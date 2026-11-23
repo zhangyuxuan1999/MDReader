@@ -1,0 +1,97 @@
+# electron-builder.yml — MDReader desktop packaging (CONTRACT §10).
+# The build config lives ONLY here (package.json keeps no "build" key).
+#   npm run app:build  → vite build + electron-builder --mac --arm64 + ad-hoc codesign
+appId: com.zyx.mdreader
+productName: MDReader
+copyright: Copyright © 2026 zyx
+directories:
+  output: release
+  buildResources: build
+files:
+  - dist/**
+  - electron/**
+  - package.json
+asar: true
+npmRebuild: false
+# Extensions the app claims. `rank: Default` makes MDReader a candidate default handler; the actual
+# default is only switched by scripts/set-default-md.swift, which the user runs explicitly.
+fileAssociations:
+  - ext: md
+    name: Markdown
+    description: Markdown 文档
+    role: Editor
+    rank: Default
+    mimeType: text/markdown
+  - ext: markdown
+    name: Markdown
+    description: Markdown 文档
+    role: Editor
+    rank: Default
+    mimeType: text/markdown
+  - ext: mdown
+    name: Markdown
+    description: Markdown 文档
+    role: Editor
+    rank: Default
+    mimeType: text/markdown
+  - ext: mkd
+    name: Markdown
+    description: Markdown 文档
+    role: Editor
+    rank: Default
+    mimeType: text/markdown
+  - ext: mkdn
+    name: Markdown
+    description: Markdown 文档
+    role: Editor
+    rank: Default
+    mimeType: text/markdown
+mac:
+  target:
+    - target: dir
+      arch:
+        - arm64
+    - target: dmg
+      arch:
+        - arm64
+  category: public.app-category.productivity
+  icon: build/icon.png
+  darkModeSupport: true
+  # Ad-hoc signing is applied afterwards by `codesign --force --deep --sign -` (app:build):
+  # electron-builder must not try to find a Developer ID identity or run Gatekeeper.
+  identity: null
+  hardenedRuntime: false
+  gatekeeperAssess: false
+  extendInfo:
+    NSHumanReadableCopyright: Copyright © 2026 zyx
+    LSApplicationCategoryType: public.app-category.productivity
+    CFBundleDocumentTypes:
+      - CFBundleTypeName: Markdown Document
+        CFBundleTypeRole: Editor
+        LSHandlerRank: Default
+        LSItemContentTypes:
+          - net.daringfireball.markdown
+          - public.plain-text
+        CFBundleTypeExtensions:
+          - md
+          - markdown
+          - mdown
+          - mkd
+          - mkdn
+    UTImportedTypeDeclarations:
+      - UTTypeIdentifier: net.daringfireball.markdown
+        UTTypeDescription: Markdown 文档
+        UTTypeConformsTo:
+          - public.plain-text
+        UTTypeTagSpecification:
+          public.filename-extension:
+            - md
+            - markdown
+            - mdown
+            - mkd
+            - mkdn
+          public.mime-type:
+            - text/markdown
+dmg:
+  title: MDReader
+  artifactName: ${productName}-${version}-${arch}.${ext}

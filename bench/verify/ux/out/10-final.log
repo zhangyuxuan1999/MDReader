@@ -1,0 +1,8 @@
+PASS  Global shortcuts work with focus on the preview pane / body (Mod-/, Mod-Shift-o, Mod-Shift-l, Mod-Shift-p)  — focus was on BODY
+PASS  Editor-scope Mod-b with focus on preview leaves the document unchanged  — doc changed
+PASS  Mod-f with focus on preview opens the editor search panel (SPEC §13: Cmd+F routed to editor search)  — no search panel
+PASS  Mod-b / Mod-f (editor-scope) with focus on the preview pane: behaviour
+PASS  edit → split keeps the editor top line in the preview  — editor 602 → preview 602
+
+[10-final] 5 passed, 0 failed
+[10-final] no console/page errors

@@ -1,0 +1,46 @@
+PASS  initial settle  — {"ok":true,"version":1}
+PASS  (A) 500 px: no horizontal page overflow  — {"scrollW":500,"clientW":500,"bodyScrollW":500,"editorW":343.15625,"previewW":343.15625,"tocW":0,"toolbarH":45,"toolbarScrollW":692,"toolbarClientW":692,"statusH":25,"mode":"split","toc":true}
+PASS  (A) 500 px: editor and preview panes both have usable width (> 120 px)  — {"scrollW":500,"clientW":500,"bodyScrollW":500,"editorW":343.15625,"previewW":343.15625,"tocW":0,"toolbarH":45,"toolbarScrollW":692,"toolbarClientW":692,"statusH":25,"mode":"split","toc":true}
+OK    (A) 500 px: toolbar height (px) = 45 (target informational (single row ≈ 40))
+PASS  (A) 500 px: toolbar not overflowing/clipped  — {"toolbarScrollW":692,"toolbarClientW":692}
+OK    (A) 500 px: input latency p95 (ms) = 21 (target < 100)
+PASS  (A) 500 px: preview visible blocks mounted after typing  — {"pending":0,"total":6,"H":732,"W":350}
+PASS  (A) 500 px: preview shows the typed text
+OK    (A) 10 rapid resizes: long tasks count / max ms = 0/0 (target 0 > 50 ms)
+PASS  (A) after resizing back to 1400: visible blocks mounted  — {"pending":0,"total":11,"H":932,"W":577}
+PASS  (A) structure tiles  — {"blocks":6002,"docLines":20404,"sumLines":20404,"domBlocks":6002,"pending":5960,"stale":0,"errors":0,"kinds":{"0":1801,"1":1201,"2":600,"3":600,"4":600,"5":600,"7":600},"problems":[]}
+PASS  (B) settles after returning from hidden  — {"ok":true,"version":39}
+PASS  (B) visible blocks mounted after return  — {"pending":0,"total":10,"H":932,"W":577}
+PASS  (B) preview shows text typed while hidden
+PASS  (B) draft saved for the latest version  — {"draftB":{"docId":"text:medium.md","version":39,"at":1788674025624},"vB":39}
+PASS  (C) draft saved before reload  — {"docId":"untitled","version":84,"at":1788674029288}
+PASS  (C) title shows dirty marker before reload  — ● 未命名.md
+PASS  (C) after reload: draft-found toast offered  — ["发现未保存的草稿，是否恢复？恢复丢弃×"]
+PASS  (C) restored draft text equals text before reload  — len 83 vs 83
+PASS  (C) structure after restore tiles  — {"blocks":2,"docLines":3,"sumLines":3,"domBlocks":2,"pending":0,"stale":0,"errors":0,"kinds":{"0":1,"1":1},"problems":[]}
+PASS  (C) status bar shows draft state  — 行 1, 列 1字数 6字符 83约 1 分钟未命名.md · 草稿已存分栏
+PASS  (C) second reload: draft offered again (restore does not delete it)  — ["发现未保存的草稿，是否恢复？恢复丢弃×"]
+PASS  (C) after discard + reload: no draft toast  — []
+OK    (D) 50 mode switches: wall ms, long tasks count / max ms = 826, 0/0 (target P12 longest task < 50 ms)
+PASS  (D) mode after 50 cycles is edit and DOM matches  — {"mode":"edit","attr":"edit","editorVisible":true,"previewVisible":false,"ed":{"line":7986,"fraction":0.1357142857142857},"pv":{"line":1,"fraction":0},"status":"编辑"}
+PASS  (D) status bar mode label matches  — 编辑
+PASS  (D) back in split: editor top line within 5 lines of where it was  — {"before":{"line":7990,"fraction":0.669047619047619},"after":{"line":7986,"fraction":0.1357142857142857}}
+PASS  (D) back in split: preview top line within 5 lines of editor  — {"ed":{"line":7986,"fraction":0.1357142857142857},"pv":{"line":7986,"fraction":0.11910669975186106},"edFocus":true}
+PASS  (D) back in split: visible preview blocks mounted  — {"pending":0,"total":11,"H":932,"W":577}
+OK    (D) input latency p95 after mode storm (ms) = 21.6 (target < 100)
+PASS  (D) settles after typing  — {"ok":true,"version":18}
+OK    (E) 50 theme flips: wall ms, long tasks count / max ms = 785, 0/0 (target P12 longest task < 50 ms)
+PASS  (E) after 50 flips theme equals the starting theme (even count)  — {"theme0":"light","theme":"light","pref":"light","resolved":"light","cmDark":false,"cmDarkTheme":"cm-editor cm-focused ͼ1 ͼ2 ͼ4 ͼo","bgLum":248.142,"cmLum":248.142,"pvLum":248.142,"stored":"light"}
+PASS  (E) app / editor / preview backgrounds agree with the resolved theme  — {"theme":"light","pref":"light","resolved":"light","cmDark":false,"cmDarkTheme":"cm-editor cm-focused ͼ1 ͼ2 ͼ4 ͼo","bgLum":248.142,"cmLum":248.142,"pvLum":248.142,"stored":"light"}
+PASS  (E) theme persisted in localStorage  — light
+OK    (E) input latency p95 after theme storm (ms) = 18.7 (target < 100)
+PASS  no console errors  — []
+PASS  no page errors  — []
+PASS  no worker restart  — restarts=0
+
+=== s10 ui stress ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

@@ -1,0 +1,15 @@
+# MDReader 的部署配置（Cloudflare Workers 静态资源，与 TextCompare 相同的方式）。
+#
+# ★ 纯静态 Worker：只有 assets（vite build 产物 dist/），没有服务端代码。
+#   静态资源请求免费且不限量，不占用 Workers 的每日请求额度。
+#
+# 发布 / 更新：
+#   npm run deploy        （= 类型检查 + 单元测试 + 构建 + npx wrangler deploy）
+name = "mdreader"
+compatibility_date = "2026-08-28"
+workers_dev = true
+
+[assets]
+directory = "./dist"
+# 单页应用：未知路径回退到 index.html
+not_found_handling = "single-page-application"

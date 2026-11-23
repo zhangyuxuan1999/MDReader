@@ -1,0 +1,19 @@
+FAIL  Recent-files dropdown is actually visible and clickable (not clipped by .mdr-toolbar__file overflow:hidden)  — elementFromPoint at the menu item centre is div.mdr-preview; li rect 1139,39,240,30, chip rect 1314,10,78,24 (overflow hidden); click: page.click: Timeout 2500ms exceeded.
+PASS  Alt+click h2 → line 245 ("## 二")  — cursor line 245 "## 二"
+PASS  Alt+click quote → line 247 ("> 引用一行")  — cursor line 247 "> 引用一行"
+PASS  Alt+click code fence start → line 250 ("```js")  — cursor line 250 "```js"
+PASS  Alt+click table row 2 → line 258 ("| r2 | y |")  — cursor line 255 "| h | v |"
+PASS  Alt+click nested li → line 261 ("  - 乙")  — cursor line 261 "  - 乙"
+PASS  Alt+click nested task li → line 264 ("  - [x] 子任务二")  — cursor line 264 "  - [x] 子任务二"
+PASS  Alt+click last paragraph → line 266 ("尾段。")  — cursor line 266 "尾段。"
+PASS  Alt+click on heading / quote / code / table row / nested list item moves the cursor to the right line  — h2:245/245 quote:247/247 code fence start:250/250 table row 2:255/258 nested li:261/261 nested task li:264/264 last paragraph:266/266
+FAIL  Esc from a palette opened with focus on the preview (body) returns focus to the editor  — before BODY. → after BODY.
+PASS  Palette opened via toolbar button (focus on button) → Esc returns focus somewhere useful  — before BODY. → after BODY.
+FAIL  Hovered palette item becomes is-active  — active "标题 1", hovered "标题 4"
+PASS  Palette: hovering an item makes it the active target (mouse + keyboard consistency)
+FAIL  Theme button changes state (aria-pressed or icon) when theme flips  — before {"pressed":null,"title":"切换主题 (⇧⌘L)","svg":115} after {"pressed":null,"title":"切换主题 (⇧⌘L)","svg":115,"theme":"dark"}
+PASS  Theme toolbar button reflects the current theme (aria-pressed / icon change)  — {"pressed":null,"title":"切换主题 (⇧⌘L)","svg":115} → {"pressed":null,"title":"切换主题 (⇧⌘L)","svg":115,"theme":"dark"}
+PASS  External links have target=_blank rel=noopener; relative link shows toast; mailto not blocked  — [{"href":"https://example.com/a","target":"_blank","rel":"noopener noreferrer"},{"href":"./b.md","target":"","rel":""},{"href":"mailto:a@b.c","target":"_blank","rel":"noopener noreferrer"}]
+
+[13-recent-altclick] 12 passed, 4 failed
+[13-recent-altclick] no console/page errors

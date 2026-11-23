@@ -1,0 +1,21 @@
+markdown-it (node) renders the 1 MB paragraph in 76 ms → 1350165 chars
+MEAS  [big] 1 MB paragraph: load → idle (all rendered): 1673 ms (target informational)
+1 MB paragraph: {"blocks":4,"bigTag":"P","bigClass":"md-plain md-plain__piece","strongs":0,"links":0,"textLen":1000081,"rawMarkupVisible":true,"afterH2":true,"toc":2}
+FAIL  [big] 1 MB paragraph rendered as raw text (HTML_FLAG_PLAIN), inline markup not rendered
+      {"blocks":4,"bigTag":"P","bigClass":"md-plain md-plain__piece","strongs":0,"links":0,"textLen":1000081,"rawMarkupVisible":true,"afterH2":true,"toc":2,"note":"SPEC 4.4 maxHtmlChars=200000 makes any block > 200 KB plain text; markdown-it renders it in 76 ms in node"}
+PASS  [big] 1 MB paragraph: following heading rendered + in TOC
+MEAS  [big] 1 MB paragraph: type 3 chars → idle: 2204 ms (target informational)
+FAIL  [big] 1 MB paragraph: typed text appears in preview
+      {}
+PASS  [big] 150 KB paragraph rendered as markdown  — 1250 <strong>
+MEAS  [big] 20k blocks: load → worker idle: 231 ms (target P3 idle < 20 s)
+MEAS  [big] 20k blocks: load → all mounted: 2035 ms (target informational)
+PASS  [big] 20k blocks: 20000 blocks  — toc 2500
+PASS  [big] 20k blocks: TOC has 2500 headings
+PASS  [big] 20k blocks: rendering equals markdown-it  — 140000 canonical lines
+PASS  [big] 20k blocks: last TOC entry correct
+PASS  [big] no page errors
+PASS  [big] no console errors
+
+[big] 8 pass, 2 fail, 4 measurements
+__RESULT__{"findings":[{"title":"1 MB paragraph rendered as raw text (HTML_FLAG_PLAIN), inline markup not rendered","blocks":4,"bigTag":"P","bigClass":"md-plain md-plain__piece","strongs":0,"links":0,"textLen":1000081,"rawMarkupVisible":true,"afterH2":true,"toc":2,"note":"SPEC 4.4 maxHtmlChars=200000 makes any block > 200 KB plain text; markdown-it renders it in 76 ms in node"},{"title":"1 MB paragraph: typed text appears in preview"}],"measurements":[{"name":"1 MB paragraph: load → idle (all rendered)","value":"1673 ms","target":"informational","pass":true},{"name":"1 MB paragraph: type 3 chars → idle","value":"2204 ms","target":"informational","pass":true},{"name":"20k blocks: load → worker idle","value":"231 ms","target":"P3 idle < 20 s","pass":true},{"name":"20k blocks: load → all mounted","value":"2035 ms","target":"informational","pass":true}]}

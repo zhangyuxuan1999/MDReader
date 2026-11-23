@@ -1,0 +1,57 @@
+PASS  [render] corpus: atx+setext headings  — 27 canonical lines
+PASS  [render] corpus: emphasis/strong/strike/code  — 52 canonical lines
+PASS  [render] corpus: links inline/auto/ref  — 206 canonical lines
+PASS  [render] corpus: images  — 14 canonical lines
+PASS  [render] corpus: lists ordered/unordered/nested/loose  — 82 canonical lines
+PASS  [render] corpus: task lists  — 49 canonical lines
+PASS  [render] corpus: fences ts/py/json/unknown  — 35 canonical lines
+PASS  [render] corpus: indented code  — 11 canonical lines
+PASS  [render] corpus: tables with alignment  — 79 canonical lines
+PASS  [render] corpus: blockquotes nested with lists  — 38 canonical lines
+PASS  [render] corpus: hr variants  — 20 canonical lines
+PASS  [render] corpus: inline html  — 38 canonical lines
+PASS  [render] corpus: html block spanning lines  — 15 canonical lines
+PASS  [render] corpus: cjk no spaces  — 22 canonical lines
+PASS  [render] corpus: heading right after paragraph  — 28 canonical lines
+PASS  [render] corpus: list items separated by blank lines (one list)  — 34 canonical lines
+PASS  [render] corpus: fence with blank + # lines  — 13 canonical lines
+PASS  [render] corpus: unclosed fence  — 8 canonical lines
+PASS  [render] corpus: crlf input  — 41 canonical lines
+PASS  [render] corpus: trailing blank lines  — 6 canonical lines
+PASS  [render] corpus: empty doc  — 0 canonical lines
+PASS  [render] corpus: only blank lines  — 0 canonical lines
+PASS  [render] corpus: setext multi-line paragraph  — 6 canonical lines
+PASS  [render] corpus: ref def inside quote/list  — 17 canonical lines
+PASS  [render] corpus: heading indented inside list item  — 18 canonical lines
+PASS  [render] corpus: div html block containing # line  — 8 canonical lines
+PASS  [render] corpus: ref definition immediately after paragraph  — 9 canonical lines
+PASS  [render] corpus: numbered list start + escapes  — 20 canonical lines
+PASS  [render] corpus: lazy continuation  — 15 canonical lines
+PASS  [render] corpus: link reference with title on next line  — 5 canonical lines
+PASS  [render] corpus: multi-line ref definition url on next line  — 5 canonical lines
+PASS  [render] corpus: html comment with blank lines then heading  — 3 canonical lines
+PASS  [render] corpus: table interrupted by heading  — 25 canonical lines
+PASS  [render] corpus: autolink paragraph start  — 12 canonical lines
+PASS  [render] corpus: hard breaks  — 9 canonical lines
+PASS  [render] corpus: entities and special chars  — 3 canonical lines
+PASS  [render] corpus: script/style html blocks  — differs only by sanitised <script>/<style> (expected)
+PASS  [render] corpus: fence inside ordered list with wide marker  — 17 canonical lines
+PASS  [render] corpus: tilde fence closed by backticks (must not close)  — 8 canonical lines
+PASS  [render] corpus: fence longer closer  — 8 canonical lines
+PASS  [render] corpus: thematic break vs list  — 12 canonical lines
+PASS  [render] corpus: details with markdown inside (README pattern)  — 21 canonical lines
+PASS  [render] corpus: div align=center with blank lines inside  — 9 canonical lines
+PASS  [render] corpus: details without blank lines (single html block)  — 6 canonical lines
+PASS  [render] corpus: nested details  — 13 canonical lines
+PASS  [render] math: KaTeX rendered  — 5 .katex nodes
+PASS  [render] math: currency not treated as math
+PASS  [render] math: text after same-line $$ kept
+PASS  [render] math: text after closing $$ line kept
+PASS  [render] math: inline code containing $ preserved
+PASS  [render] math: escaped dollar
+PASS  [render] xss: all payloads neutralised  — 25 payloads
+PASS  [render] no page errors
+PASS  [render] no console errors
+
+[render] 54 pass, 0 fail, 0 measurements
+__RESULT__{"findings":[],"measurements":[]}

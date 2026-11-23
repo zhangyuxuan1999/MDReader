@@ -1,0 +1,466 @@
+/* src/styles/preview.css — everything inside .mdr-preview plus the .mdr-toc (E2).
+   Colours and fonts come from tokens.css (--mdr-*); no literals here. */
+
+.mdr-preview {
+  position: relative;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+  overflow-anchor: auto;
+  /* Scroll past the end, but only a little. A full-viewport tail (the old `100vh`) let the pane be
+     scrolled until ~3 % of it held document, and it desynced the tail in split mode: the editor has no
+     scroll-past-end region at all, so once the preview entered its tail the two panes could no longer
+     show the same top line (drift of 28 lines at maximum scroll on a 240-line document). A modest tail
+     keeps the last paragraph clear of the window edge while both panes still bottom out on the same
+     content; `scrollSync` additionally clamps a follower to its scrollable range and stops following the
+     master once the master is inside its own tail. */
+  padding: 32px 40px max(48px, 20vh);
+  background: var(--mdr-bg);
+  color: var(--mdr-fg);
+  font-family: var(--mdr-font-sans);
+  font-size: var(--mdr-preview-font-size);
+  line-height: var(--mdr-line-height);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: contain;
+}
+
+.mdr-preview__body {
+  max-width: 46em;
+  margin: 0 auto;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  text-align: start;
+  hanging-punctuation: allow-end;
+}
+@supports (text-spacing-trim: space-first) {
+  .mdr-preview__body { text-spacing-trim: space-first; }
+}
+
+/* ---- block wrappers ----------------------------------------------------- */
+/* Wrappers live in chunks of ~256 (div.md-chunk). The chunk is the content-visibility unit: Chrome's
+   per-frame relevancy bookkeeping costs ~1 µs per c-v:auto element, so 100k skippable wrappers would
+   cost ~100 ms per frame while ~400 chunks cost nothing. A chunk adds no box of its own (no
+   margin/padding/border); --chunk-h (sum of its wrappers' model heights) sizes it until first rendered. */
+.md-chunk {
+  display: block;
+  margin: 0;
+  padding: 0;
+  content-visibility: auto;
+  contain-intrinsic-size: auto var(--chunk-h, 7168px);
+}
+/* A dormant chunk holds no wrappers at all: far from the materialization window even an empty pending
+   <section> costs ≈1 KB of renderer memory (element + attributes + computed style + layout box), which is
+   what pushed a 6.6 MB document past the P13 budget. It contributes exactly the height the model assigns
+   to its blocks, so the scrollbar and every model → scrollTop mapping stay correct, and it is cheaper than
+   a content-visibility unit (nothing to skip, no per-frame relevancy bookkeeping). */
+.md-chunk.is-dormant {
+  content-visibility: visible;
+  contain: layout style;
+  height: var(--chunk-h, 0px);
+}
+/* Layout containment keeps child margins from collapsing out, so a wrapper's border box is exactly the
+   height the model tracks: --est-h while pending, the measured content height once mounted. */
+.md-block {
+  display: block;
+  margin: 0;
+  contain: layout style;
+}
+.md-block.is-pending {
+  min-height: var(--est-h, 28px);
+}
+/* ---- focus line (CONTRACT §9) -------------------------------------------- */
+/* The element covering the line the user is on — clicked/selected here, or mirrored from the editor's
+   caret line. Deliberately quiet: the same token as the editor's caret line, no border, no bright colour.
+   The box-shadow pads the tint a few pixels past the text box so a one-line paragraph reads as a band
+   rather than as a tight rectangle. For li / blockquote / table the whole element tints. */
+.mdr-preview__body .is-focus {
+  background: var(--mdr-focus-line);
+  box-shadow: 0 0 0 4px var(--mdr-focus-line);
+  border-radius: 3px;
+}
+
+.md-block.is-stale {
+  opacity: 0.85;
+  transition: opacity 120ms;
+}
+.md-block.is-slow {
+  position: relative;
+}
+.md-block.is-slow::after {
+  content: "渲染中…";
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  padding: 1px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--mdr-fg-muted);
+  background: var(--mdr-bg-elevated);
+  border: 1px solid var(--mdr-border);
+  pointer-events: none;
+}
+
+/* ---- typography ----------------------------------------------------------- */
+.mdr-preview__body p {
+  margin: 0 0 1em;
+}
+.mdr-preview__body h1,
+.mdr-preview__body h2,
+.mdr-preview__body h3,
+.mdr-preview__body h4,
+.mdr-preview__body h5,
+.mdr-preview__body h6 {
+  margin: 1.4em 0 0.6em;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
+.mdr-preview__body h1 { font-size: 1.9em; margin-top: 0.6em; padding-bottom: 0.3em; border-bottom: 1px solid var(--mdr-border); }
+.mdr-preview__body h2 { font-size: 1.5em; padding-bottom: 0.25em; border-bottom: 1px solid var(--mdr-border); }
+.mdr-preview__body h3 { font-size: 1.25em; }
+.mdr-preview__body h4 { font-size: 1.1em; }
+.mdr-preview__body h5 { font-size: 1em; }
+.mdr-preview__body h6 { font-size: 0.95em; color: var(--mdr-fg-muted); }
+.md-block > :first-child { margin-top: 0; }
+
+.mdr-preview__body a {
+  color: var(--mdr-link);
+  text-decoration: none;
+  text-underline-offset: 0.15em;
+}
+.mdr-preview__body a:hover { text-decoration: underline; }
+.mdr-preview__body strong { font-weight: 600; }
+.mdr-preview__body del { color: var(--mdr-fg-muted); }
+.mdr-preview__body hr {
+  height: 1px;
+  margin: 1.5em 0;
+  border: 0;
+  background: var(--mdr-border);
+}
+.mdr-preview__body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* ---- lists ---------------------------------------------------------------- */
+.mdr-preview__body ul,
+.mdr-preview__body ol {
+  margin: 0 0 1em;
+  padding-inline-start: 1.8em;
+}
+.mdr-preview__body li { margin: 0.2em 0; }
+.mdr-preview__body li > p { margin-bottom: 0.4em; }
+.mdr-preview__body li > ul,
+.mdr-preview__body li > ol { margin-bottom: 0; }
+/* Only the task items themselves lose their marker (GitHub behaviour): a list that mixes plain items with
+   task items keeps the bullets of its plain items, so they never read as bare paragraphs. The reduced
+   indent applies only when every item of the list is a task (then no bullet column is needed). */
+.mdr-preview__body .task-list-item { list-style: none; }
+.mdr-preview__body ul.contains-task-list:not(:has(> li:not(.task-list-item))) { padding-inline-start: 0.4em; }
+.mdr-preview__body .task-list-item-checkbox,
+.mdr-preview__body input[type="checkbox"] {
+  width: 1em;
+  height: 1em;
+  margin: 0 0.5em 0 0;
+  vertical-align: -0.1em;
+  accent-color: var(--mdr-accent);
+  cursor: pointer;
+}
+
+/* ---- quotes --------------------------------------------------------------- */
+.mdr-preview__body blockquote {
+  margin: 0 0 1em;
+  padding: 0.2em 1em;
+  border-left: 4px solid var(--mdr-quote-border);
+  color: var(--mdr-fg-muted);
+}
+.mdr-preview__body blockquote > :last-child { margin-bottom: 0; }
+
+/* ---- code ----------------------------------------------------------------- */
+.mdr-preview__body code {
+  font-family: var(--mdr-font-mono);
+  font-size: 0.9em;
+  background: var(--mdr-code-bg);
+  color: var(--mdr-code-fg);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+.mdr-preview__body pre {
+  margin: 0 0 1em;
+  padding: 0.85em 1em;
+  overflow-x: auto;
+  background: var(--mdr-code-bg);
+  color: var(--mdr-code-fg);
+  border-radius: 6px;
+  font-family: var(--mdr-font-mono);
+  font-size: 0.875em;
+  line-height: 1.6;
+  tab-size: 2;
+}
+.mdr-preview__body pre code {
+  display: block;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font-size: inherit;
+  white-space: pre;
+}
+.mdr-preview__body pre.md-code--plain code { white-space: pre-wrap; }
+
+/* ---- code-fence language badge ---------------------------------------------
+   The badge must never cover a code glyph and must stay in the corner while the fence is scrolled
+   horizontally. It cannot live inside the `pre`: that element IS the horizontal scroller, a `float`
+   is ignored by its `white-space: pre` lines (so the badge was painted straight over them), and an
+   absolutely positioned child of a scroller travels with `scrollLeft`. The preview therefore lifts
+   every `pre.md-code[data-lang]` into a `div.md-codewrap` when it mounts the block (createPreview.ts)
+   and paints the badge from that wrapper, outside the scrolled content; the fence reserves a line of
+   `padding-top` for it so the first code line starts below the badge. */
+.mdr-preview__body .md-codewrap {
+  position: relative;
+  margin: 0 0 1em;
+}
+.mdr-preview__body .md-codewrap > pre.md-code {
+  margin: 0;
+  padding-top: 2.1em;
+}
+.mdr-preview__body .md-codewrap::after {
+  content: attr(data-lang);
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  font-family: var(--mdr-font-sans);
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--mdr-fg-muted);
+  pointer-events: none;
+  user-select: none;
+}
+/* Fallback for a fence that is NOT wrapped: the standalone HTML export reuses this stylesheet with the
+   worker's raw markup, where no mount step ran. A block-level badge takes a line of its own (never over
+   a glyph) and `position: sticky; left: 0` keeps it from travelling with the code when the fence is
+   scrolled right. Inside a wrapper the absolute badge above is the one that shows. */
+.mdr-preview__body pre.md-code[data-lang]::before {
+  content: attr(data-lang);
+  display: block;
+  position: sticky;
+  left: 0;
+  margin: -0.25em 0 0.45em;
+  text-align: end;
+  font-family: var(--mdr-font-sans);
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--mdr-fg-muted);
+  user-select: none;
+}
+.mdr-preview__body .md-codewrap > pre.md-code[data-lang]::before { content: none; }
+
+/* ---- oversize (PLAIN) blocks ------------------------------------------------
+   A block beyond maxHtmlChars arrives as raw text and is mounted in pieces of ≤ 64 KB, each a block-level
+   element and a content-visibility unit of its own: Chrome lays out one piece at a time (a single
+   multi-MB line box is superlinear) and a keystroke inside the block re-lays out one piece only.
+   Prose pieces wrap normally (pre-line keeps the author's line breaks); only Code keeps pre-wrap. */
+.mdr-preview__body .md-plain {
+  margin: 0;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+/* Why the literal Markdown is on screen: a prose block past maxHtmlChars is not rendered (SPEC §4.4).
+   Muted, small and unselectable, so copying the block copies the text and not the explanation. */
+.mdr-preview__body .md-plain__note {
+  margin: 0 0 0.5em;
+  font-family: var(--mdr-font-sans);
+  font-size: 0.8em;
+  line-height: 1.6;
+  color: var(--mdr-fg-muted);
+  border-left: 3px solid var(--mdr-border);
+  padding: 0 0 0 0.6em;
+  user-select: none;
+}
+.mdr-preview__body .md-plain__piece {
+  content-visibility: auto;
+  contain-intrinsic-size: auto var(--piece-h, 28px);
+}
+.mdr-preview__body .md-block > .md-plain:last-child { margin-bottom: 1em; }
+
+/* ---- tables --------------------------------------------------------------- */
+.mdr-preview__body table {
+  display: block;
+  max-width: 100%;
+  margin: 0 0 1em;
+  overflow-x: auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 0.95em;
+}
+.mdr-preview__body th,
+.mdr-preview__body td {
+  padding: 0.4em 0.8em;
+  border: 1px solid var(--mdr-border);
+  text-align: start;
+  vertical-align: top;
+}
+.mdr-preview__body th {
+  font-weight: 600;
+  background: var(--mdr-bg-hover);
+}
+.mdr-preview__body tbody tr:nth-child(even) { background: var(--mdr-bg-elevated); }
+
+/* ---- math / errors -------------------------------------------------------- */
+.mdr-preview__body .katex-display {
+  margin: 0 0 1em;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.2em 0;
+}
+.mdr-preview__body .md-error {
+  margin: 0 0 1em;
+  padding: 0.6em 0.9em;
+  border: 1px solid var(--mdr-danger);
+  border-radius: 6px;
+  color: var(--mdr-danger);
+  font-size: 0.9em;
+}
+.mdr-preview__body .md-error p { margin: 0 0 0.4em; font-weight: 600; }
+.mdr-preview__body .md-error pre {
+  margin: 0;
+  color: var(--mdr-fg);
+  max-height: 12em;
+  overflow: auto;
+}
+
+/* ---- TOC ------------------------------------------------------------------ */
+.mdr-toc {
+  position: sticky;
+  top: 0;
+  display: block;
+  box-sizing: border-box;
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 8px 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--mdr-fg);
+}
+.mdr-toc[hidden] { display: none; }
+.mdr-toc__item {
+  display: block;
+  padding: 3px 12px 3px calc(12px + (var(--lvl, 1) - 1) * 12px);
+  color: var(--mdr-fg-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-left: 2px solid transparent;
+}
+.mdr-toc__item:hover { background: var(--mdr-bg-hover); color: var(--mdr-fg); }
+.mdr-toc__item.is-active {
+  /* the raw accent is only 3.97:1 on the hover background in the light theme: text uses the darker
+     accent-text token (AA on --mdr-bg-hover in both themes), falling back to the foreground colour */
+  color: var(--mdr-accent-text, var(--mdr-fg));
+  border-left-color: var(--mdr-accent);
+  background: var(--mdr-bg-hover);
+}
+.mdr-toc__item--h1 { --lvl: 1; font-weight: 600; color: var(--mdr-fg); }
+.mdr-toc__item--h2 { --lvl: 2; }
+.mdr-toc__item--h3 { --lvl: 3; }
+.mdr-toc__item--h4 { --lvl: 4; }
+.mdr-toc__item--h5 { --lvl: 5; }
+.mdr-toc__item--h6 { --lvl: 6; }
+.mdr-toc--collapsed .mdr-toc__item--h3,
+.mdr-toc--collapsed .mdr-toc__item--h4,
+.mdr-toc--collapsed .mdr-toc__item--h5,
+.mdr-toc--collapsed .mdr-toc__item--h6 { display: none; }
+.mdr-toc__expand {
+  display: block;
+  width: calc(100% - 16px);
+  margin: 0 8px 6px;
+  padding: 3px 8px;
+  border: 1px solid var(--mdr-border);
+  border-radius: 4px;
+  background: var(--mdr-bg-elevated);
+  color: var(--mdr-fg-muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+.mdr-toc__expand:hover { background: var(--mdr-bg-hover); color: var(--mdr-fg); }
+
+/* ---- in-preview editing (CONTRACT §11) -------------------------------------- */
+/* The block being edited: a quiet dashed frame a few pixels outside the text, the caret in the accent
+   colour. The frame is an outline, so it takes no layout space and the block does not move. */
+.mdr-preview__body .md-block.is-editing {
+  outline: 1px dashed color-mix(in srgb, var(--mdr-accent) 40%, transparent);
+  outline-offset: 6px;
+  border-radius: 4px;
+  caret-color: var(--mdr-accent);
+}
+.mdr-preview__body .md-block.is-editing [contenteditable],
+.mdr-preview__body .md-block.is-editing :focus { outline: none; }
+.mdr-preview__body .md-block.is-editing .md-math[contenteditable="false"] { cursor: pointer; }
+/* A formula being edited shows its TeX source (serialized back to `$…$` / `$$…$$`). */
+.mdr-preview__body .md-math-src {
+  font-family: var(--mdr-font-mono);
+  font-size: 0.9em;
+  color: var(--mdr-code-fg);
+  background: var(--mdr-code-bg);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+.mdr-preview__body code.md-math-src::before,
+.mdr-preview__body code.md-math-src::after { content: "$"; color: var(--mdr-fg-muted); }
+.mdr-preview__body code.md-math-src.md-math--display::before,
+.mdr-preview__body code.md-math-src.md-math--display::after { content: "$$"; }
+.mdr-preview__body pre.md-math-src {
+  display: block;
+  margin: 0 0 1em;
+  padding: 0.75em 1em;
+  white-space: pre-wrap;
+}
+/* Floating hint, bottom-right of the preview pane, only while a session is active. It lives in the pane
+   around the scroller (position: relative, see layout.css), so it never scrolls with the content and adds
+   no scrollable height; it keeps clear of the scrollbar and ignores the pointer. */
+.mdr-preview__edit-hint {
+  position: absolute;
+  right: 20px;
+  bottom: 14px;
+  z-index: 5;
+  max-width: calc(100% - 40px);
+  pointer-events: none;
+}
+.mdr-preview__edit-hint[hidden] { display: none; }
+.mdr-preview__edit-hint-pill {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-family: var(--mdr-font-sans);
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: nowrap;
+  color: var(--mdr-fg-muted);
+  background: var(--mdr-bg-elevated);
+  border: 1px solid var(--mdr-border);
+  box-shadow: var(--mdr-shadow);
+  user-select: none;
+}
+/* ⌘K: the link address input, under the selection. */
+.mdr-preview__link-input {
+  position: absolute;
+  z-index: 6;
+}
+.mdr-preview__link-input input {
+  width: min(320px, 70vw);
+  box-sizing: border-box;
+  padding: 5px 9px;
+  font: 13px/1.4 var(--mdr-font-sans);
+  color: var(--mdr-fg);
+  background: var(--mdr-bg-elevated);
+  border: 1px solid var(--mdr-border);
+  border-radius: 6px;
+  box-shadow: var(--mdr-shadow);
+  outline: none;
+}
+.mdr-preview__link-input input:focus { border-color: var(--mdr-accent); }

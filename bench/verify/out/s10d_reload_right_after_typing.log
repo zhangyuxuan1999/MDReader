@@ -1,0 +1,14 @@
+PASS  draft A saved after 3 s  — {"docId":"untitled","version":27,"at":1788674070654}
+PASS  reload 150 ms after typing: draft offered  — ["发现未保存的草稿，是否恢复？恢复丢弃×"]
+PASS  reload 150 ms after typing: restored draft includes the last keystrokes (flush on hide)  — {"restored":"# Draft\n\nfirst part saved LAST-WORDS","expected":"# Draft\n\nfirst part saved LAST-WORDS"}
+PASS  tab closed 150 ms after typing: draft offered  — ["发现未保存的草稿，是否恢复？恢复丢弃×"]
+PASS  tab closed 150 ms after typing: restored draft includes the last keystrokes  — {"restored":"# Tab close\n\nsaved part CLOSE-WORDS","expected":"# Tab close\n\nsaved part CLOSE-WORDS"}
+PASS  no console errors  — []
+PASS  no page errors  — []
+
+=== s10d reload right after typing ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

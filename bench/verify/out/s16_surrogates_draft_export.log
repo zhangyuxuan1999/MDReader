@@ -1,0 +1,25 @@
+PASS  loads and settles  — {"ok":true,"version":2}
+PASS  structure tiles  — {"blocks":6,"docLines":23,"sumLines":23,"domBlocks":6,"pending":1,"stale":0,"errors":0,"kinds":{"0":2,"2":1,"3":1,"4":1,"7":1},"problems":[]}
+PASS  no .md-error blocks  — {"blocks":6,"docLines":23,"sumLines":23,"domBlocks":6,"pending":1,"stale":0,"errors":0,"kinds":{"0":2,"2":1,"3":1,"4":1,"7":1},"problems":[]}
+PASS  every block mounted (nothing dropped)  — [32,177,177,127,201,274]
+PASS  status bar stats present and finite  — 行 1, 列 1字数 35字符 266约 1 分钟surrogates.md · 未命名分栏
+PASS  editor text preserved exactly (lone surrogates, NUL, LS/PS, BOM)  — {"len":266,"expected":266}
+PASS  settles after typing next to a lone surrogate  — {"ok":true,"version":4}
+PASS  structure tiles after typing  — {"blocks":6,"docLines":23,"sumLines":23,"domBlocks":6,"pending":0,"stale":0,"errors":0,"kinds":{"0":2,"2":1,"3":1,"4":1,"7":1},"problems":[]}
+PASS  typed chars landed after the lone surrogate  — "lone high \ud800XY mid \udbff end"
+PASS  incremental preview === fresh render (surrogate doc)  — []
+PASS  exportHtml resolves for surrogate doc  — {"ok":true,"len":1023,"hasHeading":true,"hasTask":true}
+PASS  draft saved for the surrogate doc  — {"saved":{"docId":"untitled","version":2,"at":1788674191994},"vD":2}
+PASS  draft offered after reload  — ["发现未保存的草稿，是否恢复？恢复丢弃×"]
+PASS  restored draft === exact original (lone surrogates survive IDB)  — {"len":266,"expected":266,"diffAt":64}
+PASS  structure after restore tiles  — {"blocks":6,"docLines":23,"sumLines":23,"domBlocks":6,"pending":0,"stale":0,"errors":0,"kinds":{"0":2,"2":1,"3":1,"4":1,"7":1},"problems":[]}
+PASS  no console errors  — []
+PASS  no page errors  — []
+PASS  no worker restart  — restarts=0
+
+=== s16 surrogates / draft / export ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

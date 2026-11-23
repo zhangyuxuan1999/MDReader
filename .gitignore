@@ -1,0 +1,10 @@
+node_modules
+dist
+.DS_Store
+release
+build/icon.icns
+.wrangler
+.claude
+test-results
+test-data/huge.md
+test-data/large.md

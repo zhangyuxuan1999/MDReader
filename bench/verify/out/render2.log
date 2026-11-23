@@ -1,0 +1,91 @@
+PASS  [render2] corpus2: tabs: indented code + list + fence: preview == markdown-it  — 21 canonical lines, 4 blocks
+PASS  [render2] corpus2: lone CR line endings: preview == markdown-it  — 19 canonical lines, 4 blocks
+PASS  [render2] corpus2: mixed CR/CRLF/LF: preview == markdown-it  — 19 canonical lines, 4 blocks
+PASS  [render2] corpus2: table followed directly by text: preview == markdown-it  — 36 canonical lines, 1 blocks
+PASS  [render2] corpus2: table followed directly by list: preview == markdown-it  — 30 canonical lines, 1 blocks
+PASS  [render2] corpus2: table with escaped pipes and code: preview == markdown-it  — 35 canonical lines, 1 blocks
+PASS  [render2] corpus2: table without leading/trailing pipes + short rows: preview == markdown-it  — 38 canonical lines, 1 blocks
+PASS  [render2] corpus2: table with only header: preview == markdown-it  — 15 canonical lines, 2 blocks
+PASS  [render2] corpus2: paragraph then table delimiter (not a table): preview == markdown-it  — 3 canonical lines, 1 blocks
+PASS  [render2] corpus2: ref def followed by text without blank: preview == markdown-it  — 11 canonical lines, 2 blocks
+PASS  [render2] corpus2: duplicate ref definitions (first wins): preview == markdown-it  — 5 canonical lines, 2 blocks
+PASS  [render2] corpus2: ref def with angle brackets + title variants: preview == markdown-it  — 11 canonical lines, 2 blocks
+PASS  [render2] corpus2: ref def with CJK label + case fold: preview == markdown-it  — 11 canonical lines, 2 blocks
+PASS  [render2] corpus2: ref-style image and nested link: preview == markdown-it  — 9 canonical lines, 2 blocks
+PASS  [render2] corpus2: ref def in blockquote used outside: preview == markdown-it  — 8 canonical lines, 2 blocks
+PASS  [render2] corpus2: ref def inside list item used outside: preview == markdown-it  — 10 canonical lines, 2 blocks
+PASS  [render2] corpus2: ref def cannot interrupt paragraph: preview == markdown-it  — 9 canonical lines, 2 blocks
+FAIL  [render2] corpus2: ref label with brackets escaped: preview ≠ markdown-it
+      {"text":"[a\\]b]\n\n[a\\]b]: https://example.com/ab\n","diffAt":1,"expected":"<p>\n  <a href=\"https://example.com/ab\">\n    #a]b\n  </a>\n</p>","actual":"<p>\n  #[a]b]\n</p>","expectedLines":5,"actualLines":3}
+PASS  [render2] corpus2: linkify variants: preview == markdown-it  — 23 canonical lines, 1 blocks
+PASS  [render2] corpus2: linkify inside code / html: preview == markdown-it  — 15 canonical lines, 1 blocks
+PASS  [render2] corpus2: emphasis edge: underscores in words + CJK: preview == markdown-it  — 34 canonical lines, 2 blocks
+PASS  [render2] corpus2: strikethrough edge: preview == markdown-it  — 6 canonical lines, 1 blocks
+PASS  [render2] corpus2: inline code with backticks: preview == markdown-it  — 14 canonical lines, 1 blocks
+PASS  [render2] corpus2: hard break at paragraph end: preview == markdown-it  — 9 canonical lines, 3 blocks
+PASS  [render2] corpus2: html inline mixed with markdown: preview == markdown-it  — 18 canonical lines, 1 blocks
+PASS  [render2] corpus2: html block type 7 alone cannot interrupt paragraph: preview == markdown-it  — 13 canonical lines, 2 blocks
+FAIL  [render2] corpus2: html block type 6 interrupts paragraph: preview ≠ markdown-it
+      {"text":"text\n<div>\n# inside\n</div>\nafter\n","diffAt":4,"expected":"<p>\n  #text\n</p>\n<div>\n  ## inside\n</div>\n#after","actual":"<p>\n  #text\n</p>\n<div>\n</div>\n<h1>\n  #inside\n</h1>\n#after","expectedLines":7,"actualLines":9}
+PASS  [render2] corpus2: html comment inline and block: preview == markdown-it  — 6 canonical lines, 3 blocks
+FAIL  [render2] corpus2: html container with attributes on multiple lines: preview ≠ markdown-it
+      {"text":"<div\n  class=\"x\"\n  align=\"center\">\n\ncontent **md**\n\n</div>\n","diffAt":1,"expected":"<div align=\"center\">\n  <p>\n    #content\n    <strong>\n      #md\n    </strong>","actual":"<div align=\"center\">\n</div>\n<p>\n  #content\n  <strong>\n    #md","expectedLines":8,"actualLines":8}
+PASS  [render2] corpus2: unclosed div container: preview == markdown-it  — 17 canonical lines, 1 blocks
+PASS  [render2] corpus2: closing tag before open (stray): preview == markdown-it  — 8 canonical lines, 4 blocks
+PASS  [render2] corpus2: details with heading inside: preview == markdown-it  — 14 canonical lines, 2 blocks
+PASS  [render2] corpus2: table html container with md inside: preview == markdown-it  — 13 canonical lines, 1 blocks
+PASS  [render2] corpus2: pre containing fence markers and blanks: preview == markdown-it  — 6 canonical lines, 2 blocks
+PASS  [render2] corpus2: textarea/script/style html1 blocks  — differs only by the sanitised <textarea> (expected)
+PASS  [render2] corpus2: processing instruction / cdata / doctype: preview == markdown-it  — 3 canonical lines, 4 blocks
+PASS  [render2] corpus2: fence inside nested list (4-space indent): preview == markdown-it  — 21 canonical lines, 1 blocks
+PASS  [render2] corpus2: fence inside blockquote with blank quote line: preview == markdown-it  — 10 canonical lines, 1 blocks
+PASS  [render2] corpus2: fence info string with attributes: preview == markdown-it  — 15 canonical lines, 3 blocks
+PASS  [render2] corpus2: fence indented 1-3 spaces: preview == markdown-it  — 10 canonical lines, 2 blocks
+PASS  [render2] corpus2: fence closer with trailing spaces / longer: preview == markdown-it  — 13 canonical lines, 3 blocks
+PASS  [render2] corpus2: backtick fence with backtick in info (not a fence): preview == markdown-it  — 7 canonical lines, 1 blocks
+PASS  [render2] corpus2: language aliases: preview == markdown-it  — 80 canonical lines, 16 blocks
+PASS  [render2] corpus2: heading edge cases: preview == markdown-it  — 43 canonical lines, 10 blocks
+PASS  [render2] corpus2: setext edge cases: preview == markdown-it  — 31 canonical lines, 7 blocks
+PASS  [render2] corpus2: setext after list / quote (lazy): preview == markdown-it  — 12 canonical lines, 2 blocks
+PASS  [render2] corpus2: hr variants and lookalikes: preview == markdown-it  — 26 canonical lines, 10 blocks
+PASS  [render2] corpus2: list edge: marker changes + start numbers: preview == markdown-it  — 40 canonical lines, 3 blocks
+PASS  [render2] corpus2: list indentation edge: preview == markdown-it  — 29 canonical lines, 1 blocks
+PASS  [render2] corpus2: loose vs tight mixed: preview == markdown-it  — 25 canonical lines, 1 blocks
+PASS  [render2] corpus2: list with fence + table + quote inside: preview == markdown-it  — 44 canonical lines, 1 blocks
+PASS  [render2] corpus2: task list edge: preview == markdown-it  — 41 canonical lines, 3 blocks
+PASS  [render2] corpus2: blockquote edge: preview == markdown-it  — 39 canonical lines, 1 blocks
+PASS  [render2] corpus2: blockquote lazy then heading: preview == markdown-it  — 11 canonical lines, 2 blocks
+PASS  [render2] corpus2: math inside blockquote and list: preview == markdown-it  — 64 canonical lines, 2 blocks
+PASS  [render2] corpus2: math with html-ish and entities: preview == markdown-it  — 28 canonical lines, 2 blocks
+FAIL  [render2] corpus2: dollar edge cases: preview ≠ markdown-it
+      {"text":"Price $5, $10, $5.00-$10.50, US$3, 5$ each, $ alone, $$ two, a$b$c, $x$$y$, \\$esc\\$, `$in code$`\n\n$$$\n\n$$ $$\n","diffAt":22,"expected":"  </span>\n  #in code$`\n</p>\n<div>\n  <span style=\"color:#cc0000\" title=\"ParseError: KaTeX parse error: Can't use function '$' in math mode at position 1: $̲\\n\\n\">\n    #$\n  </span>\n</div>\n<p>","actual":"  </span>\n  #in code$`\n</p>\n<div>\n  <span style=\"color:#cc0000\" title=\"ParseError: KaTeX parse error: Can't use function '$' in math mode at position 1: $̲\">\n    #$\n  </span>\n</div>\n<p>","expectedLines":29,"actualLines":29}
+PASS  [render2] corpus2: math unclosed inline: preview == markdown-it  — 9 canonical lines, 3 blocks
+PASS  [render2] corpus2: entities + numeric refs + invalid: preview == markdown-it  — 3 canonical lines, 1 blocks
+PASS  [render2] corpus2: unicode: zero-width, rtl, combining, emoji: preview == markdown-it  — 6 canonical lines, 2 blocks
+PASS  [render2] corpus2: very long line with inline markup: preview == markdown-it  — 30002 canonical lines, 1 blocks
+PASS  [render2] corpus2: deeply nested lists (20): preview == markdown-it  — 100 canonical lines, 1 blocks
+PASS  [render2] corpus2: deeply nested quotes (20): preview == markdown-it  — 43 canonical lines, 1 blocks
+PASS  [render2] corpus2: many blank lines between blocks: preview == markdown-it  — 21 canonical lines, 4 blocks
+PASS  [render2] corpus2: whitespace-only lines inside paragraph: preview == markdown-it  — 9 canonical lines, 3 blocks
+PASS  [render2] corpus2: line with only spaces at eof: preview == markdown-it  — 3 canonical lines, 1 blocks
+PASS  [render2] corpus2: no trailing newline: preview == markdown-it  — 6 canonical lines, 1 blocks
+PASS  [render2] corpus2: single char: preview == markdown-it  — 3 canonical lines, 1 blocks
+PASS  [render2] corpus2: only a fence opener: preview == markdown-it  — 4 canonical lines, 1 blocks
+PASS  [render2] corpus2: only $$: preview == markdown-it  — 6 canonical lines, 1 blocks
+PASS  [render2] corpus2: only html open: preview == markdown-it  — 2 canonical lines, 1 blocks
+PASS  [render2] corpus2: bom at start: preview == markdown-it  — 6 canonical lines, 2 blocks
+langs: [{"lang":"javascript","unhighlighted":false,"spans":2,"cls":"hljs language-javascript"},{"lang":"sh","unhighlighted":false,"spans":2,"cls":"hljs language-sh"},{"lang":"bash","unhighlighted":false,"spans":1,"cls":"hljs language-bash"},{"lang":"yaml","unhighlighted":false,"spans":2,"cls":"hljs language-yaml"},{"lang":"html","unhighlighted":false,"spans":6,"cls":"hljs language-html"},{"lang":"css","unhighlighted":false,"spans":2,"cls":"hljs language-css"},{"lang":"JSON","unhighlighted":false,"spans":5,"cls":"hljs language-JSON"},{"lang":"TypeScript","unhighlighted":false,"spans":3,"cls":"hljs language-TypeScript"},{"lang":"c++","unhighlighted":false,"spans":4,"cls":"hljs language-c++"},{"lang":"rust","unhighlighted":false,"spans":2,"cls":"hljs language-rust"},{"lang":"go","unhighlighted":false,"spans":4,"cls":"hljs language-go"},{"lang":"java","unhighlighted":false,"spans":2,"cls":"hljs language-java"},{"lang":"sql","unhighlighted":false,"spans":2,"cls":"hljs language-sql"},{"lang":"diff","unhighlighted":false,"spans":2,"cls":"hljs language-diff"},{"lang":"text","unhighlighted":false,"spans":0,"cls":"hljs language-text"},{"lang":"mermaid","unhighlighted":true,"spans":0,"cls":""}]
+PASS  [render2] highlight: common language aliases highlighted  — javascript:2 sh:2 bash:1 yaml:2 html:6 css:2 JSON:5 TypeScript:3 c++:4 rust:2 go:4 java:2 sql:2 diff:2 text:0 mermaid:0
+toc containers: [{"level":2,"text":"Inside details","line":4},{"level":2,"text":"After details","line":10},{"level":3,"text":"In div","line":14}]
+PASS  [render2] toc: headings inside HTML containers present  — 2:Inside details@4, 2:After details@10, 3:In div@14
+PASS  [render2] toc: every rendered top-level heading has a TOC entry
+MEAS  [render2] bom: "\ufeff# Title" passed straight to loadText renders an h1: no (same as markdown-it; real files lose the BOM in .text()) (target informational)
+giant paragraph after typing: {"cls":"md-block","first":"md-plain md-plain__piece","hasTyped":true,"rawMarkup":true}
+PASS  [render2] giant paragraph (300 KB): typed text appears  — 664 ms
+MEAS  [render2] 300 KB paragraph: last keystroke → preview updated: 664 ms (target informational)
+MEAS  [render2] 300 KB paragraph shown as PLAIN raw markdown (spec maxHtmlChars=200000): yes (target spec-conformant, informational)
+PASS  [render2] no page errors
+PASS  [render2] no console errors
+
+[render2] 74 pass, 4 fail, 3 measurements
+__RESULT__{"findings":[{"title":"corpus2: ref label with brackets escaped: preview ≠ markdown-it","text":"[a\\]b]\n\n[a\\]b]: https://example.com/ab\n","diffAt":1,"expected":"<p>\n  <a href=\"https://example.com/ab\">\n    #a]b\n  </a>\n</p>","actual":"<p>\n  #[a]b]\n</p>","expectedLines":5,"actualLines":3},{"title":"corpus2: html block type 6 interrupts paragraph: preview ≠ markdown-it","text":"text\n<div>\n# inside\n</div>\nafter\n","diffAt":4,"expected":"<p>\n  #text\n</p>\n<div>\n  ## inside\n</div>\n#after","actual":"<p>\n  #text\n</p>\n<div>\n</div>\n<h1>\n  #inside\n</h1>\n#after","expectedLines":7,"actualLines":9},{"title":"corpus2: html container with attributes on multiple lines: preview ≠ markdown-it","text":"<div\n  class=\"x\"\n  align=\"center\">\n\ncontent **md**\n\n</div>\n","diffAt":1,"expected":"<div align=\"center\">\n  <p>\n    #content\n    <strong>\n      #md\n    </strong>","actual":"<div align=\"center\">\n</div>\n<p>\n  #content\n  <strong>\n    #md","expectedLines":8,"actualLines":8},{"title":"corpus2: dollar edge cases: preview ≠ markdown-it","text":"Price $5, $10, $5.00-$10.50, US$3, 5$ each, $ alone, $$ two, a$b$c, $x$$y$, \\$esc\\$, `$in code$`\n\n$$$\n\n$$ $$\n","diffAt":22,"expected":"  </span>\n  #in code$`\n</p>\n<div>\n  <span style=\"color:#cc0000\" title=\"ParseError: KaTeX parse error: Can't use function '$' in math mode at position 1: $̲\\n\\n\">\n    #$\n  </span>\n</div>\n<p>","actual":"  </span>\n  #in code$`\n</p>\n<div>\n  <span style=\"color:#cc0000\" title=\"ParseError: KaTeX parse error: Can't use function '$' in math mode at position 1: $̲\">\n    #$\n  </span>\n</div>\n<p>","expectedLines":29,"actualLines":29}],"measurements":[{"name":"bom: \"\\ufeff# Title\" passed straight to loadText renders an h1","value":"no (same as markdown-it; real files lose the BOM in .text())","target":"informational","pass":true},{"name":"300 KB paragraph: last keystroke → preview updated","value":"664 ms","target":"informational","pass":true},{"name":"300 KB paragraph shown as PLAIN raw markdown (spec maxHtmlChars=200000)","value":"yes","target":"spec-conformant, informational","pass":true}]}

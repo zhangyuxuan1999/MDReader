@@ -1,0 +1,59 @@
+[profile medium line 10203] view.dispatch per key: p50 9.6 p95 10.5 max 11.0 ms (n=40)
+[profile] total sampled 4562.9 ms over 40 keys → 114.1 ms/key of JS (incl. idle/gc nodes)
+[profile] top self-time functions (ms total / per key):
+     3950.0    98.8  (idle) @ :0
+      179.8     4.5  (program) @ :0
+       54.8     1.4  addActions @ nm/.vite/deps/dist-Del7J7N7.js:962
+       36.5     0.9  nextChild @ nm/.vite/deps/dist-C676Sjjn.js:659
+       30.3     0.8  getActions @ nm/.vite/deps/dist-Del7J7N7.js:891
+       19.1     0.5  readToken @ nm/.vite/deps/dist-Del7J7N7.js:758
+       13.4     0.3  (garbage collector) @ :0
+       13.4     0.3  advanceStack @ nm/.vite/deps/dist-Del7J7N7.js:1080
+       12.5     0.3  nextInner @ nm/.vite/deps/dist-1JlpyTd9.js:418
+       10.6     0.3  startInner @ nm/.vite/deps/dist-C676Sjjn.js:1649
+        9.6     0.2  sibling @ nm/.vite/deps/dist-C676Sjjn.js:1014
+        9.4     0.2  getGoto @ nm/.vite/deps/dist-Del7J7N7.js:1306
+        7.5     0.2  nodeSize @ nm/.vite/deps/dist-C676Sjjn.js:1344
+        7.0     0.2  enterChild @ nm/.vite/deps/dist-C676Sjjn.js:957
+        7.0     0.2  until @ nm/.vite/deps/@codemirror_language.js:305
+        6.9     0.2  divide @ nm/.vite/deps/dist-C676Sjjn.js:1365
+        6.1     0.2  hasNode @ nm/.vite/deps/dist-C676Sjjn.js:1773
+        5.5     0.1  moveTo @ nm/.vite/deps/dist-C676Sjjn.js:1766
+        5.2     0.1  hasNode @ nm/.vite/deps/dist-C676Sjjn.js:1795
+        5.1     0.1  advance @ nm/.vite/deps/dist-Del7J7N7.js:1000
+        5.1     0.1  copyToBuffer @ nm/.vite/deps/dist-C676Sjjn.js:1321
+        5.1     0.1  advance @ nm/.vite/deps/dist-C676Sjjn.js:1615
+        4.8     0.1  takeNode @ nm/.vite/deps/dist-C676Sjjn.js:1170
+        4.4     0.1  takeNodes @ nm/.vite/deps/@codemirror_lang-markdown.js:1547
+        4.2     0.1  Tree @ nm/.vite/deps/dist-C676Sjjn.js:319
+        3.9     0.1  checkSide @ nm/.vite/deps/dist-C676Sjjn.js:576
+        3.9     0.1  (anon) @ nm/.vite/deps/@codemirror_lang-markdown.js:1638
+        3.6     0.1  isLineVisible @ src/preview/createPreview.ts:737
+        3.4     0.1  enter @ nm/.vite/deps/dist-C676Sjjn.js:697
+        3.3     0.1  reuseFragment @ nm/.vite/deps/@codemirror_lang-markdown.js:672
+[profile] inclusive time by file (ms per key):
+    114.1  (native/(root))
+     98.8  (native/(idle))
+      9.8  nm/.vite/deps/dist-7Dsd9j37.js
+      9.3  (native/view.dispatch)
+      8.9  nm/.vite/deps/@codemirror_language.js
+      8.9  nm/.vite/deps/dist-1JlpyTd9.js
+      8.8  nm/.vite/deps/dist-C676Sjjn.js
+      4.6  nm/.vite/deps/dist-Del7J7N7.js
+      4.5  (native/(program))
+      1.6  nm/.vite/deps/@codemirror_lang-markdown.js
+      0.4  src/preview/createPreview.ts
+      0.3  (native/(garbage collector))
+      0.2  src/app/App.ts
+      0.2  src/preview/mountQueue.ts
+      0.2  nm/.vite/deps/dompurify.js
+      0.2  src/preview/sanitize.ts
+      0.2  src/app/workerClient.ts
+      0.1  src/editor/createEditor.ts
+      0.1  src/preview/scrollSync.ts
+      0.1  src/shared/bus.ts
+      0.1  nm/.vite/deps/dist-Da1NgLEV.js
+      0.1  (native/getBoundingClientRect)
+      0.0  src/app/statusbar.ts
+      0.0  (native/parseFromString)
+      0.0  (native/getClientRects)

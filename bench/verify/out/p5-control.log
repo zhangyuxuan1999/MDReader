@@ -1,0 +1,13 @@
+[control] monitor idle baseline (large.md, focused editor, no input): busy per 100 ms p50 0.0 p95 32.7 max 35.3 ms; gaps>2ms n=21
+
+[control small.md line 513 "这是一个用于性能测试的段落。Markdown 编辑器需要在大"] keys=40 dispatch n=40: p50 2.0 p95 3.1 max 4.7 ms (mean 1.9)
+[control small] Event Timing entries ≥16 ms: 168 → keydown: n=35 dur p50 16.0 max 24.0 (processing p50 0.2, input delay p50 0.1); keypress: n=35 dur p50 16.0 max 24.0 (processing p50 1.5, input delay p50 0.4); beforeinput: n=34 dur p50 16.0 max 24.0 (processing p50 0.0, input delay p50 0.0); input: n=32 dur p50 16.0 max 24.0 (processing p50 0.0, input delay p50 0.4); keyup: n=32 dur p50 16.0 max 32.0 (processing p50 0.0, input delay p50 0.2)
+[control small] long tasks: 0 (); LoAF: 0 ; mounts 40
+
+[control large.md line 50011 "行内公式 $E = mc^2$，块级公式："] keys=40 dispatch n=40: p50 11.8 p95 16.7 max 23.3 ms (mean 11.8)
+[control large] Event Timing entries ≥16 ms: 182 → keydown: n=37 dur p50 16.0 max 32.0 (processing p50 0.2, input delay p50 0.1); keypress: n=37 dur p50 16.0 max 32.0 (processing p50 0.9, input delay p50 0.2); beforeinput: n=37 dur p50 16.0 max 32.0 (processing p50 0.0, input delay p50 0.0); input: n=37 dur p50 16.0 max 32.0 (processing p50 0.0, input delay p50 0.2); keyup: n=34 dur p50 16.0 max 24.0 (processing p50 0.0, input delay p50 0.2)
+[control large] long tasks: 0 (); LoAF: 0 ; mounts 40
+
+[control huge.md line 170003 "这是一个用于性能测试的段落。Markdown 编辑器需要在大"] keys=40 dispatch n=40: p50 0.3 p95 0.5 max 0.5 ms (mean 0.3)
+[control huge] Event Timing entries ≥16 ms: 107 → keyup: n=21 dur p50 16.0 max 24.0 (processing p50 0.0, input delay p50 0.1); keydown: n=22 dur p50 16.0 max 24.0 (processing p50 0.1, input delay p50 0.0); keypress: n=22 dur p50 16.0 max 24.0 (processing p50 0.5, input delay p50 0.1); beforeinput: n=22 dur p50 16.0 max 24.0 (processing p50 0.0, input delay p50 0.0); input: n=20 dur p50 16.0 max 24.0 (processing p50 0.0, input delay p50 0.1)
+[control huge] long tasks: 0 (); LoAF: 0 ; mounts 60

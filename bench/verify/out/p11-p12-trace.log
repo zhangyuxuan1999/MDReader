@@ -1,0 +1,18 @@
+[P11 undo x50] steps 50: busy/step p50 26.5 p95 48.0 max 90.1 ms; longest task/step p50 6.8 p95 13.0 max 14.3 ms; view.dispatch p50 6.8 p95 12.9 max 14.1 (n=50); worst task: 14.3 ms [EventDispatch(keydown) 14.2]
+[P11 redo x50] steps 50: busy/step p50 36.0 p95 46.0 max 55.1 ms; longest task/step p50 10.9 p95 13.0 max 15.9 ms; view.dispatch p50 10.9 p95 12.6 max 15.6 (n=50); worst task: 15.9 ms [EventDispatch(keydown) 15.8]
+[P11] versions 51 → 101 (50 undo steps) → 151 (50 redo steps); line restored after undo: true; after redo: {"text":"E = mc^2E=mc2，块级公式：abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwx\n","stale":false,"line":"c^2$，块级公式：abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwx"}; long tasks (≥50 ms) during P11: none
+PASS  P11 undo steps executed: 50  (target 50)
+PASS  P11 redo steps executed: 50  (target 50)
+FAIL  P11 main-thread busy per undo/redo step p95 (trace RunTask sum): 48.0 ms (undo 48.0, redo 46.0, max 90.1)  (target < 5 ms)
+FAIL  P11 longest single task per step p95: 13.0 ms (max 15.9)  (target < 5 ms)
+FAIL  P11 view.dispatch per step p95: 12.9 ms (max 15.6)  (target < 5 ms)
+PASS  P11 preview reflects redo result (not stale): true stale=false  (target true)
+
+[P12 mode x20] final mode edit; per-switch longest task: 31,17,16,21,27,31,32,18,13,20,23,28,33,23,15,20,22,26,26,32; per-switch busy: 78,44,53,51,66,94,75,45,48,49,57,86,78,56,51,49,53,109,65,75
+[P12 mode x20] top tasks: 33.0 ms [EventDispatch(keydown) 32.9] | 33.0 ms [EventDispatch(keydown) 32.9] | 31.9 ms [EventDispatch(keydown) 31.9] | 31.9 ms [EventDispatch(keydown) 31.9]
+[P12 theme x20] final theme light; per-toggle longest task: 24,29,25,14,16,19,20,25,28,23,14,16,18,20,27,29,24,14,14,17; per-toggle busy: 63,75,63,37,40,46,78,65,70,58,36,40,45,71,67,73,63,36,36,43
+[P12 theme x20] top tasks: 29.5 ms [UpdateLayoutTree 29.5] | 29.5 ms [UpdateLayoutTree 29.5] | 29.5 ms [UpdateLayoutTree 29.4] | 29.4 ms [UpdateLayoutTree 29.4]
+[P12] longtask observer (≥50 ms) during P12: none; LoAF: none
+PASS  P12 mode switch x20 longest main-thread task (trace): 33.0 ms  (target < 50 ms)
+PASS  P12 theme toggle x20 longest main-thread task (trace): 29.5 ms  (target < 50 ms)
+PASS  P12 longtask entries (≥50 ms) during mode/theme cycling: 0  (target 0)

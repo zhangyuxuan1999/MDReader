@@ -1,0 +1,25 @@
+PASS  [50k-line fence] settles  — {"ok":true,"version":2}
+PASS  [50k-line fence] single block, mounted at top  — {"pending":false,"len":1400010,"blockH":1149140,"H":932,"blocks":1}
+OK    [50k-line fence] block height / viewport height (screens) = 1233.0 (target > 20 (eviction distance) for this test)
+PASS  [50k-line fence] block stays mounted while scrolled into its middle (6 s)  — {"samples":59,"mounted":59,"empty":0,"transitions":0,"htmlMsgsDelta":0,"first":{"t":0,"pending":false,"slow":false,"stale":false,"len":1400010,"scrollTop":574545,"H":932,"blockH":1149140,"html":2},"last":{"t":5970,"pending":false,"slow":false,"stale":false,"len":1400010,"scrollTop":573820,"H":932,"blockH":1147691,"html":2}}
+PASS  [50k-line fence] after one keystroke mid-block: content (re)mounted and stays  — {"samples":39,"mounted":39,"empty":0,"transitions":0,"htmlMsgsDelta":0,"first":{"t":0,"pending":false,"slow":true,"stale":true,"len":1400010,"scrollTop":573118,"H":932,"blockH":1147691,"html":3},"last":{"t":3945,"pending":false,"slow":false,"stale":false,"len":1400011,"scrollTop":573118,"H":932,"blockH":1147691,"html":3}}
+PASS  [30k-item list] settles  — {"ok":true,"version":4}
+PASS  [30k-item list] single block, mounted at top  — {"pending":false,"len":210000,"blockH":840100,"H":932,"blocks":1}
+OK    [30k-item list] block height / viewport height (screens) = 901.4 (target > 20 (eviction distance) for this test)
+PASS  [30k-item list] block stays mounted while scrolled into its middle (6 s)  — {"samples":59,"mounted":59,"empty":0,"transitions":0,"htmlMsgsDelta":0,"first":{"t":0,"pending":false,"slow":false,"stale":false,"len":210000,"scrollTop":420040,"H":932,"blockH":840100,"html":5},"last":{"t":5934,"pending":false,"slow":false,"stale":false,"len":210000,"scrollTop":420026,"H":932,"blockH":840072,"html":5}}
+PASS  [30k-item list] after one keystroke mid-block: content (re)mounted and stays  — {"samples":39,"mounted":39,"empty":0,"transitions":0,"htmlMsgsDelta":0,"first":{"t":0,"pending":false,"slow":false,"stale":false,"len":210001,"scrollTop":419597,"H":932,"blockH":840072,"html":6},"last":{"t":3900,"pending":false,"slow":false,"stale":false,"len":210001,"scrollTop":419597,"H":932,"blockH":840072,"html":6}}
+PASS  [20k-line paragraph (single block)] settles  — {"ok":true,"version":6}
+PASS  [20k-line paragraph (single block)] single block, mounted at top  — {"pending":false,"len":540000,"blockH":560240,"H":932,"blocks":1}
+OK    [20k-line paragraph (single block)] block height / viewport height (screens) = 601.1 (target > 20 (eviction distance) for this test)
+PASS  [20k-line paragraph (single block)] block stays mounted while scrolled into its middle (6 s)  — {"samples":59,"mounted":59,"empty":0,"transitions":0,"htmlMsgsDelta":0,"first":{"t":0,"pending":false,"slow":false,"stale":false,"len":540000,"scrollTop":280110,"H":932,"blockH":560240,"html":8},"last":{"t":5952,"pending":false,"slow":false,"stale":false,"len":540000,"scrollTop":280096,"H":932,"blockH":560212,"html":8}}
+PASS  [20k-line paragraph (single block)] after one keystroke mid-block: content (re)mounted and stays  — {"samples":39,"mounted":39,"empty":0,"transitions":0,"htmlMsgsDelta":0,"first":{"t":0,"pending":false,"slow":true,"stale":true,"len":540000,"scrollTop":279667,"H":932,"blockH":560212,"html":9},"last":{"t":3913,"pending":false,"slow":false,"stale":false,"len":540001,"scrollTop":279667,"H":932,"blockH":560212,"html":9}}
+PASS  no console errors  — []
+PASS  no page errors  — []
+PASS  no worker restart  — restarts=0
+
+=== s12 tall block eviction ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

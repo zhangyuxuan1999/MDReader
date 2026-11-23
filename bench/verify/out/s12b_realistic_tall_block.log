@@ -1,0 +1,20 @@
+PASS  doc settles  — {"ok":true,"version":2}
+PASS  fence middle line is code  — export const v999 = 999; // line 999
+OK    [2000-line fence] block height in screens = 49.5 (target informational)
+PASS  [2000-line fence] preview scrolled into its middle: block stays mounted for 4 s  — {"id":1472,"index":1471,"startLine":5002,"lineCount":2003,"samples":40,"mountedAt":102,"empty":0,"transitions":1,"screens":49.5,"first":{"t":0,"pending":true,"slow":false,"len":0,"scrollTop":165066,"blockH":46093,"H":932},"last":{"t":3996,"pending":false,"slow":false,"len":76671,"scrollTop":164429,"blockH":44819,"H":932}}
+PASS  [2000-line fence] after typing in its middle (editor-driven sync): block mounted at the end  — {"id":1472,"index":1471,"startLine":5002,"lineCount":2003,"samples":30,"mountedAt":0,"empty":0,"transitions":0,"screens":48.1,"first":{"t":0,"pending":false,"slow":false,"len":76672,"scrollTop":163745,"blockH":44819,"H":932},"last":{"t":2974,"pending":false,"slow":false,"len":76672,"scrollTop":163745,"blockH":44819,"H":932}}
+PASS  [2000-line fence] elements under the preview viewport are content (not the empty wrapper)  — ["CODE.","CODE.","CODE."]
+OK    [1500-line paragraph] block height in screens = 45.1 (target informational)
+PASS  [1500-line paragraph] preview scrolled into its middle: block stays mounted for 4 s  — {"id":3532,"index":3531,"startLine":14006,"lineCount":1501,"samples":39,"mountedAt":104,"empty":0,"transitions":1,"screens":45.1,"first":{"t":0,"pending":true,"slow":false,"len":0,"scrollTop":406579,"blockH":42028,"H":932},"last":{"t":3902,"pending":false,"slow":false,"len":76890,"scrollTop":403621,"blockH":36108,"H":932}}
+PASS  [1500-line paragraph] after typing in its middle (editor-driven sync): block mounted at the end  — {"id":3532,"index":3531,"startLine":14006,"lineCount":1501,"samples":30,"mountedAt":0,"empty":0,"transitions":0,"screens":38.7,"first":{"t":0,"pending":false,"slow":false,"len":76891,"scrollTop":402904,"blockH":36108,"H":932},"last":{"t":2979,"pending":false,"slow":false,"len":76891,"scrollTop":402904,"blockH":36108,"H":932}}
+PASS  [1500-line paragraph] elements under the preview viewport are content (not the empty wrapper)  — ["P.","P.","P."]
+PASS  no console errors  — []
+PASS  no page errors  — []
+PASS  no worker restart  — restarts=0
+
+=== s12b realistic tall block ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

@@ -1,0 +1,132 @@
+/* src/styles/tokens.css — colour / font tokens. Light is the default; [data-theme] switches palettes.
+   Nobody else defines colours as literals: every module uses var(--mdr-*) / var(--hl-*). */
+
+:root {
+  color-scheme: light;
+
+  --mdr-font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans CJK SC", sans-serif;
+  --mdr-font-mono: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, "PingFang SC", monospace;
+  --mdr-font-size: 15px;
+  --mdr-preview-font-size: 16px;
+  --mdr-line-height: 1.75;
+
+  /* slightly warm, high-contrast light palette */
+  --mdr-bg: #faf8f4;
+  --mdr-bg-elevated: #ffffff;
+  --mdr-bg-hover: #efebe3;
+  --mdr-fg: #1f2226;
+  --mdr-fg-muted: #6a6e75;
+  --mdr-border: #e1dcd2;
+  --mdr-accent: #c2500f;
+  --mdr-accent-text: #9c3f0c;
+  --mdr-accent-fg: #ffffff;
+  --mdr-selection: rgba(194, 80, 15, 0.18);
+  /* Focus line (CONTRACT §9): the line the user clicked / is selecting in either pane, and its mirror in
+     the other pane. Subtle on purpose — visible against --mdr-bg, never a highlight. The editor's own
+     caret-line background is the same token so both panes read as one. */
+  --mdr-focus-line: rgba(191, 87, 0, 0.09);
+  --mdr-active-line: var(--mdr-focus-line);
+  --mdr-code-bg: #f1eee7;
+  --mdr-code-fg: #383c43;
+  --mdr-quote-border: #d6cfc2;
+  --mdr-link: #0b5fbf;
+  --mdr-danger: #c2251d;
+  --mdr-danger-fg: #ffffff;
+  --mdr-shadow: 0 8px 24px rgba(40, 30, 10, 0.16), 0 1px 3px rgba(40, 30, 10, 0.1);
+
+  /* Every --hl-* token below reaches WCAG AA (>= 4.5:1) on --mdr-code-bg (#f1eee7); test/app.tokens.test.ts
+     enforces it. The old string/number/attr/addition values sat at 4.1-4.4:1 and comment at 2.77:1. */
+  --hl-keyword: #8a2ea0;
+  --hl-string: #2b752f;
+  --hl-number: #a05000;
+  /* WCAG AA on --mdr-code-bg (#f1eee7): 5.01:1. Comments in fenced code are the smallest, densest text
+     in the app — the previous #8b9098 measured 2.77:1, below even the 3:1 large-text floor. */
+  --hl-comment: #5f666f;
+  --hl-function: #2b5fd2;
+  --hl-type: #0b7285;
+  --hl-attr: #a05000;
+  --hl-tag: #b8321f;
+  --hl-variable: #a3391f;
+  --hl-literal: #0b7285;
+  --hl-title: #2b5fd2;
+  /* 4.90:1 on --mdr-code-bg; the muted --mdr-fg-muted (#6a6e75) it used to mirror is 4.42:1 there. */
+  --hl-meta: #63676e;
+  --hl-deletion: #c2251d;
+  --hl-addition: #26742f;
+  --hl-regexp: #2b752f;
+  --hl-symbol: #0b7285;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --mdr-bg: #15171a;
+  --mdr-bg-elevated: #1d2024;
+  --mdr-bg-hover: #282b31;
+  --mdr-fg: #e6e4df;
+  --mdr-fg-muted: #9a9ea6;
+  --mdr-border: #33373e;
+  --mdr-accent: #f09a55;
+  --mdr-accent-text: #f3b27a;
+  --mdr-accent-fg: #1b1206;
+  --mdr-selection: rgba(240, 154, 85, 0.26);
+  --mdr-focus-line: rgba(255, 190, 120, 0.11);
+  --mdr-active-line: var(--mdr-focus-line);
+  --mdr-code-bg: #1f2227;
+  --mdr-code-fg: #d6d3cd;
+  --mdr-quote-border: #474b53;
+  --mdr-link: #6fb3ff;
+  --mdr-danger: #ff6b66;
+  --mdr-danger-fg: #1b0907;
+  --mdr-shadow: 0 8px 24px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.4);
+
+  --hl-keyword: #c792ea;
+  --hl-string: #a5d68a;
+  --hl-number: #f5b26b;
+  /* WCAG AA on the dark --mdr-code-bg (#1f2227): 5.63:1 (was #7d838c = 4.18:1). */
+  --hl-comment: #949aa4;
+  --hl-function: #82aaff;
+  --hl-type: #5fd3e8;
+  --hl-attr: #f5b26b;
+  --hl-tag: #f07178;
+  --hl-variable: #ff9e80;
+  --hl-literal: #5fd3e8;
+  --hl-title: #82aaff;
+  --hl-meta: #9a9ea6;
+  --hl-deletion: #ff6b66;
+  --hl-addition: #8ce99a;
+  --hl-regexp: #a5d68a;
+  --hl-symbol: #5fd3e8;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--mdr-font-sans);
+  font-size: var(--mdr-font-size);
+  background: var(--mdr-bg);
+  color: var(--mdr-fg);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--mdr-selection);
+}

@@ -1,0 +1,28 @@
+PASS  initial settle large.md  — {"ok":true,"version":1}
+PASS  initial structure tiles  — {"blocks":30002,"docLines":102004,"sumLines":102004,"domBlocks":30002,"pending":29976,"stale":0,"errors":0,"kinds":{"0":9001,"1":6001,"2":3000,"3":3000,"4":3000,"5":3000,"7":3000},"problems":[]}
+PASS  editor empty after select-all + delete  — {"text":"","lines":1}
+PASS  settled after delete  — {"ok":true,"version":2}
+PASS  0 blocks after delete  — {"blocks":0,"docLines":1,"sumLines":0,"domBlocks":0,"pending":0,"stale":0,"errors":0,"kinds":{},"problems":[]}
+PASS  status bar shows zero stats after delete  — 行 1, 列 1字数 0字符 0约 0 分钟large.md · 未保存分栏渲染中 0%
+OK    select-all+delete: wall ms / long tasks (count/max) = 8 / 0/0 (target informational)
+PASS  undo restores exact original text  — len 2075291 vs 2075291
+PASS  settled after undo  — {"ok":true,"version":3}
+PASS  structure tiles after undo  — {"blocks":30002,"docLines":102004,"sumLines":102004,"domBlocks":11520,"pending":11494,"stale":0,"errors":0,"kinds":{"0":9001,"1":6001,"2":3000,"3":3000,"4":3000,"5":3000,"7":3000},"problems":[]}
+PASS  block count after undo equals initial  — 30002 vs 30002
+PASS  stats after undo equal initial  — {"stats0":"行 1, 列 1字数 693018字符 2075291约 2258 分钟large.md · 未命名分栏渲染中 0%","statsUndo":"行 102004, 列 1字数 693018字符 2075291约 2258 分钟large.md · 未保存分栏渲染中 0%"}
+OK    undo: wall ms / long tasks (count/max) = 36 / 2/100 (target informational)
+PASS  redo+undo still original
+OK    input latency p95 after undo cycle (ms) = 32.7 (target < 100)
+PASS  settled after typing  — {"ok":true,"version":28}
+PASS  structure tiles after typing  — {"blocks":30002,"docLines":102004,"sumLines":102004,"domBlocks":30002,"pending":29936,"stale":0,"errors":0,"kinds":{"0":9001,"1":6001,"2":3000,"3":3000,"4":3000,"5":3000,"7":3000},"problems":[]}
+PASS  preview shows typed text after undo cycle
+PASS  no console errors  — []
+PASS  no page errors  — []
+PASS  no worker restart  — restarts=0
+
+=== s03 select-all delete undo ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

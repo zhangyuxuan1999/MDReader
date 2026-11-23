@@ -1,0 +1,15 @@
+PASS  initial settle (preview mode)  — {"ok":true,"version":1}
+FAIL  silent death + 20 s of scrolling: app detected the dead worker (restart)  — {"workers":1,"restarts":0,"toasts":[],"elapsedMs":20121}
+FAIL  silent death + 20 s of scrolling: visible blocks rendered  — {"first":{"pending":10,"total":10},"now":{"pending":10,"total":10}}
+OK    status bar progress text while stuck = "渲染中 1%" (target informational)
+PASS  one keystroke → silence detector restarts the worker (≈10 s)  — {"workers":2,"restarts":1}
+PASS  after recovery: visible blocks rendered  — {"pending":0,"total":10}
+PASS  no console errors  — []
+PASS  no page errors  — []
+
+=== s07c silent death ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 1
+}

@@ -1,0 +1,179 @@
+PASS  [empty] settles (0 chars)  — {"ok":true,"version":2}
+OK    [empty] loadText main-thread ms / time to idle ms = 2 / 3 (target < 20000)
+PASS  [empty] structure tiles  — {"blocks":0,"docLines":1,"sumLines":0,"domBlocks":0,"pending":0,"stale":0,"errors":0,"kinds":{},"problems":[]}
+OK    [empty] long tasks count / max ms = 0/0 (target informational)
+PASS  [empty] no error toast  — []
+PASS  [empty] no .md-error blocks in view  — md-error=0
+OK    [empty] input latency p95 / max (ms) = 11.4 / 11.4 (target p95 < 100)
+OK    [empty] typing: wall ms, long tasks count / max = 9, 0/0 (target informational)
+PASS  [empty] settles after typing  — {"ok":true,"version":15}
+PASS  [empty] structure tiles after typing  — {"blocks":1,"docLines":1,"sumLines":1,"domBlocks":1,"pending":1,"stale":0,"errors":0,"kinds":{"0":1},"problems":[]}
+PASS  [empty] no console/page errors, no restart  — {"consoleErrors":[],"pageErrors":[],"restarts":0}
+PASS  [onlyNewline] settles (1 chars)  — {"ok":true,"version":16}
+OK    [onlyNewline] loadText main-thread ms / time to idle ms = 1 / 2 (target < 20000)
+PASS  [onlyNewline] structure tiles  — {"blocks":1,"docLines":2,"sumLines":2,"domBlocks":1,"pending":1,"stale":0,"errors":0,"kinds":{"0":1},"problems":[]}
+OK    [onlyNewline] long tasks count / max ms = 0/0 (target informational)
+PASS  [onlyNewline] no error toast  — []
+PASS  [onlyNewline] no .md-error blocks in view  — md-error=0
+OK    [onlyNewline] input latency p95 / max (ms) = 11.3 / 11.3 (target p95 < 100)
+OK    [onlyNewline] typing: wall ms, long tasks count / max = 6, 0/0 (target informational)
+PASS  [onlyNewline] settles after typing  — {"ok":true,"version":29}
+PASS  [onlyNewline] structure tiles after typing  — {"blocks":1,"docLines":2,"sumLines":2,"domBlocks":1,"pending":0,"stale":0,"errors":0,"kinds":{"0":1},"problems":[]}
+PASS  [onlyNewline] no console/page errors, no restart  — {"consoleErrors":[],"pageErrors":[],"restarts":0}
+PASS  [whitespace] settles (13 chars)  — {"ok":true,"version":30}
+OK    [whitespace] loadText main-thread ms / time to idle ms = 1 / 2 (target < 20000)
+PASS  [whitespace] structure tiles  — {"blocks":1,"docLines":5,"sumLines":5,"domBlocks":1,"pending":1,"stale":0,"errors":0,"kinds":{"0":1},"problems":[]}
+OK    [whitespace] long tasks count / max ms = 0/0 (target informational)
+PASS  [whitespace] no error toast  — []
+PASS  [whitespace] no .md-error blocks in view  — md-error=0
+OK    [whitespace] input latency p95 / max (ms) = 11.9 / 11.9 (target p95 < 100)
+OK    [whitespace] typing: wall ms, long tasks count / max = 5, 0/0 (target informational)
+PASS  [whitespace] settles after typing  — {"ok":true,"version":43}
+PASS  [whitespace] structure tiles after typing  — {"blocks":1,"docLines":5,"sumLines":5,"domBlocks":1,"pending":0,"stale":0,"errors":0,"kinds":{"0":1},"problems":[]}
+PASS  [whitespace] no console/page errors, no restart  — {"consoleErrors":[],"pageErrors":[],"restarts":0}
+PASS  [singleChar] settles (1 chars)  — {"ok":true,"version":44}
+OK    [singleChar] loadText main-thread ms / time to idle ms = 1 / 2 (target < 20000)
+PASS  [singleChar] structure tiles  — {"blocks":1,"docLines":1,"sumLines":1,"domBlocks":1,"pending":1,"stale":0,"errors":0,"kinds":{"0":1},"problems":[]}
+OK    [singleChar] long tasks count / max ms = 0/0 (target informational)
+PASS  [singleChar] no error toast  — []
+PASS  [singleChar] no .md-error blocks in view  — md-error=0
+OK    [singleChar] input latency p95 / max (ms) = 12.4 / 12.4 (target p95 < 100)
+OK    [singleChar] typing: wall ms, long tasks count / max = 4, 0/0 (target informational)
+PASS  [singleChar] settles after typing  — {"ok":true,"version":57}
+PASS  [singleChar] structure tiles after typing  — {"blocks":1,"docLines":1,"sumLines":1,"domBlocks":1,"pending":0,"stale":0,"errors":0,"kinds":{"0":1},"problems":[]}
+PASS  [singleChar] no console/page errors, no restart  — {"consoleErrors":[],"pageErrors":[],"restarts":0}
+PASS  [crlf] settles (41 chars)  — {"ok":true,"version":58}
+OK    [crlf] loadText main-thread ms / time to idle ms = 3 / 31 (target < 20000)
+PASS  [crlf] structure tiles  — {"blocks":3,"docLines":10,"sumLines":10,"domBlocks":3,"pending":2,"stale":0,"errors":0,"kinds":{"0":1,"1":1,"2":1},"problems":[]}
+OK    [crlf] long tasks count / max ms = 0/0 (target informational)
+PASS  [crlf] no error toast  — []
+PASS  [crlf] no .md-error blocks in view  — md-error=0
+OK    [crlf] input latency p95 / max (ms) = 15.3 / 15.3 (target p95 < 100)
+OK    [crlf] typing: wall ms, long tasks count / max = 7, 0/0 (target informational)
+PASS  [crlf] settles after typing  — {"ok":true,"version":71}
+PASS  [crlf] structure tiles after typing  — {"blocks":3,"docLines":10,"sumLines":10,"domBlocks":3,"pending":0,"stale":0,"errors":0,"kinds":{"0":2,"2":1},"problems":[]}
+PASS  [crlf] CRLF normalised in editor
+PASS  [crlf] no console/page errors, no restart  — {"consoleErrors":[],"pageErrors":[],"restarts":0}
+PASS  [emptyLines100k] settles (100000 chars)  — {"ok":true,"version":72}
+OK    [emptyLines100k] loadText main-thread ms / time to idle ms = 11 / 39 (target < 20000)
+PASS  [emptyLines100k] structure tiles  — {"blocks":1,"docLines":100001,"sumLines":100001,"domBlocks":1,"pending":0,"stale":0,"errors":0,"kinds":{"0":1},"problems":[]}
+OK    [emptyLines100k] long tasks count / max ms = 0/0 (target informational)
+PASS  [emptyLines100k] no error toast  — []
+PASS  [emptyLines100k] no .md-error blocks in view  — md-error=0
+OK    [emptyLines100k] input latency p95 / max (ms) = 17.7 / 17.7 (target p95 < 100)
+OK    [emptyLines100k] typing: wall ms, long tasks count / max = 43, 0/0 (target informational)
+PASS  [emptyLines100k] settles after typing  — {"ok":true,"version":85}
+PASS  [emptyLines100k] structure tiles after typing  — {"blocks":2,"docLines":100001,"sumLines":100001,"domBlocks":2,"pending":1,"stale":0,"errors":0,"kinds":{"0":2},"problems":[]}
+PASS  [emptyLines100k] no console/page errors, no restart  — {"consoleErrors":[],"pageErrors":[],"restarts":0}
+PASS  [headings50k] settles (913886 chars)  — {"ok":true,"version":86}
+OK    [headings50k] loadText main-thread ms / time to idle ms = 6 / 354 (target < 20000)
+PASS  [headings50k] structure tiles  — {"blocks":50000,"docLines":50001,"sumLines":50001,"domBlocks":43008,"pending":42959,"stale":0,"errors":0,"kinds":{"1":50000},"problems":[]}
+OK    [headings50k] long tasks count / max ms = 2/160 (target informational)
+PASS  [headings50k] no error toast  — []
+PASS  [headings50k] no .md-error blocks in view  — md-error=0
+OK    [headings50k] input latency p95 / max (ms) = 27.3 / 27.3 (target p95 < 100)
+OK    [headings50k] typing: wall ms, long tasks count / max = 257, 0/0 (target informational)
+PASS  [headings50k] settles after typing  — {"ok":true,"version":99}
+PASS  [headings50k] structure tiles after typing  — {"blocks":49999,"docLines":50001,"sumLines":50001,"domBlocks":49999,"pending":49920,"stale":0,"errors":0,"kinds":{"1":49999},"problems":[]}
+PASS  [headings50k] TOC has 49999 entries (probe un-headed one) and is collapsed  — {"items":49999,"collapsed":true,"expandBtn":true}
+PASS  [headings50k] no console/page errors, no restart  — {"consoleErrors":[],"pageErrors":[],"restarts":0}
+PASS  [fence50kLines] settles (1400010 chars)  — {"ok":true,"version":100}
+OK    [fence50kLines] loadText main-thread ms / time to idle ms = 58 / 105 (target < 20000)
+PASS  [fence50kLines] structure tiles  — {"blocks":1,"docLines":50003,"sumLines":50003,"domBlocks":1,"pending":1,"stale":0,"errors":0,"kinds":{"2":1},"problems":[]}
+OK    [fence50kLines] long tasks count / max ms = 0/0 (target informational)
+PASS  [fence50kLines] no error toast  — ["大文件：已关闭语法高亮以保持流畅×"]
+PASS  [fence50kLines] no .md-error blocks in view  — md-error=0
+OK    [fence50kLines] input latency p95 / max (ms) = 16.4 / 16.4 (target p95 < 100)
+OK    [fence50kLines] typing: wall ms, long tasks count / max = 31, 0/0 (target informational)
+PASS  [fence50kLines] settles after typing  — {"ok":true,"version":113}
+PASS  [fence50kLines] structure tiles after typing  — {"blocks":1,"docLines":50003,"sumLines":50003,"domBlocks":1,"pending":1,"stale":0,"errors":0,"kinds":{"2":1},"problems":[]}
+PASS  [fence50kLines] 50k-line fence mounted as PLAIN block  — {"cls":"md-block","plain":true,"slow":false,"pending":false,"len":1400023}
+PASS  [fence50kLines] no console/page errors, no restart  — {"consoleErrors":[],"pageErrors":[],"restarts":0}
+PASS  [nested50] settles (2990 chars)  — {"ok":true,"version":114}
+OK    [nested50] loadText main-thread ms / time to idle ms = 8 / 44 (target < 20000)
+PASS  [nested50] structure tiles  — {"blocks":1,"docLines":51,"sumLines":51,"domBlocks":1,"pending":0,"stale":0,"errors":0,"kinds":{"4":1},"problems":[]}
+OK    [nested50] long tasks count / max ms = 0/0 (target informational)
+PASS  [nested50] no error toast  — ["大文件：已关闭语法高亮以保持流畅×"]
+PASS  [nested50] no .md-error blocks in view  — md-error=0
+OK    [nested50] input latency p95 / max (ms) = 14.6 / 14.6 (target p95 < 100)
+OK    [nested50] typing: wall ms, long tasks count / max = 22, 0/0 (target informational)
+PASS  [nested50] settles after typing  — {"ok":true,"version":127}
+PASS  [nested50] structure tiles after typing  — {"blocks":1,"docLines":51,"sumLines":51,"domBlocks":1,"pending":0,"stale":0,"errors":0,"kinds":{"4":1},"problems":[]}
+PASS  [nested50] no console/page errors, no restart  — {"consoleErrors":[],"pageErrors":[],"restarts":0}
+PASS  [longLine1MB] settles (1000003 chars)  — {"ok":true,"version":128}
+OK    [longLine1MB] loadText main-thread ms / time to idle ms = 123 / 124 (target < 20000)
+PASS  [longLine1MB] structure tiles  — {"blocks":1,"docLines":1,"sumLines":1,"domBlocks":1,"pending":1,"stale":0,"errors":0,"kinds":{"0":1},"problems":[]}
+OK    [longLine1MB] long tasks count / max ms = 0/0 (target informational)
+PASS  [longLine1MB] no error toast  — ["大文件：已关闭语法高亮以保持流畅×"]
+PASS  [longLine1MB] no .md-error blocks in view  — md-error=0
+OK    [longLine1MB] input latency p95 / max (ms) = 85.5 / 85.5 (target p95 < 100)
+OK    [longLine1MB] typing: wall ms, long tasks count / max = 1066, 13/85 (target informational)
+PASS  [longLine1MB] settles after typing  — {"ok":true,"version":141}
+PASS  [longLine1MB] structure tiles after typing  — {"blocks":1,"docLines":1,"sumLines":1,"domBlocks":1,"pending":1,"stale":0,"errors":0,"kinds":{"0":1},"problems":[]}
+PASS  [longLine1MB] no console/page errors, no restart  — {"consoleErrors":[],"pageErrors":[],"restarts":0}
+PASS  [longLine1MBNoSpaces] settles (1000000 chars)  — {"ok":true,"version":142}
+OK    [longLine1MBNoSpaces] loadText main-thread ms / time to idle ms = 122 / 123 (target < 20000)
+PASS  [longLine1MBNoSpaces] structure tiles  — {"blocks":1,"docLines":1,"sumLines":1,"domBlocks":1,"pending":1,"stale":0,"errors":0,"kinds":{"0":1},"problems":[]}
+OK    [longLine1MBNoSpaces] long tasks count / max ms = 1/56 (target informational)
+PASS  [longLine1MBNoSpaces] no error toast  — ["大文件：已关闭语法高亮以保持流畅×"]
+PASS  [longLine1MBNoSpaces] no .md-error blocks in view  — md-error=0
+OK    [longLine1MBNoSpaces] input latency p95 / max (ms) = 74.3 / 74.3 (target p95 < 100)
+OK    [longLine1MBNoSpaces] typing: wall ms, long tasks count / max = 955, 14/74 (target informational)
+PASS  [longLine1MBNoSpaces] settles after typing  — {"ok":true,"version":155}
+PASS  [longLine1MBNoSpaces] structure tiles after typing  — {"blocks":1,"docLines":1,"sumLines":1,"domBlocks":1,"pending":1,"stale":0,"errors":0,"kinds":{"0":1},"problems":[]}
+PASS  [longLine1MBNoSpaces] no console/page errors, no restart  — {"consoleErrors":[],"pageErrors":[],"restarts":0}
+PASS  [garbage] settles (20056 chars)  — {"ok":true,"version":156}
+OK    [garbage] loadText main-thread ms / time to idle ms = 29 / 64 (target < 20000)
+PASS  [garbage] structure tiles  — {"blocks":2,"docLines":160,"sumLines":160,"domBlocks":2,"pending":1,"stale":0,"errors":0,"kinds":{"0":1,"1":1},"problems":[]}
+OK    [garbage] long tasks count / max ms = 0/0 (target informational)
+PASS  [garbage] no error toast  — []
+PASS  [garbage] no .md-error blocks in view  — md-error=0
+OK    [garbage] input latency p95 / max (ms) = 15.9 / 15.9 (target p95 < 100)
+OK    [garbage] typing: wall ms, long tasks count / max = 25, 0/0 (target informational)
+PASS  [garbage] settles after typing  — {"ok":true,"version":169}
+PASS  [garbage] structure tiles after typing  — {"blocks":2,"docLines":160,"sumLines":160,"domBlocks":2,"pending":0,"stale":0,"errors":0,"kinds":{"0":1,"1":1},"problems":[]}
+PASS  [garbage] no console/page errors, no restart  — {"consoleErrors":[],"pageErrors":[],"restarts":0}
+PASS  [rtl] settles (177 chars)  — {"ok":true,"version":170}
+OK    [rtl] loadText main-thread ms / time to idle ms = 8 / 39 (target < 20000)
+PASS  [rtl] structure tiles  — {"blocks":5,"docLines":11,"sumLines":11,"domBlocks":5,"pending":4,"stale":0,"errors":0,"kinds":{"0":3,"1":1,"4":1},"problems":[]}
+OK    [rtl] long tasks count / max ms = 0/0 (target informational)
+PASS  [rtl] no error toast  — []
+PASS  [rtl] no .md-error blocks in view  — md-error=0
+OK    [rtl] input latency p95 / max (ms) = 16.8 / 16.8 (target p95 < 100)
+OK    [rtl] typing: wall ms, long tasks count / max = 7, 0/0 (target informational)
+PASS  [rtl] settles after typing  — {"ok":true,"version":183}
+PASS  [rtl] structure tiles after typing  — {"blocks":5,"docLines":11,"sumLines":11,"domBlocks":5,"pending":0,"stale":0,"errors":0,"kinds":{"0":3,"1":1,"4":1},"problems":[]}
+PASS  [rtl] no console/page errors, no restart  — {"consoleErrors":[],"pageErrors":[],"restarts":0}
+PASS  [emoji] settles (18401 chars)  — {"ok":true,"version":184}
+OK    [emoji] loadText main-thread ms / time to idle ms = 3 / 33 (target < 20000)
+PASS  [emoji] structure tiles  — {"blocks":201,"docLines":402,"sumLines":402,"domBlocks":201,"pending":159,"stale":0,"errors":0,"kinds":{"0":200,"1":1},"problems":[]}
+OK    [emoji] long tasks count / max ms = 0/0 (target informational)
+PASS  [emoji] no error toast  — []
+PASS  [emoji] no .md-error blocks in view  — md-error=0
+OK    [emoji] input latency p95 / max (ms) = 13.4 / 13.4 (target p95 < 100)
+OK    [emoji] typing: wall ms, long tasks count / max = 7, 0/0 (target informational)
+PASS  [emoji] settles after typing  — {"ok":true,"version":197}
+PASS  [emoji] structure tiles after typing  — {"blocks":201,"docLines":402,"sumLines":402,"domBlocks":201,"pending":159,"stale":0,"errors":0,"kinds":{"0":200,"1":1},"problems":[]}
+PASS  [emoji] statusbar has stats  — 行 3, 列 14字数 1602字符 18414约 9 分钟emoji.md · 未保存分栏渲染中 1%
+PASS  [emoji] no console/page errors, no restart  — {"consoleErrors":[],"pageErrors":[],"restarts":0}
+PASS  [unclosedFenceTop] settles (100004 chars)  — {"ok":true,"version":198}
+OK    [unclosedFenceTop] loadText main-thread ms / time to idle ms = 4 / 37 (target < 20000)
+PASS  [unclosedFenceTop] structure tiles  — {"blocks":1,"docLines":35002,"sumLines":35002,"domBlocks":1,"pending":0,"stale":0,"errors":0,"kinds":{"2":1},"problems":[]}
+OK    [unclosedFenceTop] long tasks count / max ms = 0/0 (target informational)
+PASS  [unclosedFenceTop] no error toast  — []
+PASS  [unclosedFenceTop] no .md-error blocks in view  — md-error=0
+OK    [unclosedFenceTop] input latency p95 / max (ms) = 24.8 / 24.8 (target p95 < 100)
+OK    [unclosedFenceTop] typing: wall ms, long tasks count / max = 4, 0/0 (target informational)
+PASS  [unclosedFenceTop] settles after typing  — {"ok":true,"version":200}
+PASS  [unclosedFenceTop] structure tiles after typing  — {"blocks":1,"docLines":35002,"sumLines":35002,"domBlocks":1,"pending":0,"stale":0,"errors":0,"kinds":{"2":1},"problems":[]}
+OK    [unclosedFenceTop] closing the fence: input latency max (ms) = 25.2 (target < 100)
+PASS  [unclosedFenceTop] settles after closing fence  — {"ok":true,"version":204}
+PASS  [unclosedFenceTop] closing fence at EOF → one closed code block, tiles  — {"blocks":1,"docLines":35003,"sumLines":35003,"domBlocks":1,"pending":0,"stale":0,"errors":0,"kinds":{"2":1},"problems":[]}
+PASS  [unclosedFenceTop] no console/page errors, no restart  — {"consoleErrors":[],"pageErrors":[],"restarts":0}
+
+=== s09 edge docs ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

@@ -1,0 +1,21 @@
+MEAS  [export] export: small doc time: 8 ms (target informational)
+offline export: {"hs":[{"tag":"H1","id":"export-title","text":"Export Title"},{"tag":"H2","id":"section-a","text":"Section A"},{"tag":"H2","id":"section-a-1","text":"Section A"},{"tag":"H3","id":"中文-节","text":"中文 节"}],"kwColor":"rgb(138, 46, 160)","codeColor":"rgb(56, 60, 67)","bodyBg":"rgb(250, 248, 244)","bodyColor":"rgb(31, 34, 38)","lang":"zh-CN","theme":"light","title":"deep","charset":true,"styles":1,"checkbox":2,"table":true,"details":true,"detailsCollapsed":true,"ref":"ref","pwn":null,"pwn2":null,"scripts":0,"external":0,"detailsDebug":{"open":false,"pInDetails":true,"pDisplay":"block","pH":28,"summaryDisplay":"list-item","detailsH":28},"fontFaces":0,"h1Font":"30.4px","pFont":"16px","tableBorder":"1px"}
+PASS  [export] export offline: standalone, ids, highlighted with colours, tasks/table/details, sanitised  — 16978 bytes, deep.html
+PASS  [export] export: <details> nested and collapsed
+PASS  [export] export: exported body == live preview (semantic)  — 100 lines
+offline math export: {"katex":3,"mathml":0,"visibleMathml":0,"dup":1,"display":true,"frac":true,"currency":true,"text":"M Inline E=mc 2 and α. ∫ 0 1 ​ xdx= 2 1 ​ $5 and $10 stay text.","katexFont":"KaTeX_Main, \"Times New Roman\", serif"}
+PASS  [export] export: 3 KaTeX formulas + display block, currency untouched
+PASS  [export] export: formulas shown once offline
+dark export: {"theme":"dark","bg":"rgb(21, 23, 26)","fg":"rgb(230, 228, 223)","kw":"rgb(199, 146, 234)"}
+PASS  [export] export: dark theme exported as dark  — {"theme":"dark","bg":"rgb(21, 23, 26)","fg":"rgb(230, 228, 223)","kw":"rgb(199, 146, 234)"}
+MEAS  [export] export large.md (3 MB): command → download: 1417 ms (target informational (no spec target))
+MEAS  [export] export large.md: main-thread long tasks during export: 1 (max 962 ms) (target informational)
+MEAS  [export] export large.md: output size: 17.4 MB (target informational)
+large export: {"headings":6001,"srcHeadings":6001,"codes":3000,"hljsSpans":33000,"scripts":0,"uniqueIds":6001,"longTasks":[{"start":2532,"dur":962}]}
+PASS  [export] export large.md: all headings with unique ids, code highlighted, no scripts  — 6001 headings, 3000 code blocks
+MEAS  [export] after large export: two rAFs: 20 ms (target < 100 ms)
+PASS  [export] no page errors
+PASS  [export] no console errors
+
+[export] 9 pass, 0 fail, 5 measurements
+__RESULT__{"findings":[],"measurements":[{"name":"export: small doc time","value":"8 ms","target":"informational","pass":true},{"name":"export large.md (3 MB): command → download","value":"1417 ms","target":"informational (no spec target)","pass":true},{"name":"export large.md: main-thread long tasks during export","value":"1 (max 962 ms)","target":"informational","pass":true},{"name":"export large.md: output size","value":"17.4 MB","target":"informational","pass":true},{"name":"after large export: two rAFs","value":"20 ms","target":"< 100 ms","pass":true}]}

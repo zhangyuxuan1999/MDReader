@@ -1,0 +1,34 @@
+PASS  [indexedDB undefined] app loads and settles  — {"ok":true,"version":1}
+PASS  [indexedDB undefined] structure tiles  — {"blocks":302,"docLines":1024,"sumLines":1024,"domBlocks":302,"pending":276,"stale":0,"errors":0,"kinds":{"0":91,"1":61,"2":30,"3":30,"4":30,"5":30,"7":30},"problems":[]}
+OK    [indexedDB undefined] input latency p95 (ms) = 14.5 (target < 100)
+PASS  [indexedDB undefined] settles after typing  — {"ok":true,"version":15}
+PASS  [indexedDB undefined] recent menu opens (no crash)  — 打开文件…暂无最近文件
+PASS  [indexedDB undefined] loadText works  — {"ok":true,"version":16}
+PASS  [indexedDB undefined] no error toasts  — []
+PASS  [indexedDB undefined] no console errors  — []
+PASS  [indexedDB undefined] no page errors  — []
+PASS  [indexedDB undefined] no worker restart  — restarts=0
+
+=== s08 indexedDB undefined ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}
+PASS  [indexedDB.open throws] app loads and settles  — {"ok":true,"version":1}
+PASS  [indexedDB.open throws] structure tiles  — {"blocks":302,"docLines":1024,"sumLines":1024,"domBlocks":302,"pending":276,"stale":0,"errors":0,"kinds":{"0":91,"1":61,"2":30,"3":30,"4":30,"5":30,"7":30},"problems":[]}
+OK    [indexedDB.open throws] input latency p95 (ms) = 16.1 (target < 100)
+PASS  [indexedDB.open throws] settles after typing  — {"ok":true,"version":15}
+PASS  [indexedDB.open throws] recent menu opens (no crash)  — 打开文件…暂无最近文件
+PASS  [indexedDB.open throws] loadText works  — {"ok":true,"version":16}
+PASS  [indexedDB.open throws] no error toasts  — []
+PASS  [indexedDB.open throws] no console errors  — []
+PASS  [indexedDB.open throws] no page errors  — []
+PASS  [indexedDB.open throws] no worker restart  — restarts=0
+
+=== s08 indexedDB.open throws ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

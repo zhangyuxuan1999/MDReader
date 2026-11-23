@@ -1,0 +1,202 @@
+PASS  Backspace after list marker removes the marker (no leftover indentation)  — 1st Backspace → "乙", 2nd → "- [ ] "
+PASS  Backspace right after "- " on a list item: what remains  — "乙" then "- [ ] "
+PASS  Backspace on empty task item leaves an empty line (not invisible spaces)  — 1st → "" (len 0), 2nd → "" (len 0)
+PASS  Backspace on an empty task item "- [ ] "  — "" then ""
+PASS  Mod-f with focus in the preview pane opens the editor search panel (SPEC §13)
+PASS  Mod-o opens a file chooser (legacy backend) and setInputFiles loads the file
+PASS  Recent-files menu (legacy): opens on click with 打开文件… and lists entries  — 打开文件… | 暂无最近文件
+PASS  Palette → 全部渲染 mounts every block  — mounted 26 → 6002 of 6002
+PASS  TOC item #3 heading visible at top after click (offset within [-4, 80] px)  — {"found":true,"off":0,"blockOff":0,"pvLine":38,"target":39,"pending":false}
+PASS  TOC item #8 heading visible at top after click (offset within [-4, 80] px)  — {"found":true,"off":0.2,"blockOff":0.2,"pvLine":110,"target":111,"pending":false}
+PASS  TOC item #12 heading visible at top after click (offset within [-4, 80] px)  — {"found":true,"off":0.3,"blockOff":0.3,"pvLine":178,"target":179,"pending":false}
+PASS  TOC item #20 heading visible at top after click (offset within [-4, 80] px)  — {"found":true,"off":-0.4,"blockOff":-0.4,"pvLine":315,"target":315,"pending":false}
+PASS  TOC item #33 heading visible at top after click (offset within [-4, 80] px)  — {"found":true,"off":-0.3,"blockOff":-0.3,"pvLine":549,"target":549,"pending":false}
+PASS  TOC item #50 heading visible at top after click (offset within [-4, 80] px)  — {"found":true,"off":0,"blockOff":0,"pvLine":824,"target":825,"pending":false}
+PASS  TOC click lands the heading at the preview top (offset measured for 6 items)  — #3 L39: {"found":true,"off":0,"blockOff":0,"pvLine":38,"target":39,"pending":false}
+    #8 L111: {"found":true,"off":0.2,"blockOff":0.2,"pvLine":110,"target":111,"pending":false}
+    #12 L179: {"found":true,"off":0.3,"blockOff":0.3,"pvLine":178,"target":179,"pending":false}
+    #20 L315: {"found":true,"off":-0.4,"blockOff":-0.4,"pvLine":315,"target":315,"pending":false}
+    #33 L549: {"found":true,"off":-0.3,"blockOff":-0.3,"pvLine":549,"target":549,"pending":false}
+    #50 L825: {"found":true,"off":0,"blockOff":0,"pvLine":824,"target":825,"pending":false}
+MEASURE progress indicator max % before idle (large.md) = 1 (target ≈100 (monotone 0→100)) FAIL
+PASS  Progress indicator reaches a meaningful percentage while large.md renders  — render→idle 1537 ms; 4 updates: 渲染中 0% 渲染中 1%
+PASS  CJK #anchor links (href percent-encoded by markdown-it) resolve in both panes  — hrefs #%E7%AC%AC%E4%BA%8C%E8%8A%82 #%E4%B8%AD%E6%96%87-%E6%A0%87%E9%A2%98
+PASS  Enter in the dirty-guard dialog does NOT discard the document (default should be 取消)  — focused button "取消", after Enter text = "# 顶
+
+[去 第二节](#第二节) · [去 中文 标题](#中文-标题)
+
+段 0
+
+段 1
+
+段 2
+
+段 3
+
+段 4
+
+段 5
+
+段 6
+
+段 7
+
+段 8
+
+段 9
+
+段 10
+
+段 11
+
+段 12
+
+段 13
+
+段 14
+
+段 15
+
+段 16
+
+段 17
+
+段 18
+
+段 19
+
+段 20
+
+段 21
+
+段 22
+
+段 23
+
+段 24
+
+段 25
+
+段 26
+
+段 27
+
+段 28
+
+段 29
+
+段 30
+
+段 31
+
+段 32
+
+段 33
+
+段 34
+
+段 35
+
+段 36
+
+段 37
+
+段 38
+
+段 39
+
+段 40
+
+段 41
+
+段 42
+
+段 43
+
+段 44
+
+段 45
+
+段 46
+
+段 47
+
+段 48
+
+段 49
+
+段 50
+
+段 51
+
+段 52
+
+段 53
+
+段 54
+
+段 55
+
+段 56
+
+段 57
+
+段 58
+
+段 59
+
+段 60
+
+段 61
+
+段 62
+
+段 63
+
+段 64
+
+段 65
+
+段 66
+
+段 67
+
+段 68
+
+段 69
+
+段 70
+
+段 71
+
+段 72
+
+段 73
+
+段 74
+
+段 75
+
+段 76重要内容
+
+段 77
+
+段 78
+
+段 79
+
+## 第二节
+
+x
+
+## 中文 标题
+
+y
+"
+PASS  Dirty-guard dialog: pressing Enter immediately
+MEASURE editor→preview block error max (1 s settle, 20 pos) = 0 (target ≤ 1 (P10)) PASS
+MEASURE editor→preview line error max (1 s settle, 20 pos) = 0 (target informational) PASS
+PASS  Editor→preview sync: 20 positions, 1 s settle, block error  — 13368/13368(0) 6228/6228(0) 12858/12858(0) 20236/20236(0) 13787/13787(0) 13653/13653(0) 3535/3535(0) 17890/17890(0) 14313/14313(0) 16741/16741(0) 14951/14951(0) 6840/6840(0) 16020/16020(0) 3901/3901(0) 11747/11747(0) 4728/4728(0) 4222/4222(0) 15843/15843(0) 17504/17504(0) 16942/16942(0)
+
+[07-extra] 22 passed, 1 failed
+[07-extra] no console/page errors

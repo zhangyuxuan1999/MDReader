@@ -1,0 +1,33 @@
+PASS  [interact] task toggle: line 3  — - [ ] top unchecked → - [x] top unchecked
+PASS  [interact] task toggle: line 4  — - [x] top checked → - [ ] top checked
+PASS  [interact] task toggle: line 5  — - [ ] nested unchecked → - [x] nested unchecked
+PASS  [interact] task toggle: line 7  — 1. [ ] ordered task → 1. [x] ordered task
+PASS  [interact] task toggle: line 9  — > - [ ] task in quote → > - [x] task in quote
+PASS  [interact] task toggle: line 11  — - [ ] loose one → - [x] loose one
+PASS  [interact] task toggle: line 13  — - [x] loose two → - [ ] loose two
+PASS  [interact] task toggle: line 15  — * [ ] star task → * [x] star task
+PASS  [interact] task toggle: line 16  — + [ ] plus task → + [x] plus task
+PASS  [interact] task toggle: line 18  — - [ ] **bold** task with `code` and [link](https://x.y) → - [x] **bold** task with `code` and [link](https://x.y)
+PASS  [interact] task toggle: round trip back to unchecked
+PASS  [interact] task toggle: undo restores previous state
+PASS  [interact] refs: definition far away resolves
+PASS  [interact] refs: case-insensitive label match
+PASS  [interact] refs: undefined ref renders as text
+PASS  [interact] refs: editing the definition updates a link in the viewport  — 21 ms
+MEAS  [interact] ref-def edit → viewport link updated: 21 ms (target < 1000 ms (eventually))
+PASS  [interact] refs: blocks scrolled into view later use the new definition
+PASS  [interact] refs: all blocks after mountAll use the new definition  — {"https://example.org/far-v2":401}
+PASS  [interact] refs: definition added later resolves an earlier link (after scrolling it into view)  — 70 ms after scroll
+PASS  [interact] refs: deleting the definition reverts links in the viewport to text  — 64 ms; {"visible":22,"visibleStale":0,"visibleWithOldAnchor":0,"totalStale":0,"totalOldAnchors":0,"sample":"<p data-l=\"0\">Filler paragraph 197 with [far][fardef] usage.</p>\n"}
+PASS  [interact] refs: after mountAll no block still uses the deleted definition
+export: external refs [] inline scripts [] on* attrs [] size 45395 name export-me.html
+PASS  [interact] export: standalone document has all headings (deduped ids), highlighted code, refs, math, tasks, table  — 45395 bytes
+PASS  [interact] export: no external resources
+PASS  [interact] export: no script / on* attributes
+PASS  [interact] export: file name export-me.html
+PASS  [interact] export: empty document exports
+PASS  [interact] no page errors
+PASS  [interact] no console errors
+
+[interact] 28 pass, 0 fail, 1 measurements
+__RESULT__{"findings":[],"measurements":[{"name":"ref-def edit → viewport link updated","value":"21 ms","target":"< 1000 ms (eventually)","pass":true}]}

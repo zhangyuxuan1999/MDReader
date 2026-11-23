@@ -1,0 +1,21 @@
+OK    6× throttle: open huge.md → first structure (ms) = 1945 (target < 10000 (silence limit))
+PASS  6× throttle: huge.md settles  — {"ok":true,"version":1}
+PASS  6× throttle: no spurious restart on open  — {"restarts":0,"warnings":[]}
+OK    6× throttle: 6 MB paste → structure (ms) = 1608 (target < 10000 (silence limit))
+PASS  6× throttle: settles after paste  — {"ok":true,"version":2}
+PASS  6× throttle: no spurious restart on paste  — {"restarts":0,"warnings":["Measure loop restarted more than 5 times"]}
+PASS  structure tiles after throttled paste  — {"blocks":422643,"docLines":1227264,"sumLines":1227264,"domBlocks":7720,"pending":7674,"stale":0,"errors":0,"kinds":{"0":110661,"1":100661,"2":90660,"3":10000,"4":90661,"5":10000,"7":10000},"problems":[]}
+OK    6× throttle: undo of 13 MB delete → structure (ms) = 1831 (target < 10000 (silence limit))
+PASS  6× throttle: settles after undo  — {"ok":true,"version":4}
+PASS  6× throttle: no spurious restart on undo  — {"restarts":0,"warnings":["Measure loop restarted more than 5 times"]}
+PASS  structure tiles after throttled undo  — {"blocks":422643,"docLines":1227264,"sumLines":1227264,"domBlocks":6400,"pending":6374,"stale":0,"errors":0,"kinds":{"0":110661,"1":100661,"2":90660,"3":10000,"4":90661,"5":10000,"7":10000},"problems":[]}
+PASS  no restart / give-up toasts  — []
+PASS  no console errors  — []
+PASS  no page errors  — []
+
+=== s20 throttled silence ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

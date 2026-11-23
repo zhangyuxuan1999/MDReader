@@ -1,0 +1,45 @@
+{"t":397,"len":410483,"v":2,"blocks":6002,"dom":6002,"structure":2,"idle":2,"load":"scheduled","file":"medium.md · 未命名"}
+{"t":552,"len":410512,"v":31,"blocks":6002,"dom":6002,"structure":2,"idle":2,"load":"scheduled","file":"medium.md · 未保存"}
+{"t":706,"len":410547,"v":66,"blocks":6002,"dom":6002,"structure":2,"idle":2,"load":"scheduled","file":"medium.md · 未保存"}
+{"t":868,"len":2075293,"v":104,"blocks":6002,"dom":6002,"structure":2,"idle":2,"load":"called len=410582 v=101","file":"large-mid-burst.md · 未保存"}
+{"t":1020,"len":2075586,"v":397,"blocks":6002,"dom":6002,"structure":2,"idle":2,"load":"called len=410582 v=101","file":"large-mid-burst.md · 未保存"}
+{"t":1174,"len":2075612,"v":423,"blocks":30002,"dom":25856,"structure":423,"idle":101,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 未保存"}
+{"t":1327,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 未保存"}
+{"t":1482,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 未保存"}
+{"t":1635,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 未保存"}
+{"t":1789,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 未保存"}
+{"t":1945,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 未保存"}
+{"t":2100,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+{"t":2257,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+{"t":2418,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+{"t":2577,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+{"t":2737,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+{"t":2896,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+{"t":3058,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+{"t":3217,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+{"t":3372,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+{"t":3529,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+{"t":3683,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+{"t":3840,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+{"t":3995,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+{"t":4152,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+{"t":4308,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+{"t":4463,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+{"t":4618,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+{"t":4774,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+{"t":4930,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+FINAL {"t":6590,"len":2075612,"v":423,"blocks":30002,"dom":30002,"structure":423,"idle":423,"load":"called len=410582 v=101 → resolved len=2075612 v=423","file":"large-mid-burst.md · 草稿已存"}
+toasts []
+PASS  loadText resolved  — called len=410582 v=101 → resolved len=2075612 v=423
+PASS  editor holds large.md (+ keystrokes typed after the load)  — {"len":2075612,"large":2075291,"medium":410483}
+PASS  model block count == DOM wrapper count  — {"blocks":30002,"docLines":102004,"sumLines":102004,"domBlocks":30002,"pending":29976,"stale":0,"errors":0,"kinds":{"0":9002,"1":6000,"2":3000,"3":3000,"4":3000,"5":3000,"7":3000},"problems":[]}
+PASS  after mountAll: DOM wrappers == model blocks and none empty  — {"blocks":30002,"dom":30002,"empty":0}
+PASS  no console errors  — []
+PASS  no page errors  — []
+
+=== s18b load mid burst ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

@@ -1,0 +1,73 @@
+FAIL  [render3] fresh: list directly after heading, items separated by blank line: preview ≠ markdown-it
+      {"text":"# Title\n- a\n\n- b\n","diffAt":5,"expected":"  #Title\n</h1>\n<ul>\n  <li>\n    <p>\n      #a\n    </p>\n  </li>\n  <li>","actual":"  #Title\n</h1>\n<ul>\n  <li>\n    #a\n  </li>\n</ul>\n<ul>\n  <li>","expectedLines":15,"actualLines":13}
+--- list directly after heading, items separated by blank line
+source: "# Title\n- a\n\n- b\n"
+expected(markdown-it): "<h1>Title</h1>\n<ul>\n<li>\n<p>a</p>\n</li>\n<li>\n<p>b</p>\n</li>\n</ul>\n"
+actual(preview):       "<h1 data-l=\"0\">Title</h1>\n<ul>\n<li data-l=\"1\">a</li>\n</ul>\n\n<ul>\n<li data-l=\"0\">b</li>\n</ul>\n"
+FAIL  [render3] fresh: ordered list directly after paragraph, items separated by blank lines: preview ≠ markdown-it
+      {"text":"Steps:\n1. one\n\n2. two\n\n3. three\n","diffAt":5,"expected":"  #Steps:\n</p>\n<ol>\n  <li>\n    <p>\n      #one\n    </p>\n  </li>\n  <li>","actual":"  #Steps:\n</p>\n<ol>\n  <li>\n    #one\n  </li>\n</ol>\n<ol start=\"2\">\n  <li>","expectedLines":20,"actualLines":20}
+--- ordered list directly after paragraph, items separated by blank lines
+source: "Steps:\n1. one\n\n2. two\n\n3. three\n"
+expected(markdown-it): "<p>Steps:</p>\n<ol>\n<li>\n<p>one</p>\n</li>\n<li>\n<p>two</p>\n</li>\n<li>\n<p>three</p>\n</li>\n</ol>\n"
+actual(preview):       "<p data-l=\"0\">Steps:</p>\n<ol>\n<li data-l=\"1\">one</li>\n</ol>\n\n<ol start=\"2\">\n<li data-l=\"0\">\n<p data-l=\"0\">two</p>\n</li>\n<li data-l=\"2\">\n<p data-l=\"2\">three</p>\n</li>\n</ol>\n"
+FAIL  [render3] fresh: list directly after heading, continuation paragraph after blank: preview ≠ markdown-it
+      {"text":"## H\n- item\n\n  continuation of item\n- next\n","diffAt":5,"expected":"  #H\n</h2>\n<ul>\n  <li>\n    <p>\n      #item\n    </p>\n    <p>\n      #continuation of item","actual":"  #H\n</h2>\n<ul>\n  <li>\n    #item\n  </li>\n</ul>\n<p>\n  #continuation of item","expectedLines":18,"actualLines":16}
+--- list directly after heading, continuation paragraph after blank
+source: "## H\n- item\n\n  continuation of item\n- next\n"
+expected(markdown-it): "<h2>H</h2>\n<ul>\n<li>\n<p>item</p>\n<p>continuation of item</p>\n</li>\n<li>\n<p>next</p>\n</li>\n</ul>\n"
+actual(preview):       "<h2 data-l=\"0\">H</h2>\n<ul>\n<li data-l=\"1\">item</li>\n</ul>\n\n<p data-l=\"0\">continuation of item</p>\n<ul>\n<li data-l=\"1\">next</li>\n</ul>\n"
+FAIL  [render3] fresh: list directly after quote line, items separated by blank line: preview ≠ markdown-it
+      {"text":"> q\n- a\n\n- b\n","diffAt":7,"expected":"  </p>\n</blockquote>\n<ul>\n  <li>\n    <p>\n      #a\n    </p>\n  </li>\n  <li>","actual":"  </p>\n</blockquote>\n<ul>\n  <li>\n    #a\n  </li>\n</ul>\n<ul>\n  <li>","expectedLines":17,"actualLines":15}
+--- list directly after quote line, items separated by blank line
+source: "> q\n- a\n\n- b\n"
+expected(markdown-it): "<blockquote>\n<p>q</p>\n</blockquote>\n<ul>\n<li>\n<p>a</p>\n</li>\n<li>\n<p>b</p>\n</li>\n</ul>\n"
+actual(preview):       "<blockquote data-l=\"0\">\n<p data-l=\"0\">q</p>\n</blockquote>\n<ul>\n<li data-l=\"1\">a</li>\n</ul>\n\n<ul>\n<li data-l=\"0\">b</li>\n</ul>\n"
+FAIL  [render3] fresh: task list directly after paragraph, blank-separated: preview ≠ markdown-it
+      {"text":"Todo:\n- [ ] a\n\n- [x] b\n","diffAt":5,"expected":"  #Todo:\n</p>\n<ul>\n  <li>\n    <p>\n      <input type=\"checkbox\">\n      </input>\n      #a\n    </p>","actual":"  #Todo:\n</p>\n<ul>\n  <li>\n    <input type=\"checkbox\">\n    </input>\n    #a\n  </li>\n</ul>","expectedLines":19,"actualLines":17}
+--- task list directly after paragraph, blank-separated
+source: "Todo:\n- [ ] a\n\n- [x] b\n"
+expected(markdown-it): "<p>Todo:</p>\n<ul class=\"contains-task-list\">\n<li class=\"task-list-item enabled\">\n<p><input class=\"task-list-item-checkbox\"type=\"checkbox\"> a</p>\n</li>\n<li class=\"task-list-item enabled\">\n<p><input class=\"task-list-item-checkbox\" checked=\"\"type=\"checkbox\"> b</p>\n</li>\n</ul>\n"
+actual(preview):       "<p data-l=\"0\">Todo:</p>\n<ul class=\"contains-task-list\">\n<li class=\"task-list-item enabled\" data-l=\"1\"><input class=\"task-list-item-checkbox\" type=\"checkbox\"> a</li>\n</ul>\n\n<ul class=\"contains-task-list\">\n<li class=\"task-list-item enabled\" data-l=\"0\"><input class=\"task-list-item-checkbox\" checked=\"\" type=\"checkbox\"> b</li>\n</ul>\n"
+FAIL  [render3] fresh: indented heading inside a list that follows a heading (no blank): preview ≠ markdown-it
+      {"text":"### Mid list\n- item two\n  # continuation\n- item three\n","diffAt":6,"expected":"</h3>\n<ul>\n  <li>\n    #item two\n    <h1>\n      #continuation\n    </h1>\n  </li>\n  <li>","actual":"</h3>\n<ul>\n  <li>\n    #item two\n  </li>\n</ul>\n<h1>\n  #continuation\n</h1>","expectedLines":14,"actualLines":16}
+--- indented heading inside a list that follows a heading (no blank)
+source: "### Mid list\n- item two\n  # continuation\n- item three\n"
+expected(markdown-it): "<h3>Mid list</h3>\n<ul>\n<li>item two\n<h1>continuation</h1>\n</li>\n<li>item three</li>\n</ul>\n"
+actual(preview):       "<h3 data-l=\"0\">Mid list</h3>\n<ul>\n<li data-l=\"1\">item two</li>\n</ul>\n\n<h1 data-l=\"0\">continuation</h1>\n<ul>\n<li data-l=\"1\">item three</li>\n</ul>\n"
+FAIL  [render3] fresh: indented heading inside a list that follows a paragraph (no blank): preview ≠ markdown-it
+      {"text":"text\n- item two\n  # continuation\n- item three\n","diffAt":6,"expected":"</p>\n<ul>\n  <li>\n    #item two\n    <h1>\n      #continuation\n    </h1>\n  </li>\n  <li>","actual":"</p>\n<ul>\n  <li>\n    #item two\n  </li>\n</ul>\n<h1>\n  #continuation\n</h1>","expectedLines":14,"actualLines":16}
+--- indented heading inside a list that follows a paragraph (no blank)
+source: "text\n- item two\n  # continuation\n- item three\n"
+expected(markdown-it): "<p>text</p>\n<ul>\n<li>item two\n<h1>continuation</h1>\n</li>\n<li>item three</li>\n</ul>\n"
+actual(preview):       "<p data-l=\"0\">text</p>\n<ul>\n<li data-l=\"1\">item two</li>\n</ul>\n\n<h1 data-l=\"0\">continuation</h1>\n<ul>\n<li data-l=\"1\">item three</li>\n</ul>\n"
+FAIL  [render3] fresh: html block type 6 interrupts paragraph, # inside: preview ≠ markdown-it
+      {"text":"text\n<div>\n# inside\n</div>\nafter\n","diffAt":4,"expected":"<p>\n  #text\n</p>\n<div>\n  ## inside\n</div>\n#after","actual":"<p>\n  #text\n</p>\n<div>\n</div>\n<h1>\n  #inside\n</h1>\n#after","expectedLines":7,"actualLines":9}
+--- html block type 6 interrupts paragraph, # inside
+source: "text\n<div>\n# inside\n</div>\nafter\n"
+expected(markdown-it): "<p>text</p>\n<div>\n# inside\n</div>\nafter\n"
+actual(preview):       "<p data-l=\"0\">text</p>\n<div data-l=\"1\"></div>\n<h1 data-l=\"0\">inside</h1>\n\nafter\n"
+FAIL  [render3] fresh: html container with multi-line open tag: preview ≠ markdown-it
+      {"text":"<div\n  class=\"x\"\n  align=\"center\">\n\ncontent **md**\n\n</div>\n","diffAt":1,"expected":"<div align=\"center\">\n  <p>\n    #content\n    <strong>\n      #md\n    </strong>","actual":"<div align=\"center\">\n</div>\n<p>\n  #content\n  <strong>\n    #md","expectedLines":8,"actualLines":8}
+--- html container with multi-line open tag
+source: "<div\n  class=\"x\"\n  align=\"center\">\n\ncontent **md**\n\n</div>\n"
+expected(markdown-it): "<div\n  class=\"x\"\n  align=\"center\">\n<p>content <strong>md</strong></p>\n</div>\n"
+actual(preview):       "<div data-l=\"0\" class=\"x\" align=\"center\">\n</div>\n<p data-l=\"0\">content <strong>md</strong></p>\n\n"
+FAIL  [render3] fresh: reference label with escaped ]: preview ≠ markdown-it
+      {"text":"[a\\]b]\n\n[a\\]b]: https://example.com/ab\n","diffAt":1,"expected":"<p>\n  <a href=\"https://example.com/ab\">\n    #a]b\n  </a>\n</p>","actual":"<p>\n  #[a]b]\n</p>","expectedLines":5,"actualLines":3}
+--- reference label with escaped ]
+source: "[a\\]b]\n\n[a\\]b]: https://example.com/ab\n"
+expected(markdown-it): "<p><a href=\"https://example.com/ab\">a]b</a></p>\n"
+actual(preview):       "<p data-l=\"0\">[a]b]</p>\n\n"
+PASS  [render3] fresh: reference label with escaped ] used inline: preview == markdown-it  — 7 canonical lines, 2 blocks
+PASS  [render3] fresh: setext heading inside a heading block (TOC): preview == markdown-it  — 9 canonical lines, 2 blocks
+toc: [{"level":1,"text":"Title","line":1},{"level":2,"text":"Real H2","line":7}] rendered: ["1:Title","2:Subtitle","2:Real H2"]
+FAIL  [render3] toc: setext heading directly under an ATX heading line is rendered as <h2> but missing from the TOC
+      {"toc":[{"level":1,"text":"Title","line":1},{"level":2,"text":"Real H2","line":7}],"rendered":["1:Title","2:Subtitle","2:Real H2"]}
+ordered list after paragraph: {"lists":2,"starts":[null,"2"],"pInLi":2}
+FAIL  [render3] ordered list after a paragraph line: split into several <ol> (tight) instead of one loose <ol>
+      {"lists":2,"starts":[null,"2"],"pInLi":2,"expected":{"lists":1,"pInLi":3}}
+PASS  [render3] no page errors
+PASS  [render3] no console errors
+
+[render3] 4 pass, 12 fail, 0 measurements
+__RESULT__{"findings":[{"title":"fresh: list directly after heading, items separated by blank line: preview ≠ markdown-it","text":"# Title\n- a\n\n- b\n","diffAt":5,"expected":"  #Title\n</h1>\n<ul>\n  <li>\n    <p>\n      #a\n    </p>\n  </li>\n  <li>","actual":"  #Title\n</h1>\n<ul>\n  <li>\n    #a\n  </li>\n</ul>\n<ul>\n  <li>","expectedLines":15,"actualLines":13},{"title":"fresh: ordered list directly after paragraph, items separated by blank lines: preview ≠ markdown-it","text":"Steps:\n1. one\n\n2. two\n\n3. three\n","diffAt":5,"expected":"  #Steps:\n</p>\n<ol>\n  <li>\n    <p>\n      #one\n    </p>\n  </li>\n  <li>","actual":"  #Steps:\n</p>\n<ol>\n  <li>\n    #one\n  </li>\n</ol>\n<ol start=\"2\">\n  <li>","expectedLines":20,"actualLines":20},{"title":"fresh: list directly after heading, continuation paragraph after blank: preview ≠ markdown-it","text":"## H\n- item\n\n  continuation of item\n- next\n","diffAt":5,"expected":"  #H\n</h2>\n<ul>\n  <li>\n    <p>\n      #item\n    </p>\n    <p>\n      #continuation of item","actual":"  #H\n</h2>\n<ul>\n  <li>\n    #item\n  </li>\n</ul>\n<p>\n  #continuation of item","expectedLines":18,"actualLines":16},{"title":"fresh: list directly after quote line, items separated by blank line: preview ≠ markdown-it","text":"> q\n- a\n\n- b\n","diffAt":7,"expected":"  </p>\n</blockquote>\n<ul>\n  <li>\n    <p>\n      #a\n    </p>\n  </li>\n  <li>","actual":"  </p>\n</blockquote>\n<ul>\n  <li>\n    #a\n  </li>\n</ul>\n<ul>\n  <li>","expectedLines":17,"actualLines":15},{"title":"fresh: task list directly after paragraph, blank-separated: preview ≠ markdown-it","text":"Todo:\n- [ ] a\n\n- [x] b\n","diffAt":5,"expected":"  #Todo:\n</p>\n<ul>\n  <li>\n    <p>\n      <input type=\"checkbox\">\n      </input>\n      #a\n    </p>","actual":"  #Todo:\n</p>\n<ul>\n  <li>\n    <input type=\"checkbox\">\n    </input>\n    #a\n  </li>\n</ul>","expectedLines":19,"actualLines":17},{"title":"fresh: indented heading inside a list that follows a heading (no blank): preview ≠ markdown-it","text":"### Mid list\n- item two\n  # continuation\n- item three\n","diffAt":6,"expected":"</h3>\n<ul>\n  <li>\n    #item two\n    <h1>\n      #continuation\n    </h1>\n  </li>\n  <li>","actual":"</h3>\n<ul>\n  <li>\n    #item two\n  </li>\n</ul>\n<h1>\n  #continuation\n</h1>","expectedLines":14,"actualLines":16},{"title":"fresh: indented heading inside a list that follows a paragraph (no blank): preview ≠ markdown-it","text":"text\n- item two\n  # continuation\n- item three\n","diffAt":6,"expected":"</p>\n<ul>\n  <li>\n    #item two\n    <h1>\n      #continuation\n    </h1>\n  </li>\n  <li>","actual":"</p>\n<ul>\n  <li>\n    #item two\n  </li>\n</ul>\n<h1>\n  #continuation\n</h1>","expectedLines":14,"actualLines":16},{"title":"fresh: html block type 6 interrupts paragraph, # inside: preview ≠ markdown-it","text":"text\n<div>\n# inside\n</div>\nafter\n","diffAt":4,"expected":"<p>\n  #text\n</p>\n<div>\n  ## inside\n</div>\n#after","actual":"<p>\n  #text\n</p>\n<div>\n</div>\n<h1>\n  #inside\n</h1>\n#after","expectedLines":7,"actualLines":9},{"title":"fresh: html container with multi-line open tag: preview ≠ markdown-it","text":"<div\n  class=\"x\"\n  align=\"center\">\n\ncontent **md**\n\n</div>\n","diffAt":1,"expected":"<div align=\"center\">\n  <p>\n    #content\n    <strong>\n      #md\n    </strong>","actual":"<div align=\"center\">\n</div>\n<p>\n  #content\n  <strong>\n    #md","expectedLines":8,"actualLines":8},{"title":"fresh: reference label with escaped ]: preview ≠ markdown-it","text":"[a\\]b]\n\n[a\\]b]: https://example.com/ab\n","diffAt":1,"expected":"<p>\n  <a href=\"https://example.com/ab\">\n    #a]b\n  </a>\n</p>","actual":"<p>\n  #[a]b]\n</p>","expectedLines":5,"actualLines":3},{"title":"toc: setext heading directly under an ATX heading line is rendered as <h2> but missing from the TOC","toc":[{"level":1,"text":"Title","line":1},{"level":2,"text":"Real H2","line":7}],"rendered":["1:Title","2:Subtitle","2:Real H2"]},{"title":"ordered list after a paragraph line: split into several <ol> (tight) instead of one loose <ol>","lists":2,"starts":[null,"2"],"pInLi":2,"expected":{"lists":1,"pInLi":3}}],"measurements":[]}

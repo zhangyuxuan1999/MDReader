@@ -1,0 +1,29 @@
+PASS  initial settle  — {"ok":true,"version":1}
+PASS  draft saved before restart (IDB has current version)  — {"d0":{"version":14,"at":1788673861500,"len":410496},"v0":14}
+PASS  (A) worker restarted after error event  — 1 → 2
+PASS  (A) toast 「渲染器已重启」 shown  — ["渲染器已重启×"]
+PASS  (A) restart counted once  — restarts=1
+PASS  (A) worker settled after restart  — {"ok":true,"version":14}
+PASS  (A) structure tiles after restart  — {"blocks":6001,"docLines":20404,"sumLines":20404,"domBlocks":6001,"pending":5951,"stale":30,"errors":0,"kinds":{"0":1801,"1":1201,"2":600,"3":600,"4":600,"5":600,"7":599},"problems":[]}
+PASS  (A) visible preview blocks mounted after restart  — {"pending":0,"total":10}
+FAIL  (A) preview reflects typing after restart
+PASS  (B) draft still autosaved after worker restart  — {"draftInIdb":{"version":35,"at":1788673864452,"len":410517},"editorVersion":35,"draftSavedVersions":[14,35]}
+PASS  (B) draft flush on visibilitychange after restart  — {"dB2":{"version":35,"at":1788673865978,"len":410517},"vB":35}
+PASS  (C) after silent terminate + scroll: visible blocks stay pending (no detection without an edit)  — {"pending":10,"total":10,"restarts":1}
+PASS  (C) silent-terminate recovered via silence detector after an edit  — workers 2 → 3
+OK    (C) time from edit to restart after silent terminate (ms) = 10038 (target ≈ 10000 (spec))
+PASS  (C) settled after recovery  — {"ok":true,"version":36}
+PASS  (C) visible blocks mounted after recovery  — {"pending":0,"total":10}
+OK    (C) input latency max during dead-worker period (ms) = 24 (target < 100)
+PASS  (D) give-up toast after > 3 restarts/min  — ["渲染器已重启×","渲染器已重启×","渲染器多次崩溃，已停止自动重启×"]
+PASS  (D) editor still works after renderer gave up
+PASS  (D) no further worker spawns after give-up  — 4 → 4
+PASS  no console errors  — []
+PASS  no page errors  — []
+
+=== s07 worker kill ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 4
+}

@@ -1,0 +1,26 @@
+PASS  initial settle  — {"ok":true,"version":1}
+PASS  before restart: typed text shows in preview
+PASS  worker #0 received viewport messages  — ["viewport(1,84)","viewport(1,84)","viewport(2935,3076)"]
+PASS  restart happened
+PASS  settled after restart  — {"ok":true,"version":16}
+messages to worker #1: ["init","setDoc","draft"]
+FAIL  DEFECT PROBE: new worker received a viewport message after restart  — ["init","setDoc","draft"]
+FAIL  after restart + idle + 1 s: no mounted block is still .is-stale  — {"stale":41,"mountedStale":41,"visibleStale":11,"visibleStaleIds":["880","881","882","883","884"]}
+FAIL  after restart + idle + 1 s: no VISIBLE block is still .is-stale  — {"stale":41,"mountedStale":41,"visibleStale":11,"visibleStaleIds":["880","881","882","883","884"]}
+FAIL  after restart: typed text shows in preview (idle + 1 s)  — {"posted1":["edit","edit","edit","edit","edit","edit"],"htmlMsgs":23}
+FAIL  after restart + typing: edited block not left stale  — {"stale":41,"mountedStale":41,"visibleStale":11,"visibleStaleIds":["880","881","882","883","884"]}
+FAIL  after restart + 5 more edits + 2 s: typed text shows
+PASS  after a scroll: viewport message finally sent to the new worker  — ["viewport(3043,3178)","viewport(2948,3088)"]
+PASS  after a scroll: typed text shows (recovery by scrolling)
+FAIL  second restart: typed text shows without scrolling
+PASS  second restart: typed text shows after a mode round-trip
+toasts: [ '渲染器已重启×' ]
+PASS  no console errors  — []
+PASS  no page errors  — []
+
+=== s07b restart viewport ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 2
+}

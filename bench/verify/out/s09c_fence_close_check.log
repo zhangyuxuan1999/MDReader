@@ -1,0 +1,17 @@
+(a) keyboard: head "```js\n# H\n\np" tail "\npara\n\n- a\n- b\n\n# H\n\npara\n\n- a\n- b\n\n```\n" blocks 1 settled true
+PASS  (a) keyboard-typed closing fence at EOF → still one (now closed) block  — {"head":"\"```js\\n# H\\n\\np\"","tail":"\"\\npara\\n\\n- a\\n- b\\n\\n# H\\n\\npara\\n\\n- a\\n- b\\n\\n```\\n\"","blocks":1}
+(b) dispatch: tail "\npara\n\n- a\n- b\n\n# H\n\npara\n\n- a\n- b\n\n```\n" blocks 1 settled true
+PASS  (b) dispatched closing fence at EOF → one block  — {"tail":"\"\\npara\\n\\n- a\\n- b\\n\\n# H\\n\\npara\\n\\n- a\\n- b\\n\\n```\\n\"","blocks":1}
+(c) after three ` presses, tail "\n\npara\n\n- a\n- b\n\n```"
+(c) after Enter, tail "\npara\n\n- a\n- b\n\n```\n" blocks 1
+PASS  (c) plain ``` typed on the last line → one block  — {"tail":"\"\\npara\\n\\n- a\\n- b\\n\\n```\\n\"","blocks":1}
+PASS  (d) TOC has 50000 entries and is collapsed  — {"items":50000,"collapsed":true,"expandBtn":true}
+PASS  no console errors  — []
+PASS  no page errors  — []
+
+=== s09c fence close check ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

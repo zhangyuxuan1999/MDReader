@@ -1,0 +1,23 @@
+PASS  [inc-repro] type "- a⏎b⏎⏎after" in an empty doc (incremental state): preview == markdown-it  — 8 canonical lines, 1 blocks
+PASS  [inc-repro] type "- a⏎b⏎⏎after" in an empty doc: incremental == fresh  — 1 blocks
+FAIL  [inc-repro] heading + list typed via Enter continuation before a paragraph (incremental state): preview ≠ markdown-it
+      {"text":"# Title\n#### Typed heading\n- typed item\n\n- second typed item\n\n\nIntro paragraph.\n\n- item one\n- item two\n","diffAt":8,"expected":"  #Typed heading\n</h4>\n<ul>\n  <li>\n    <p>\n      #typed item\n    </p>\n  </li>\n  <li>","actual":"  #Typed heading\n</h4>\n<ul>\n  <li>\n    #typed item\n  </li>\n</ul>\n<ul>\n  <li>","expectedLines":29,"actualLines":27}
+PASS  [inc-repro] heading + list typed via Enter continuation before a paragraph: incremental == fresh  — 5 blocks
+after type "- typed item": text="# Title\n- typed item\nIntro paragraph.\n\n- item one\n- item two\n" blocks=["1+4:k1","5+3:k4"]
+after press "Enter": text="# Title\n- typed item\n\n- \nIntro paragraph.\n\n- item one\n- item two\n" blocks=["1+3:k1","4+6:k4"]
+after type "second": text="# Title\n- typed item\n\n- second\nIntro paragraph.\n\n- item one\n- item two\n" blocks=["1+3:k1","4+6:k4"]
+after press "Enter": text="# Title\n- typed item\n\n- second\n\n- \nIntro paragraph.\n\n- item one\n- item two\n" blocks=["1+3:k1","4+8:k4"]
+after press "Enter": text="# Title\n- typed item\n\n- second\n\n\nIntro paragraph.\n\n- item one\n- item two\n" blocks=["1+3:k1","4+3:k4","7+2:k0","9+3:k4"]
+FAIL  [inc-repro] step-by-step end state (incremental state): preview ≠ markdown-it
+      {"text":"# Title\n- typed item\n\n- second\n\n\nIntro paragraph.\n\n- item one\n- item two\n","diffAt":5,"expected":"  #Title\n</h1>\n<ul>\n  <li>\n    <p>\n      #typed item\n    </p>\n  </li>\n  <li>","actual":"  #Title\n</h1>\n<ul>\n  <li>\n    #typed item\n  </li>\n</ul>\n<ul>\n  <li>","expectedLines":26,"actualLines":24}
+PASS  [inc-repro] step-by-step end state: incremental == fresh  — 4 blocks
+PASS  [inc-repro] dispatch-emulated list continuation (incremental state): preview == markdown-it  — 22 canonical lines, 3 blocks
+PASS  [inc-repro] dispatch-emulated list continuation: incremental == fresh  — 3 blocks
+FAIL  [inc-repro] undo ×1 after list typing (incremental state): preview ≠ markdown-it
+      {"text":"# Title\n- typed item\n\n- second\n\n- \nIntro paragraph.\n\n- item one\n- item two\n","diffAt":5,"expected":"  #Title\n</h1>\n<ul>\n  <li>\n    <p>\n      #typed item\n    </p>\n  </li>\n  <li>","actual":"  #Title\n</h1>\n<ul>\n  <li>\n    #typed item\n  </li>\n</ul>\n<ul>\n  <li>","expectedLines":28,"actualLines":28}
+PASS  [inc-repro] undo ×1 after list typing: incremental == fresh  — 2 blocks
+PASS  [inc-repro] no page errors
+PASS  [inc-repro] no console errors
+
+[inc-repro] 9 pass, 3 fail, 0 measurements
+__RESULT__{"findings":[{"title":"heading + list typed via Enter continuation before a paragraph (incremental state): preview ≠ markdown-it","text":"# Title\n#### Typed heading\n- typed item\n\n- second typed item\n\n\nIntro paragraph.\n\n- item one\n- item two\n","diffAt":8,"expected":"  #Typed heading\n</h4>\n<ul>\n  <li>\n    <p>\n      #typed item\n    </p>\n  </li>\n  <li>","actual":"  #Typed heading\n</h4>\n<ul>\n  <li>\n    #typed item\n  </li>\n</ul>\n<ul>\n  <li>","expectedLines":29,"actualLines":27},{"title":"step-by-step end state (incremental state): preview ≠ markdown-it","text":"# Title\n- typed item\n\n- second\n\n\nIntro paragraph.\n\n- item one\n- item two\n","diffAt":5,"expected":"  #Title\n</h1>\n<ul>\n  <li>\n    <p>\n      #typed item\n    </p>\n  </li>\n  <li>","actual":"  #Title\n</h1>\n<ul>\n  <li>\n    #typed item\n  </li>\n</ul>\n<ul>\n  <li>","expectedLines":26,"actualLines":24},{"title":"undo ×1 after list typing (incremental state): preview ≠ markdown-it","text":"# Title\n- typed item\n\n- second\n\n- \nIntro paragraph.\n\n- item one\n- item two\n","diffAt":5,"expected":"  #Title\n</h1>\n<ul>\n  <li>\n    <p>\n      #typed item\n    </p>\n  </li>\n  <li>","actual":"  #Title\n</h1>\n<ul>\n  <li>\n    #typed item\n  </li>\n</ul>\n<ul>\n  <li>","expectedLines":28,"actualLines":28}],"measurements":[]}

@@ -1,0 +1,45 @@
+[500px toc=true] {"vw":500,"mode":"split","toc":true,"tocW":0,"editorW":335,"gutterW":6,"previewW":335,"mainW":675,"cols":"0px 334.703px 6px 334.719px","split":"1fr","tocVar":"240px","docScrollW":500}
+PASS  (1) 500px split toc=true: editor ≥ 150 px and preview ≥ 150 px  — {"vw":500,"mode":"split","toc":true,"tocW":0,"editorW":335,"gutterW":6,"previewW":335,"mainW":675,"cols":"0px 334.703px 6px 334.719px","split":"1fr","tocVar":"240px","docScrollW":500}
+[500px toc=false] {"vw":500,"mode":"split","toc":false,"tocW":0,"editorW":335,"gutterW":6,"previewW":335,"mainW":675,"cols":"0px 334.703px 6px 334.719px","split":"1fr","tocVar":"240px","docScrollW":500}
+PASS  (1) 500px split toc=false: editor ≥ 150 px and preview ≥ 150 px  — {"vw":500,"mode":"split","toc":false,"tocW":0,"editorW":335,"gutterW":6,"previewW":335,"mainW":675,"cols":"0px 334.703px 6px 334.719px","split":"1fr","tocVar":"240px","docScrollW":500}
+PASS  (1) 500px edit mode (toc closed): editor ≥ 300 px  — {"vw":500,"mode":"edit","toc":false,"tocW":0,"editorW":675,"gutterW":0,"previewW":0,"mainW":675,"cols":"0px 675.422px 0px 0px","split":"1fr","tocVar":"240px","docScrollW":500}
+PASS  (1) 500px preview mode (toc closed): preview ≥ 300 px  — {"vw":500,"mode":"preview","toc":false,"tocW":0,"editorW":0,"gutterW":0,"previewW":675,"mainW":675,"cols":"0px 0px 0px 675.422px","split":"1fr","tocVar":"240px","docScrollW":500}
+[700px toc=true] {"vw":700,"mode":"split","toc":true,"tocW":0,"editorW":347,"gutterW":6,"previewW":347,"mainW":700,"cols":"0px 347px 6px 347px","split":"1fr","tocVar":"240px","docScrollW":700}
+PASS  (1) 700px split toc=true: editor ≥ 150 px and preview ≥ 150 px  — {"vw":700,"mode":"split","toc":true,"tocW":0,"editorW":347,"gutterW":6,"previewW":347,"mainW":700,"cols":"0px 347px 6px 347px","split":"1fr","tocVar":"240px","docScrollW":700}
+[700px toc=false] {"vw":700,"mode":"split","toc":false,"tocW":0,"editorW":347,"gutterW":6,"previewW":347,"mainW":700,"cols":"0px 347px 6px 347px","split":"1fr","tocVar":"240px","docScrollW":700}
+PASS  (1) 700px split toc=false: editor ≥ 150 px and preview ≥ 150 px  — {"vw":700,"mode":"split","toc":false,"tocW":0,"editorW":347,"gutterW":6,"previewW":347,"mainW":700,"cols":"0px 347px 6px 347px","split":"1fr","tocVar":"240px","docScrollW":700}
+PASS  (1) 700px edit mode (toc closed): editor ≥ 300 px  — {"vw":700,"mode":"edit","toc":false,"tocW":0,"editorW":700,"gutterW":0,"previewW":0,"mainW":700,"cols":"0px 700px 0px 0px","split":"1fr","tocVar":"240px","docScrollW":700}
+PASS  (1) 700px preview mode (toc closed): preview ≥ 300 px  — {"vw":700,"mode":"preview","toc":false,"tocW":0,"editorW":0,"gutterW":0,"previewW":700,"mainW":700,"cols":"0px 0px 0px 700px","split":"1fr","tocVar":"240px","docScrollW":700}
+[900px toc=true] {"vw":900,"mode":"split","toc":true,"tocW":0,"editorW":447,"gutterW":6,"previewW":447,"mainW":900,"cols":"0px 447px 6px 447px","split":"1fr","tocVar":"240px","docScrollW":900}
+PASS  (1) 900px split toc=true: editor ≥ 150 px and preview ≥ 150 px  — {"vw":900,"mode":"split","toc":true,"tocW":0,"editorW":447,"gutterW":6,"previewW":447,"mainW":900,"cols":"0px 447px 6px 447px","split":"1fr","tocVar":"240px","docScrollW":900}
+[900px toc=false] {"vw":900,"mode":"split","toc":false,"tocW":0,"editorW":447,"gutterW":6,"previewW":447,"mainW":900,"cols":"0px 447px 6px 447px","split":"1fr","tocVar":"240px","docScrollW":900}
+PASS  (1) 900px split toc=false: editor ≥ 150 px and preview ≥ 150 px  — {"vw":900,"mode":"split","toc":false,"tocW":0,"editorW":447,"gutterW":6,"previewW":447,"mainW":900,"cols":"0px 447px 6px 447px","split":"1fr","tocVar":"240px","docScrollW":900}
+PASS  (1) 900px edit mode (toc closed): editor ≥ 300 px  — {"vw":900,"mode":"edit","toc":false,"tocW":0,"editorW":900,"gutterW":0,"previewW":0,"mainW":900,"cols":"0px 900px 0px 0px","split":"1fr","tocVar":"240px","docScrollW":900}
+PASS  (1) 900px preview mode (toc closed): preview ≥ 300 px  — {"vw":900,"mode":"preview","toc":false,"tocW":0,"editorW":0,"gutterW":0,"previewW":900,"mainW":900,"cols":"0px 0px 0px 900px","split":"1fr","tocVar":"240px","docScrollW":900}
+[1100px toc=true] {"vw":1100,"mode":"split","toc":true,"tocW":240,"editorW":427,"gutterW":6,"previewW":427,"mainW":1100,"cols":"240px 427px 6px 427px","split":"1fr","tocVar":"240px","docScrollW":1100}
+PASS  (1) 1100px split toc=true: editor ≥ 150 px and preview ≥ 150 px  — {"vw":1100,"mode":"split","toc":true,"tocW":240,"editorW":427,"gutterW":6,"previewW":427,"mainW":1100,"cols":"240px 427px 6px 427px","split":"1fr","tocVar":"240px","docScrollW":1100}
+[1100px toc=false] {"vw":1100,"mode":"split","toc":false,"tocW":0,"editorW":547,"gutterW":6,"previewW":547,"mainW":1100,"cols":"0px 547px 6px 547px","split":"1fr","tocVar":"240px","docScrollW":1100}
+PASS  (1) 1100px split toc=false: editor ≥ 150 px and preview ≥ 150 px  — {"vw":1100,"mode":"split","toc":false,"tocW":0,"editorW":547,"gutterW":6,"previewW":547,"mainW":1100,"cols":"0px 547px 6px 547px","split":"1fr","tocVar":"240px","docScrollW":1100}
+PASS  (1) 1100px edit mode (toc closed): editor ≥ 300 px  — {"vw":1100,"mode":"edit","toc":false,"tocW":0,"editorW":1100,"gutterW":0,"previewW":0,"mainW":1100,"cols":"0px 1100px 0px 0px","split":"1fr","tocVar":"240px","docScrollW":1100}
+PASS  (1) 1100px preview mode (toc closed): preview ≥ 300 px  — {"vw":1100,"mode":"preview","toc":false,"tocW":0,"editorW":0,"gutterW":0,"previewW":1100,"mainW":1100,"cols":"0px 0px 0px 1100px","split":"1fr","tocVar":"240px","docScrollW":1100}
+before { ed: 7990, pv: 7990, edScroll: 210002, pvScroll: 226731 }
+PASS  (2) split→preview→split (500 ms): editor top line kept (±5 lines)  — {"before":{"ed":7991,"pv":7991,"edScroll":210014,"pvScroll":226739},"after":{"ed":7991,"pv":7991,"edScroll":210015,"pvScroll":226739},"modeNow":"split"}
+PASS  (2) split→preview→split (500 ms): preview top line ≈ editor top line (±5)  — {"ed":7991,"pv":7991,"edScroll":210015,"pvScroll":226739}
+PASS  (2) split→edit→split (500 ms): editor top line kept (±5 lines)  — {"before":{"ed":7991,"pv":7991,"edScroll":210014,"pvScroll":226739},"after":{"ed":7991,"pv":7991,"edScroll":210015,"pvScroll":226739},"modeNow":"split"}
+PASS  (2) split→edit→split (500 ms): preview top line ≈ editor top line (±5)  — {"ed":7991,"pv":7991,"edScroll":210015,"pvScroll":226739}
+PASS  (2) split→edit→preview→split (500 ms): editor top line kept (±5 lines)  — {"before":{"ed":7991,"pv":7991,"edScroll":210014,"pvScroll":226739},"after":{"ed":7991,"pv":7991,"edScroll":210015,"pvScroll":226739},"modeNow":"split"}
+PASS  (2) split→edit→preview→split (500 ms): preview top line ≈ editor top line (±5)  — {"ed":7991,"pv":7991,"edScroll":210015,"pvScroll":226739}
+PASS  (2) 50 cycles at 100 ms: editor top line kept (±5 lines)  — {"before":{"ed":7991,"pv":7991,"edScroll":210014,"pvScroll":226739},"after":{"ed":7991,"pv":7991,"edScroll":210015,"pvScroll":226739},"modeNow":"split"}
+PASS  (2) 50 cycles at 100 ms: preview top line ≈ editor top line (±5)  — {"ed":7991,"pv":7991,"edScroll":210015,"pvScroll":226739}
+PASS  (2) 50 cycles at 10 ms: editor top line kept (±5 lines)  — {"before":{"ed":7991,"pv":7991,"edScroll":210014,"pvScroll":226739},"after":{"ed":7991,"pv":7991,"edScroll":210015,"pvScroll":226739},"modeNow":"split"}
+PASS  (2) 50 cycles at 10 ms: preview top line ≈ editor top line (±5)  — {"ed":7991,"pv":7991,"edScroll":210015,"pvScroll":226739}
+PASS  (2) cursor line unchanged after the mode storms  — cursor line 8000
+PASS  no console errors  — []
+PASS  no page errors  — []
+
+=== s10b layout + mode position ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

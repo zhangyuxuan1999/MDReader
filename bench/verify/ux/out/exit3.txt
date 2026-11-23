@@ -1,0 +1,4 @@
+10-final exit 0
+09-nav exit 0
+12-gaps exit 1
+11-fsa exit 1

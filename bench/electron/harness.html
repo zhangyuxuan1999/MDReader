@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>MDReader shell harness</title>
+  </head>
+  <body style="font: 14px -apple-system, sans-serif; padding: 24px">
+    <h1>MDReader shell harness</h1>
+    <p>
+      A renderer stand-in for <code>bench/electron/dev-shell.mjs</code>: it uses nothing but
+      <code>window.mdrNative</code>, so the shell's close/quit guard, command routing and open-file
+      queue can be verified without the real app answering <code>resolveClose</code> first.
+    </p>
+    <pre id="log"></pre>
+    <script>
+      window.__cmds = [];
+      window.__openedFiles = [];
+      window.__autoResolve = null; // set from the test to answer app.closeRequested automatically
+      const log = (s) => {
+        document.getElementById('log').textContent += s + '\n';
+      };
+      window.__offCmd = window.mdrNative.onCommand((id) => {
+        window.__cmds.push(id);
+        log('command ' + id);
+        if (id === 'app.closeRequested' && window.__autoResolve) {
+          window.mdrNative.resolveClose(window.__autoResolve);
+        }
+      });
+      window.__offOpen = window.mdrNative.onOpenFile((p) => {
+        window.__openedFiles.push(p);
+        log('open-file ' + p);
+      });
+      document.title = 'MDReader 外壳测试页';
+    </script>
+  </body>
+</html>

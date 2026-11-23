@@ -1,0 +1,71 @@
+import { launch, open, loadText, step, expect, finish, sleep, getFailures, focusEditor, getText, lineText } from '../ux/lib.mjs';
+const { browser, page, errors } = await launch();
+page.setDefaultTimeout(10000);
+await open(page, '?mode=split');
+await loadText(page, '# 标题\n\nalpha beta gamma 段落一。\n\n- [ ] 任务\n\n第二段 beta。\n', 'f.md');
+await page.evaluate(() => window.__mdr.app.registry.run('view.mountAll'));
+await sleep(600);
+
+await step('Mod-f works when focus is in the preview pane (SPEC §13: Cmd+F routed to the editor search)', async () => {
+  await page.evaluate(() => { const p = document.querySelector('.mdr-preview'); p.tabIndex = -1; p.focus(); });
+  await page.mouse.click(1100, 300);
+  await sleep(200);
+  const where = await page.evaluate(() => document.activeElement?.className || document.activeElement?.tagName);
+  await page.keyboard.press('Meta+f');
+  await sleep(400);
+  const panel = await page.locator('.cm-panel.cm-search').count();
+  expect(panel > 0, `focus was ${where}; Mod-f opened no search panel — the browser's own find bar takes over, and it only sees the blocks currently mounted (SPEC §13 tradeoff)`);
+  await page.keyboard.press('Escape');
+  return `focus=${where}`;
+});
+await step('Mod-f works in preview-only mode', async () => {
+  await page.evaluate(() => window.__mdr.mode('preview'));
+  await sleep(400);
+  await page.mouse.click(700, 300);
+  await sleep(200);
+  await page.keyboard.press('Meta+f');
+  await sleep(400);
+  const panel = await page.locator('.cm-panel.cm-search').count();
+  const where = await page.evaluate(() => document.activeElement?.className || document.activeElement?.tagName);
+  expect(panel > 0, `in 预览 mode Mod-f opens nothing (activeElement=${where}); the document is not searchable from the preview`);
+  await page.keyboard.press('Escape');
+});
+await step('toolbar 加粗 still edits while in preview-only mode', async () => {
+  await page.evaluate(() => window.__mdr.mode('preview'));
+  await sleep(300);
+  await page.evaluate(() => { const v = window.__mdr.app.editor.view; const l = v.state.doc.line(3); v.dispatch({ selection: { anchor: l.from, head: l.from + 5 } }); });
+  await page.click('.mdr-toolbar__btn[data-cmd="edit.bold"]');
+  await sleep(500);
+  const l = await lineText(page, 3);
+  expect(l.startsWith('**alpha**'), `line3 = ${JSON.stringify(l)} — the 加粗 toolbar button is enabled in 预览 mode but does nothing`);
+  return l;
+});
+await page.evaluate(() => window.__mdr.mode('split'));
+await sleep(300);
+await step('palette shows an empty state when nothing matches', async () => {
+  await page.keyboard.press('Meta+Shift+p');
+  await sleep(300);
+  await page.keyboard.type('zzzzqqqq');
+  await sleep(400);
+  const r = await page.evaluate(() => { const p = document.querySelector('.mdr-palette');
+    return { items: p.querySelectorAll('.mdr-palette__item').length, text: p.textContent.trim(), h: Math.round(p.getBoundingClientRect().height) }; });
+  expect(r.items === 0, `expected 0 matches, got ${r.items}`);
+  expect(/无|没有|未找到|no result/i.test(r.text), `no empty-state message — the palette just shows a blank box (text=${JSON.stringify(r.text)}, height=${r.h}px)`);
+  await page.keyboard.press('Escape');
+  return JSON.stringify(r);
+});
+await step('Enter in an empty palette result list does nothing harmful', async () => {
+  await page.keyboard.press('Meta+Shift+p');
+  await sleep(250);
+  await page.keyboard.type('zzzzqqqq');
+  await sleep(300);
+  const before = errors.length;
+  await page.keyboard.press('Enter');
+  await sleep(400);
+  const newErr = errors.slice(before);
+  expect(newErr.length === 0, newErr.join(' | '));
+  await page.keyboard.press('Escape');
+});
+finish('21-focus-modes', errors);
+await browser.close();
+process.exit(getFailures() ? 1 : 0);

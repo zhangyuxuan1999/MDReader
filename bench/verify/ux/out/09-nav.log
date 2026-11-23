@@ -1,0 +1,13 @@
+MEASURE anchor click (cold) heading offset px = 0 (target 0 ± 4 px) PASS
+PASS  #anchor click #1 (cold, blocks pending): heading offset from preview top  — {"off":0,"pvLine":304,"pendingBlocks":169,"target":305}
+MEASURE anchor click (warm) heading offset px = 0 (target 0 ± 4 px) PASS
+PASS  #anchor click #2 (same target, blocks now mounted)  — {"off":0,"pvLine":304,"pendingBlocks":169}
+MEASURE TOC click (cold) heading offset px = 0 (target 0 ± 4 px) PASS
+PASS  TOC click on 第三节 (cold): heading offset  — {"off":0,"pvLine":608,"pendingBlocks":135,"target":609}
+MEASURE TOC click (all mounted) heading offset px = 0 (target 0 ± 4 px) PASS
+PASS  TOC click on 第三节 after 全部渲染 (all blocks measured)  — {"off":0,"pvLine":304,"pendingBlocks":0}
+MEASURE editor→preview sync heading offset px (all mounted) = -1 (target 0 ± 30 px) PASS
+PASS  Editor-driven sync to the same heading (scroll editor so 第二节 is at top): preview offset  — {"off":-1,"pvLine":305,"pendingBlocks":0}
+
+[09-nav] 10 passed, 0 failed
+[09-nav] no console/page errors

@@ -1,0 +1,76 @@
+/* src/styles/hljs.css — highlight.js class → --hl-* token mapping (E2). No upstream theme CSS. */
+
+.hljs {
+  color: var(--mdr-code-fg);
+  background: transparent;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-template-tag { color: var(--hl-keyword); }
+
+.hljs-string,
+.hljs-template-variable,
+.hljs-quote,
+.hljs-selector-attr,
+.hljs-selector-pseudo { color: var(--hl-string); }
+
+.hljs-number { color: var(--hl-number); }
+
+.hljs-comment,
+.hljs-formula { color: var(--hl-comment); font-style: italic; }
+
+.hljs-function,
+.hljs-title.function_,
+.hljs-title { color: var(--hl-title); }
+
+.hljs-function .hljs-title,
+.hljs-title.function_ { color: var(--hl-function); }
+
+.hljs-type,
+.hljs-class .hljs-title,
+.hljs-title.class_,
+.hljs-title.class_.inherited__,
+.hljs-selector-class,
+.hljs-selector-id { color: var(--hl-type); }
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-property { color: var(--hl-attr); }
+
+.hljs-tag { color: var(--hl-tag); }
+.hljs-name,
+.hljs-tag .hljs-name { color: var(--hl-tag); }
+
+.hljs-variable,
+.hljs-variable.language_,
+.hljs-variable.constant_,
+.hljs-operator,
+.hljs-punctuation { color: var(--hl-variable); }
+.hljs-operator,
+.hljs-punctuation { color: inherit; }
+
+.hljs-literal,
+.hljs-built_in,
+.hljs-code { color: var(--hl-literal); }
+
+.hljs-meta,
+.hljs-meta .hljs-keyword,
+.hljs-meta .hljs-string,
+.hljs-params,
+.hljs-subst { color: var(--hl-meta); }
+
+.hljs-deletion { color: var(--hl-deletion); background: color-mix(in srgb, var(--hl-deletion) 12%, transparent); }
+.hljs-addition { color: var(--hl-addition); background: color-mix(in srgb, var(--hl-addition) 12%, transparent); }
+
+.hljs-regexp,
+.hljs-link { color: var(--hl-regexp); }
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-char.escape_ { color: var(--hl-symbol); }
+
+.hljs-section { color: var(--hl-title); font-weight: 600; }
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: 600; }

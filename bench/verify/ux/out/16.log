@@ -1,0 +1,6 @@
+FAIL  TOC button at 800 px either shows the TOC or does not claim it is shown (aria-pressed)  — before {"dataToc":"open","w":0,"display":"none","pressed":"true","ls":"open"} → click {"dataToc":"closed","w":0,"display":"none","pressed":"false","ls":"closed"} → click {"dataToc":"open","w":0,"display":"none","pressed":"true","ls":"open"}
+PASS  800 px: TOC auto-collapsed; toolbar button state + clicking it  — {"dataToc":"open","w":0,"display":"none","pressed":"true","ls":"open"} → {"dataToc":"closed","w":0,"display":"none","pressed":"false","ls":"closed"} → {"dataToc":"open","w":0,"display":"none","pressed":"true","ls":"open"}
+PASS  Widen to 1400: TOC comes back and reflects the persisted state  — {"dataToc":"open","w":240,"display":"block","pressed":"true","ls":"open"}
+
+[16-narrow-toc] 2 passed, 1 failed
+[16-narrow-toc] no console/page errors

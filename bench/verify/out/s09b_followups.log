@@ -1,0 +1,33 @@
+PASS  (1) fence settles  — {"ok":true,"version":2}
+PASS  (1) 50k-line fence mounts (PLAIN) after the 500 ms giant settle  — {"cls":"md-block","plain":true,"len":1400010}
+OK    (1) typing inside 50k-line fence: latency p95 (ms) = 17.6 (target < 100)
+PASS  (1) fence content refreshed after edit + settle  — {"cls":"md-block","hasEdit":true,"stale":false}
+PASS  (2) unclosed fence = 1 giant code block  — {"blocks":1,"docLines":35002,"sumLines":35002,"domBlocks":1,"pending":0,"stale":0,"errors":0,"kinds":{"2":1},"problems":[]}
+OK    (2) closing the fence at line 2: latency max (ms) = 33.7 (target < 100 (P7 p95 < 16))
+PASS  (2) settles after closing the fence  — {"ok":true,"version":11}
+PASS  (2) giant block split into many blocks  — {"blocks":15001,"docLines":35003,"sumLines":35003,"domBlocks":15001,"pending":15000,"stale":0,"errors":0,"kinds":{"0":5000,"1":5000,"2":1,"4":5000},"problems":[]}
+OK    (2) long tasks after closing (count / max / >100ms) = 0/0/0 (target P7: tasks > 100 ms ≤ 1)
+PASS  (2) removing the closing fence → 1 block again  — {"blocks":1,"docLines":35002,"sumLines":35002,"domBlocks":1,"pending":0,"stale":0,"errors":0,"kinds":{"2":1},"problems":[]}
+OK    (2) long tasks after re-opening (count / max) = 0/0 (target informational)
+OK    (3) 50k headings: typing 10 chars inside a heading — latency p95 / max (ms) = 29.8 / 29.8 (target p95 < 100)
+OK    (3) 50k headings: long tasks during 10 keystrokes (count / max ms), wall ms = 0/0, 157 (target 0 > 50 ms (P4))
+PASS  (3) 50k headings: TOC updated with the edited heading  — {"items":50000,"edited":true}
+OK    (3) 3k headings (large.md-like): typing 10 chars inside a heading — latency p95 / max (ms) = 14.3 / 14.3 (target p95 < 100)
+OK    (3) 3k headings (large.md-like): long tasks during 10 keystrokes (count / max ms), wall ms = 0/0, 22 (target 0 > 50 ms (P4))
+PASS  (3) 3k headings (large.md-like): TOC updated with the edited heading  — {"items":3000,"edited":true}
+MISS  (4) 1 MB line, end of line: latency p50 / p95 / max (ms) = 122.3 / 152.4 / 161.4 (target p95 < 100)
+OK    (4) 1 MB line, end of line: long tasks (count / max ms) for 40 keystrokes, wall ms = 40/160, 5173 (target informational)
+MISS  (4) 1 MB line, start of line: latency p50 / p95 / max (ms) = 124 / 198.4 / 213.1 (target p95 < 100)
+OK    (4) 1 MB line, start of line: long tasks (count / max ms) for 40 keystrokes, wall ms = 41/212, 5508 (target informational)
+PASS  (4) settles  — {"ok":true,"version":115}
+PASS  (4) 1 MB paragraph mounted in preview  — {"pending":false,"slow":false,"len":1000083}
+PASS  no console errors  — []
+PASS  no page errors  — []
+PASS  no worker restart  — restarts=0
+
+=== s09b follow-ups ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

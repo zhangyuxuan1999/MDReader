@@ -1,0 +1,30 @@
+PASS  LoAF observer installed
+--- (c) load 50k headings: 1 LoAF ≥ 50 ms
+  213 ms (blocking 107, script 102, render 20, style+layout 11) [73ms Worker.onmessage → onMessage src/app/workerClient.ts:1759] [14ms Worker.onmessage → (anon) :-1] [8ms FrameRequestCallback → runSlice src/preview/createPreview.ts:8957] [7ms Worker.onmessage → onMessage src/app/workerClient.ts:1759]
+OK    (c) 50k headings load: longest LoAF ms / script ms / style+layout ms = 213 / 102 / 11 (target informational)
+--- (d) 6 MB paste: 2 LoAF ≥ 50 ms
+  71 ms (blocking 0, script 0, render 5, style+layout 1) 
+  200 ms (blocking 104, script 55, render 31, style+layout 20) [40ms Worker.onmessage → onMessage src/app/workerClient.ts:1759] [8ms FrameRequestCallback → runSlice src/preview/createPreview.ts:8957] [7ms Worker.onmessage → (anon) :-1]
+OK    (d) 6 MB paste: longest LoAF ms = 200 (target informational)
+--- (f) 5 keystrokes in a 1 MB line: 6 LoAF ≥ 50 ms
+  130 ms (blocking 77, script 123, render 1, style+layout 0) [123ms MutationCallback → (anon) node_modules/.vite/deps/dist-7Dsd9j37.js:217758 forcedLayout=1]
+  101 ms (blocking 51, script 100, render 0, style+layout 0) [100ms MutationCallback → (anon) node_modules/.vite/deps/dist-7Dsd9j37.js:217758]
+  80 ms (blocking 30, script 79, render 0, style+layout 0) [79ms MutationCallback → (anon) node_modules/.vite/deps/dist-7Dsd9j37.js:217758]
+  81 ms (blocking 31, script 80, render 1, style+layout 0) [80ms MutationCallback → (anon) node_modules/.vite/deps/dist-7Dsd9j37.js:217758]
+  81 ms (blocking 31, script 79, render 0, style+layout 0) [79ms MutationCallback → (anon) node_modules/.vite/deps/dist-7Dsd9j37.js:217758]
+  76 ms (blocking 26, script 76, render 0, style+layout 0) [76ms IdleRequestCallback → work node_modules/.vite/deps/@codemirror_language.js:17922]
+OK    (f) 1 MB line: LoAF per keystroke (count ≥ 50 ms / max ms) = 6 / 130 (target informational)
+--- (g) load large.md: 3 LoAF ≥ 50 ms
+  80 ms (blocking 0, script 5, render 12, style+layout 5) [5ms FrameRequestCallback → (anon) node_modules/.vite/deps/dist-7Dsd9j37.js:255388 forcedLayout=3]
+  58 ms (blocking 0, script 16, render 12, style+layout 3) [8ms Worker.onmessage → onMessage src/app/workerClient.ts:1759] [8ms FrameRequestCallback → runSlice src/preview/createPreview.ts:8957]
+  75 ms (blocking 24, script 73, render 1, style+layout 0) [73ms IdleRequestCallback → work node_modules/.vite/deps/@codemirror_language.js:17922]
+OK    (g) large.md load: longest LoAF ms = 80 (target P4 < 120)
+PASS  no console errors  — []
+PASS  no page errors  — []
+
+=== s14 LoAF attribution ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

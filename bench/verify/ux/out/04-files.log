@@ -1,0 +1,18 @@
+PASS  Drop a .md file: dragover highlight, file opens, name in toolbar + title, status 已保存
+PASS  Drop while dirty asks for confirmation; 取消 keeps the current text
+PASS  Drop while dirty + 丢弃 opens the dropped file
+PASS  Dragging non-file data (text) does not highlight
+PASS  Legacy backend: save button is titled 下载; Mod-s downloads the file, clears dirty
+PASS  Mod-Shift-s (另存为) downloads; untitled doc downloads as 未命名.md
+PASS  Export HTML is standalone (no external stylesheet/CDN links)  — none
+PASS  Export HTML downloads a standalone .html with the rendered content  — 43539 bytes; katex=true
+PASS  Draft autosave: status shows 草稿已存 within ~1.5 s of typing  — draft saved after 1040 ms
+PASS  Reload after draft: restore prompt with 恢复/丢弃; 恢复 restores text
+PASS  Restored draft persists again after a further reload (still offered)
+PASS  丢弃 deletes the draft: no prompt on the next reload
+PASS  Draft is flushed on visibilitychange→hidden (typing < 1 s before reload)
+PASS  Saving clears the draft (no prompt after reload)
+PASS  Draft for a dropped (legacy) file is offered on re-drop of the same file
+
+[04-files] 15 passed, 0 failed
+[04-files] no console/page errors

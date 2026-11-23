@@ -1,0 +1,25 @@
+PASS  loaded 1000-section doc  — {"ok":true,"version":2}
+PASS  initial structure tiles  — {"blocks":3000,"docLines":6001,"sumLines":6001,"domBlocks":3000,"pending":2960,"stale":0,"errors":0,"kinds":{"0":2000,"4":1000},"problems":[]}
+PASS  1000 replacements applied in the editor  — headings=1000
+PASS  replace-all is one transaction (one version bump)  — version 2 → 3
+PASS  settled after replace-all  — {"ok":true,"version":3}
+OK    replace-all wall ms / long tasks (count/max) = 105 / 0/0 (target informational)
+PASS  structure tiles after replace-all  — {"blocks":3000,"docLines":6001,"sumLines":6001,"domBlocks":3000,"pending":2950,"stale":17,"errors":0,"kinds":{"0":1000,"1":1000,"4":1000},"problems":[]}
+PASS  1000 heading blocks in structure  — {"0":1000,"1":1000,"4":1000}
+PASS  TOC shows 1000 headings after replace-all  — before=0 after=1000
+PASS  fresh block count equals incremental  — 3000 vs 3000
+PASS  incremental preview === fresh render after replace-all  — []
+PASS  structure tiles after second replace-all  — {"blocks":3000,"docLines":6001,"sumLines":6001,"domBlocks":3000,"pending":2950,"stale":0,"errors":0,"kinds":{"0":2000,"4":1000},"problems":[]}
+PASS  undo after replace-all restores the document  — len 72670 vs 72670
+PASS  structure tiles after undo of replace-all  — {"blocks":3000,"docLines":6001,"sumLines":6001,"domBlocks":3000,"pending":978,"stale":5,"errors":0,"kinds":{"0":2000,"4":1000},"problems":[]}
+PASS  incremental preview === fresh render after second replace-all  — []
+PASS  no console errors  — []
+PASS  no page errors  — []
+PASS  no worker restart  — restarts=0
+
+=== s05 replace-all ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

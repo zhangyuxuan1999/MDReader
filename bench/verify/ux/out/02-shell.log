@@ -1,0 +1,32 @@
+PASS  Initial mode is split (fresh profile) with editor + preview visible
+PASS  Mod-/ cycles split → preview → edit → split, panes + status + toolbar reflect it
+PASS  Mod-/ works when focus is on the preview pane (global shortcut)
+PASS  Direct mode buttons work and persist across reload
+PASS  ?mode= query overrides persisted mode
+PASS  Switching preview→split keeps the same top line in both panes  — preview 1 → editor 1
+PASS  TOC lists headings of small.md with level classes  — 61 items; first: 性能测试文档 Performance Test Document
+PASS  Mod-Shift-o hides/shows TOC, toolbar reflects, persisted across reload
+PASS  TOC click navigates both panes to the heading line  — line 179 "子标题 6.1" offset 0px
+PASS  TOC active item follows the editor cursor
+PASS  TOC updates when a heading is typed
+PASS  Mod-Shift-l toggles theme, applies data-theme, persists, CM + preview recolour  — {"bgBefore":{"cm":"rgb(250, 248, 244)","pv":"rgb(250, 248, 244)","body":"rgb(250, 248, 244)"},"bgAfter":{"cm":"rgb(21, 23, 26)","pv":"rgb(21, 23, 26)","body":"rgb(21, 23, 26)"}}
+PASS  Dark theme applied before first paint on reload (no flash)  — log [{"t":5.899999976158142,"theme":null},{"t":6.5,"theme":"dark"},{"t":35.199999928474426,"theme":"dark"}]
+PASS  Theme toolbar button toggles back to light and persists
+PASS  System dark preference is followed when no pref stored
+PASS  Gutter drag resizes split and persists --split across reload  — 577 → 377px, --split=0.485fr
+PASS  Gutter drag is clamped (cannot collapse a pane)
+PASS  Typing makes title show ● and status 未保存; toolbar dot appears
+PASS  Dialog default focus is on the non-destructive button (Enter should not discard)  — focused button: "取消"
+PASS  New file with dirty doc shows zh-CN confirm dialog; 取消 keeps content
+PASS  Escape cancels the dialog; Mod-s inside dialog does not trigger browser save
+PASS  Dialog 丢弃 creates a new empty untitled document, title without ●
+PASS  Empty doc: Mod-z after new file cannot restore the old document (history reset)
+PASS  beforeunload guard fires when dirty
+PASS  Viewport resize keeps layout sane (no horizontal overflow, panes fill)  — 1400x900: {"sw":1400,"cw":1400,"sh":900,"ch":900,"app":[1400,900],"ed":[577,830],"pv":[577,830],"tb":45,"sb":25,"tocVisible":true,"tbScroll":1400}
+    1000x700: {"sw":1000,"cw":1000,"sh":700,"ch":700,"app":[1000,700],"ed":[377,630],"pv":[377,630],"tb":45,"sb":25,"tocVisible":true,"tbScroll":1000}
+    800x600: {"sw":800,"cw":800,"sh":600,"ch":600,"app":[800,600],"ed":[397,530],"pv":[397,530],"tb":45,"sb":25,"tocVisible":false,"tbScroll":800}
+    640x480: {"sw":640,"cw":640,"sh":480,"ch":480,"app":[640,480],"ed":[334.703125,410],"pv":[334.71875,410],"tb":45,"sb":25,"tocVisible":false,"tbScroll":675}
+    1400x900: {"sw":1400,"cw":1400,"sh":900,"ch":900,"app":[1400,900],"ed":[577,830],"pv":[577,830],"tb":45,"sb":25,"tocVisible":true,"tbScroll":1400}
+
+[02-shell] 25 passed, 0 failed
+[02-shell] no console/page errors

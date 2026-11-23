@@ -1,0 +1,34 @@
+PASS  Mod-b wraps selection with **
+PASS  Mod-b again unwraps
+PASS  Undo after bold-insert + typing removes only the typed char (separate history events)  — after one undo: "普通段落 hello world****"
+PASS  Mod-b with cursor only inserts **** and places cursor inside
+PASS  Mod-i italic wraps with _ and unwraps
+PASS  Mod-e inline code wraps with ` and unwraps
+PASS  Mod-k link insertion with selection selects url
+PASS  Mod-1..6 / Mod-0 set heading level on line
+PASS  Same heading level toggles off
+PASS  Mod-Shift-x toggles task on list item / plain line
+PASS  Enter continues bullet list
+PASS  Enter continues ordered list with next number
+PASS  Enter on empty list item removes the marker
+PASS  Tab indents list item, Shift-Tab dedents
+PASS  Backspace on empty task item removes marker (deleteMarkupBackward)  — got ""
+PASS  Enter continues task list with unchecked box
+PASS  Backspace removes list marker
+PASS  Toolbar bold button runs and keeps editor focus
+PASS  Toolbar heading buttons H1/H2/H3
+PASS  All toolbar buttons have titles, icons and are enabled  — file.new:新建 | file.open:打开 (⌘O) | file.save:保存 (⌘S) | edit.bold:加粗 (⌘B) | edit.italic:斜体 (⌘I) | edit.code:行内代码 (⌘E) | edit.link:链接 (⌘K) | edit.heading1:标题 1 (⌘1) | edit.heading2:标题 2 (⌘2) | edit.heading3:标题 3 (⌘3) | view.mode.edit:编辑 | view.mode.split:分栏 | view.mode.preview:预览 | view.toggleToc:显示/隐藏目录 (⇧⌘O) | view.toggleTheme:切换主题 (⇧⌘L) | view.palette:命令面板 (⇧⌘P) | file.exportHtml:导出 HTML
+PASS  Toolbar italic / code / link buttons
+PASS  Mod-f opens search panel with zh-CN labels  — 下一个 上一个 全选 区分大小写 正则 全词匹配 替换 全部替换 × 查找 替换 下一个 上一个 全选 区分大小写 正则 全词匹配 替换 全部替换 ×
+PASS  Search panel is at the top (search({top:true}))
+PASS  Typing a query, Enter finds next; Mod-g / Mod-Shift-g navigate
+PASS  Replace works and Esc closes panel returning focus to editor
+PASS  Mod-Alt-g opens goto-line panel (zh-CN) and jumps
+PASS  Mod-Shift-p opens palette, filter, arrows, Enter runs, focus returns
+PASS  Palette Esc closes and returns focus; fuzzy matches subsequence
+PASS  Palette items show shortcut labels (mac glyphs)  — 加粗=⌘B | 斜体=⌘I | 行内代码=⌘E | 链接=⌘K | 标题 1=⌘1 | 标题 2=⌘2 | 标题 3=⌘3 | 标题 4=⌘4 | 标题 5=⌘5 | 标题 6=⌘6 | 正文=⌘0 | 切换任务项=⇧⌘X | 查找/替换=⌘F | 跳转到行=⌥⌘G | 新建= | 打开=⌘O | 保存=⌘S | 另存为=⇧⌘S | 导出 HTML= | 切换模式=⌘/ | 编辑= | 分栏= | 预览= | 显示/隐藏目录=⇧⌘O | 切换主题=⇧⌘L | 命令面板=⇧⌘P | 全部渲染=
+PASS  Global shortcuts while palette open are ignored (Mod-/ should not switch mode)
+PASS  Status bar shows 行/列, 字数, 字符, 约 N 分钟, state, mode  — {"pos":"行 3, 列 5","words":"字数 31","chars":"字符 80","reading":"约 1 分钟","file":"cmd-test.md · 未保存","mode":"分栏","progress":null}
+
+[01-editor] 31 passed, 0 failed
+[01-editor] no console/page errors

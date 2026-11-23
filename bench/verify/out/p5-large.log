@@ -1,0 +1,29 @@
+[p5] large.md target line 50011: "行内公式 $E = mc^2$，块级公式：…"
+[p5] block {"index":14709,"id":14710,"startLine":50011,"lineCount":2,"kind":0}
+[p5] before: {"pending":false,"text":"行内公式 E=mc2E = mc^2E=mc2，块级公式：\n","children":1,"editorTop":49995,"previewTop":49995}
+
+[p5] keys=200 mounts=200 keysWithoutMountBeforeNextKey=0
+[p5] typed text present in block: true; source line ok: true; same wrapper element: true; stale at end: false
+[p5] blocks 30002 wrappers 30002; editorTop 49995→49995, previewTop 49995→49995
+[p5] main busy per key: p50 32.3 p95 73.5 max 132.9 ms; longest single gap per key p95 30.7 max 34.5 ms
+[p5] CM dispatch per key: p50 9.2 p95 19.0 max 28.1 ms (n=200)
+[p5] key→mount latency: p50 27.4 p95 34.8 max 41.2 ms (n=200)
+[p5] mount sample ms: p50 0.5 p95 0.8 max 5.8
+[p5] LoAF during typing: 0 
+[p5] long tasks during typing: 0 
+[p5] rAF frame gaps: n=1294 >20ms: 0 max 18.7
+
+[p5] mutations: total 800, childList 200: on target block (direct replaceChildren) 200, inside target 0, on OTHER blocks 0 [], outside any block 0
+[p5] wrapper churn (md-block added/removed): 0 
+[p5] attribute mutations: {"class@md-block is-stale":200,"class@md-block":400}
+FAIL  P5 main-thread busy per keystroke p95: 73.5 ms  (target < 5 ms)
+FAIL  P5 main-thread busy per keystroke max: 132.9 ms  (target < 10 ms)
+PASS  P5 keystroke → block mounted p95: 34.8 ms (n=200/200)  (target < 40 ms)
+PASS  ARCH typing: no .md-block wrapper insert/remove: 0  (target 0)
+PASS  ARCH typing: childList mutations only inside the edited block: other blocks: 0, outside blocks: 0  (target 0 / 0)
+PASS  ARCH typing: wrapper element identity kept: true  (target true)
+PASS  P5 text echoed in preview: true  (target true)
+
+[p13] after typing: heap 54.1 MB, DOM nodes 45577
+[p13] after scroll to end: heap 83.9 MB used / 135.0 MB total, DOM nodes 48504, mounted 25, elements 36887, UA-specific: n/a
+PASS  P13 JS heap after load+typing+scroll-to-end: 83.9 MB (DOM nodes 48504)  (target < 450 MB renderer)

@@ -1,0 +1,23 @@
+TOC items: [{"level":1,"text":"Intro","line":1,"slug":"#intro"},{"level":2,"text":"Intro","line":5,"slug":"#intro-1"},{"level":3,"text":"Intro","line":7,"slug":"#intro-2"},{"level":2,"text":"Code inline and em and link","line":9,"slug":"#code-inline-and-em-and-link"},{"level":1,"text":"Setext H1","line":11,"slug":"#setext-h1"},{"level":2,"text":"Setext H2","line":14,"slug":"#setext-h2"},{"level":4,"text":"中文 标题 Heading","line":17,"slug":"#中文-标题-heading"},{"level":5,"text":"A & B c & # d","line":19,"slug":"#a--b-c---d"},{"level":6,"text":"Deep 6","line":21,"slug":"#deep-6"},{"level":2,"text":"Right after para","line":49,"slug":"#right-after-para"},{"level":2,"text":"Trailing hashes","line":51,"slug":"#trailing-hashes"},{"level":2,"text":"Spaces   Inside","line":53,"slug":"#spaces-inside"},{"level":1,"text":"with image","line":55,"slug":"#with-image"},{"level":1,"text":"Emoji 🎉 & Punct!?","line":57,"slug":"#emoji---punct"}]
+Rendered headings: [{"tag":"h1","text":"Intro","id":null,"inList":false},{"tag":"h2","text":"Intro","id":null,"inList":false},{"tag":"h3","text":"Intro","id":null,"inList":false},{"tag":"h2","text":"Code inline and em and link","id":null,"inList":false},{"tag":"h1","text":"Setext H1","id":null,"inList":false},{"tag":"h2","text":"Setext H2","id":null,"inList":false},{"tag":"h4","text":"中文 标题 Heading","id":null,"inList":false},{"tag":"h5","text":"A & B c & # d","id":null,"inList":false},{"tag":"h6","text":"Deep 6","id":null,"inList":false},{"tag":"h1","text":"heading in quote","id":null,"inList":false},{"tag":"h1","text":"heading in list (2 spaces)","id":null,"inList":true},{"tag":"h3","text":"three-space indent ok","id":null,"inList":true},{"tag":"h1","text":"four spaces is code","id":null,"inList":true},{"tag":"h2","text":"Right after para","id":null,"inList":false},{"tag":"h2","text":"Trailing hashes","id":null,"inList":false},{"tag":"h2","text":"Spaces   Inside","id":null,"inList":false},{"tag":"h1","text":"with image","id":null,"inList":false},{"tag":"h1","text":"Emoji 🎉 & Punct!?","id":null,"inList":false}]
+PASS  [outline] outline: entry count matches rendered headings  — 14
+PASS  [outline] outline: level/text equal to rendered headings
+PASS  [outline] outline: slug dedupe -1/-2 and CJK slugs resolve to the right lines
+PASS  [outline] stats: ascii  — 字数 15 / 字符 85 / 约 1 分钟
+PASS  [outline] stats: cjk+latin  — 字数 36 / 字符 74 / 约 1 分钟
+PASS  [outline] stats: symbols  — 字数 15 / 字符 88 / 约 1 分钟
+PASS  [outline] stats: empty  — 字数 0 / 字符 0 / 约 0 分钟 (hidden)
+PASS  [outline] stats: long cjk  — 字数 1500 / 字符 3503 / 约 5 分钟
+PASS  [outline] stats: crlf  — 字数 7 / 字符 15 / 约 1 分钟
+PASS  [outline] stats: trailing newline  — 字数 3 / 字符 14 / 约 1 分钟
+PASS  [outline] stats: no trailing newline  — 字数 3 / 字符 13 / 约 1 分钟
+PASS  [outline] stats: running totals after typing  — 字数 10 / 字符 39
+PASS  [outline] outline: multi-line setext heading in TOC
+PASS  [outline] outline: live update after typing a heading
+PASS  [outline] outline: toc text follows heading edit
+PASS  [outline] outline: duplicate heading added later gets -1 slug
+PASS  [outline] no page errors
+PASS  [outline] no console errors (fixture image 404s ignored)
+
+[outline] 18 pass, 0 fail, 0 measurements
+__RESULT__{"findings":[],"measurements":[]}

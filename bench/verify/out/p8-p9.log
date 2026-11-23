@@ -1,0 +1,14 @@
+[P8] preview wheel 20 screens: frames 368, >20 ms: 1 (0.3 %), max gap 33.2 ms, p95 18.4
+[P8] long tasks: none; LoAF: none
+[P8] end: preview top 665, editor top 665, mounted 222; editor-follow frames needed per screen: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+[P8] follow detail (last screen): [[665,665],[665,665],[665,665],[665,665],[665,665],[665,665]]
+PASS  P8 frames > 20 ms during preview wheel: 0.3 % (1/368, max 33.2 ms)  (target < 3 %)
+PASS  P8 editor follows within ≤ 1 frame: worst 0 frames (per screen: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)  (target ≤ 1)
+PASS  P8 final editor/preview top line delta: 0 lines  (target ≤ 3)
+
+[P9] editor PageDown x100: frames 298, >20 ms: 1 (0.3 %), max gap 83.4 ms; long tasks 101
+[P9] end: editor top 2665 (cursor 2693), preview top 2665; preview-follow frames per 10 PageDowns: 0,0,0,0,0,0,0,0,0,0
+PASS  P9 frames > 20 ms during PageDown x100: 0.3 % (1/298, max 83.4 ms)  (target < 3 %)
+PASS  P9 preview follows within ≤ 1 frame: worst 0 frames  (target ≤ 1)
+PASS  P9 final delta: 0 lines  (target ≤ 3)
+PASS  P9 PageDown moved the editor: top line 2665  (target > 1000)

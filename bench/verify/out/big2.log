@@ -1,0 +1,11 @@
+1 MB paragraph mounted: {"cls":"md-block","pieces":16,"textLen":1000081,"first":"md-plain md-plain__piece"}
+MEAS  [big2] 1 MB paragraph rendered as PLAIN (raw markdown text, no inline markup): yes (spec maxHtmlChars=200000) (target spec-conformant, informational)
+PASS  [big2] 1 MB paragraph: typed text appears  — 988 ms
+MEAS  [big2] 1 MB paragraph: keystroke → preview shows typed text: 989 ms (target informational)
+PASS  [big2] 1 MB paragraph: burst-typed text appears
+lengths: {"editor":1000127,"preview":1000094}
+PASS  [big2] no page errors
+PASS  [big2] no console errors
+
+[big2] 4 pass, 0 fail, 2 measurements
+__RESULT__{"findings":[],"measurements":[{"name":"1 MB paragraph rendered as PLAIN (raw markdown text, no inline markup)","value":"yes (spec maxHtmlChars=200000)","target":"spec-conformant, informational","pass":true},{"name":"1 MB paragraph: keystroke → preview shows typed text","value":"989 ms","target":"informational","pass":true}]}

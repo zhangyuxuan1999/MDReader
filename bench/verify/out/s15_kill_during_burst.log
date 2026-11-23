@@ -1,0 +1,22 @@
+PASS  initial settle  — {"ok":true,"version":1}
+MISS  burst wall ms (must span both crash timers at 1.5 s / 3.2 s) = 2313 (target > 3300)
+OK    input latency p95 / max during burst with 2 crashes (ms) = 15.9 / 21.3 (target p95 < 100)
+FAIL  exactly 2 restarts happened (3 workers)  — {"workers":2,"restarts":1}
+PASS  toast 「渲染器已重启」 shown  — ["渲染器已重启×"]
+PASS  settled after burst + crashes  — {"ok":true,"version":1225}
+PASS  editor holds the whole burst  — len 412047
+PASS  structure tiles after crashes  — {"blocks":6001,"docLines":20574,"sumLines":20574,"domBlocks":6001,"pending":5984,"stale":0,"errors":0,"kinds":{"0":1800,"1":1201,"2":600,"3":600,"4":600,"5":600,"7":600},"problems":[]}
+PASS  preview after crash-during-burst === fresh render  — []
+PASS  crash during setDoc(large.md): settles  — {"ok":true,"version":1227}
+PASS  crash during setDoc(large.md): structure tiles with 30002 blocks  — {"blocks":30002,"docLines":102004,"sumLines":102004,"domBlocks":30002,"pending":29957,"stale":0,"errors":0,"kinds":{"0":9001,"1":6001,"2":3000,"3":3000,"4":3000,"5":3000,"7":3000},"problems":[]}
+PASS  3 restarts total so far (limit not yet exceeded)  — restarts=3
+PASS  preview reflects typing after the 3rd restart
+PASS  no console errors  — []
+PASS  no page errors  — []
+
+=== s15 kill during burst ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 3
+}

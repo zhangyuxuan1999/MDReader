@@ -1,0 +1,70 @@
+FAIL  (a) replace-all + idle + 1 s: no mounted block left .is-stale  — {"stale":28,"mountedStale":28,"visibleStale":0,"sample":[{"id":"1462","text":"xx Title 487\n"},{"id":"1465","text":"xx Title 488\n"},{"id":"1468","text":"xx Title 489\n"}]}
+PASS  (a) replace-all + idle + 1 s: no visible block left .is-stale  — {"stale":28,"mountedStale":28,"visibleStale":0,"sample":[{"id":"1462","text":"xx Title 487\n"},{"id":"1465","text":"xx Title 488\n"},{"id":"1468","text":"xx Title 489\n"}]}
+FAIL  (b) large-doc toast shown on a 1 MB line  — []
+PASS  (b) large-doc toast auto-dismissed after 5 s  — []
+MISS  (c) 50k headings load: long tasks count / max ms = 2/167 (target P4-like: longest < 120 ms)
+(c) self-time top:
+  820ms (idle) :-1
+  258ms (program) :-1
+  38ms makeItem src/preview/toc.ts:3
+  20ms newWrapper src/preview/createPreview.ts:108
+  11ms reconcile src/preview/toc.ts:61
+  11ms setProperty :-1
+  10ms (garbage collector) :-1
+  10ms (anon) :10
+  9ms createElement :-1
+  8ms insertBefore :-1
+(c) inclusive app functions:
+  72ms dispatch src/app/workerClient.ts:46
+  72ms onMessage src/app/workerClient.ts:41
+  66ms setOutline src/preview/toc.ts:151
+  66ms onOutline src/app/App.ts:276
+  65ms reconcile src/preview/toc.ts:61
+  44ms makeItem src/preview/toc.ts:3
+  40ms runSlice src/preview/createPreview.ts:228
+  39ms chunksFor src/preview/createPreview.ts:141
+  36ms createRange src/preview/createPreview.ts:119
+  34ms newWrapper src/preview/createPreview.ts:108
+  34ms makeWrapper src/preview/createPreview.ts:116
+  6ms onStructure src/app/App.ts:265
+  6ms applyStructure src/preview/createPreview.ts:279
+  6ms setDoc src/editor/createEditor.ts:136
+OK    (d) 6 MB paste: long tasks count / max ms = 1/171 (target informational)
+(d) self-time top:
+  576ms (idle) :-1
+  251ms (program) :-1
+  96ms newWrapper src/preview/createPreview.ts:108
+  28ms applyStructure src/preview/createPreview.ts:279
+  27ms setProperty :-1
+  26ms appendChild :-1
+  25ms (garbage collector) :-1
+  18ms makeItem src/preview/toc.ts:3
+  13ms createElement :-1
+  10ms process node_modules/.vite/deps/dist-1JlpyTd9.js:943
+(d) inclusive app functions:
+  163ms runSlice src/preview/createPreview.ts:228
+  159ms chunksFor src/preview/createPreview.ts:141
+  146ms createRange src/preview/createPreview.ts:119
+  135ms makeWrapper src/preview/createPreview.ts:116
+  135ms newWrapper src/preview/createPreview.ts:108
+  67ms dispatch src/app/workerClient.ts:46
+  67ms onMessage src/app/workerClient.ts:41
+  36ms setOutline src/preview/toc.ts:151
+  36ms onOutline src/app/App.ts:276
+  34ms reconcile src/preview/toc.ts:61
+  31ms onStructure src/app/App.ts:265
+  30ms applyStructure src/preview/createPreview.ts:279
+  19ms makeItem src/preview/toc.ts:3
+  11ms onUpdate src/editor/createEditor.ts:81
+PASS  (e) after undo: wrappers created within 1 s of idle  — {"atIdle":{"blocks":6002,"dom":6002},"after1s":{"blocks":6002,"dom":6002}}
+PASS  (e) after undo: visible blocks mounted  — {"pending":0,"total":8,"scrollTop":578423}
+PASS  no console errors  — []
+PASS  no page errors  — []
+PASS  no worker restart  — restarts=0
+
+=== s13 follow-ups ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

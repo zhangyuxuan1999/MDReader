@@ -1,0 +1,101 @@
+[
+  {
+    "title": "Split mode: the first preview keystroke in a block below the first screen scrolls the preview back to the editor's caret line (line 1 after opening a file). On large.md, Enter then fails to resume the session and everything typed afterwards is lost.",
+    "severity": "high",
+    "file": "src/preview/scrollSync.ts",
+    "repro": "Web or packaged app, split mode:\n1. Open test-data/small.md or large.md.\n2. Scroll the PREVIEW down with the mouse wheel (10+ screens) and click into a paragraph.\n3. Type 'xyz'.\nbench/verify/inline-verify-render.mjs, 'typing in a block scrolled far down' steps; desktop: bench/verify/inline-verify-desktop.mjs.\nFor the lost typing: on large.md, click the paragraph at line 50017, press Enter, then type 'abc'.",
+    "expected": "The preview stays where it is and the edited block stays on screen. Enter resumes the session on the new paragraph, and typing lands there.",
+    "actual": "Preview scrollTop jumps:\n- small.md: 28598 → 0 px (top line 1000 → 1)\n- large.md: -300071 px\n- packaged app: 28598 → 0\nThe edited block is off screen while the user keeps typing blind.\n\nOn large.md after Enter:\n- the new block is never mounted, so the resume never starts (no session after 3 s);\n- 'abc' is lost;\n- the split write leaves '&nbsp;over the lazy dog.' in the source.\n\nThe status bar and TOC also show the editor caret line (行 1) instead of the edited line. Preview-only mode is not affected (0 px drift).",
+    "suggestedFix": "Root cause: every preview write dispatches a CodeMirror transaction tagged userEvent 'input.type.previewEdit'.\n- CodeMirror's onCursor then emits doc:cursor with typing=true for the editor's unfocused caret (App.ts:590).\n- scrollSync's offCursor (scrollSync.ts ~159) calls preview.scrollToLine(thatLine), because that line is not visible.\n- previewWriteGate only filters the focus-line consumer.\n\nFix options:\n- Gate the doc:cursor emission, or scrollSync's offCursor, while a preview write or session is active (e.g. skip when previewEdit.sessionActive() || previewWrites.noted), or emit typing=false for 'input.type.previewEdit' transactions.\n- Better: in createSourceAccess.replace, move CodeMirror's selection to the end of the replaced range (the edited block). The editor caret, TOC and status bar then follow the preview edit, and the follow target is the visible block.\n\nAdd the render-script steps as regression tests."
+  },
+  {
+    "title": "Pasting multi-line text inside a code fence loses every newline",
+    "severity": "high",
+    "file": "src/preview/inlineEdit.ts",
+    "repro": "1. Open a doc with the fence ```js / const a = 1; / const b = 2; / ```.\n2. Click into the code and put the caret after 'const a = 1;'.\n3. Paste text/plain '\\nconst c = 3;\\nconst d = 4;'.\nbench/verify/inline-verify-editing.mjs, 'paste multi-line text inside a code fence'.",
+    "expected": "```js\nconst a = 1;\nconst c = 3;\nconst d = 4;\nconst b = 2;\n```",
+    "actual": "Source line: 'const a = 1;const c = 3;const d = 4;'. The lines are merged, so the pasted code is corrupted.",
+    "suggestedFix": "In onPaste, the code branch calls exec('insertText', text) with '\\n' inside <pre>. Chrome's insertText('\\n') splits or drops newlines, the same bug the integrator fixed for Enter. Split the text on '\\n' and call exec('insertLineBreak') between the lines (or insertText per line), as the prose branch does. Add a unit or e2e test."
+  },
+  {
+    "title": "⌘K with a collapsed caret writes raw HTML with an inline style into the Markdown source",
+    "severity": "high",
+    "file": "src/preview/inlineEdit.ts",
+    "repro": "1. Click into a paragraph and place the caret at its end (no selection).\n2. Press ⌘K, type https://c.example/ and press Enter.\n3. Type '后'.\nbench/verify/inline-verify-editing.mjs, '⌘K with a collapsed caret'.",
+    "expected": "'…合并。[https://c.example/](https://c.example/)后', or a bare autolink.",
+    "actual": "'…合并。<a href=\"https://c.example/\" style=\"background-color: rgb(250, 248, 244);\">https://c.example/</a>后' is written to the file. The light-theme background is baked in, so it shows as a beige box in dark mode.",
+    "suggestedFix": "closeLinkUi's collapsed branch uses exec('insertHTML', '<a href>…</a>'), and Chrome copies the computed style onto the inserted element. Insert the <a> through the DOM (range.insertNode plus caret placement, then schedule()), or run insertText followed by createLink on the selected URL.\n\nAs a safety net, the editing-mode serializer should strip style attributes from Markdown-mappable inline elements (A/STRONG/EM/CODE) instead of falling back to raw HTML. The same concern applies to toggleInlineCode's insertHTML."
+  },
+  {
+    "title": "Keys typed between a split write and the resumed session are dropped: Backspace/Delete, and CJK text committed without a keydown",
+    "severity": "medium",
+    "file": "src/preview/inlineEdit.ts",
+    "repro": "Three cases:\n(a) Doc '## 标题\\n紧跟的段落文字。'. Click after '段落', type 'x', and within ~20 ms press Backspace. The first edit of a heading+paragraph block inserts a blank line, so it is a split.\n(b) Enter mid-paragraph, then Backspace within 30 ms.\n(c) Enter, then CDP Input.insertText('新段落') within 0–30 ms.\nScripts: bench/verify/inline-verify-editing.mjs and bench/verify/inline-verify-resume.mjs. The fidelity sweep hit (a) on docs/SPEC.md:392 (heading directly followed by a table): 'next editx |'.",
+    "expected": "The Backspace deletes the character, or the Enter. The IME-committed text lands in the new paragraph.",
+    "actual": "- The Backspace is silently dropped and 'x' stays.\n- CJK insertText in the ~30 ms window is lost; the screenshot run typed '新段落从这里开始' and only '新' survived.\n- The resume window is 27–42 ms on small.md.",
+    "suggestedFix": "onResumeKey only buffers printable keys, and Backspace only when the replay buffer is non-empty. Buffer every editing key in the window (Backspace, Delete, arrows, Enter) plus beforeinput/insertText and composition data, and replay them on the new session.\n\nAlternatively, keep the old element contenteditable until the new session begins and map the extra text across. Also consider not treating the first keystroke's blank-line normalisation of heading+content blocks as a split that ends the session."
+  },
+  {
+    "title": "No way to undo an accidental Enter in the preview: Backspace at block start does not merge, and ⌘Z after the split does nothing",
+    "severity": "medium",
+    "file": "src/preview/inlineEdit.ts",
+    "repro": "1. Click mid-paragraph ('回车|拆分') and press Enter. The session resumes on '拆分和退格合并。'.\n2. Press Backspace at offset 0, or press ⌘Z.\nbench/verify/inline-verify-editing.mjs, 'accidental Enter…' and '⌘Z inside the session after an Enter split'.",
+    "expected": "Typora-like behaviour: Backspace at the start of a block merges it into the previous block, and ⌘Z undoes the split.",
+    "actual": "The source stays split ('第二段落用于测试回车' / '' / '拆分和退格合并。'). Backspace at a block start writes nothing, and the resumed session's native undo history is empty. The only remedy is to leave the preview and undo in CodeMirror.",
+    "suggestedFix": "Handle Backspace at text offset 0 (and Delete at the end) in onKeyDown for Prose/Heading/Quote. Merge through the source: replace the previous block's lines plus this block's lines with the joined text, then resume with the caret at the join.\n\nWhen execCommand('undo') is a no-op (queryCommandEnabled('undo') is false), fall back to CodeMirror's undo(). Its history groups preview writes under 'input.type.previewEdit'."
+  },
+  {
+    "title": "⌘Z inside a session undoes one character at a time; in web preview mode ⌘Z after the session ends does nothing",
+    "severity": "medium",
+    "file": "src/app/App.ts",
+    "repro": "1. Click into a paragraph, type 'undo test' at 30 ms per key, and press ⌘Z once.\n   The packaged app's 编辑→撤销 menu item behaves the same.\n2. Web preview mode: type, press Esc, then press ⌘Z.",
+    "expected": "One ⌘Z undoes the typing burst (Chrome's default coalescing, as in a plain contenteditable). ⌘Z after the session undoes the preview edit.",
+    "actual": "Step 1: 'undo tes'. Each ⌘Z removes a single character. Control check: a plain contenteditable with a per-keystroke DOM mutation elsewhere on the page shows the same behaviour, so the per-keystroke CodeMirror and status-bar DOM updates break Chrome's typing coalescing.\nStep 2: nothing happens. The web build has no global undo binding outside CodeMirror; the desktop menu's runHistory does switch to split.",
+    "suggestedFix": "Route ⌘Z/⇧⌘Z during a session to CodeMirror's history, which already groups preview writes (userEvent 'input.type.previewEdit', 500 ms joins). Then re-sync the session block from the source, or end and resume the session.\n\nAdd a global Mod-z / Mod-Shift-z handler for preview mode when no session is active, matching runHistory."
+  },
+  {
+    "title": "⌘E with a collapsed caret does not start inline code; the typed text lands outside the backticks",
+    "severity": "medium",
+    "file": "src/preview/inlineEdit.ts",
+    "repro": "Click at the end of a paragraph, press ⌘E, type 'npm i', then press → and type ' 完成'.",
+    "expected": "'…`npm i` 完成'. The hint bar advertises '⌘E 行内代码' as the way to avoid typing backticks.",
+    "actual": "'…npm i 完成' with no code span. ⌘B and ⌘I with a collapsed caret do work.",
+    "suggestedFix": "toggleInlineCode inserts '<code>ZWSP</code>ZWSP' via insertHTML, and the caret ends up after the trailing ZWSP. After inserting, place the caret inside the code's text node, after the ZWSP, so the next insertText goes into <code>. Alternatively, create the element through the DOM and set the selection explicitly."
+  },
+  {
+    "title": "Per-keystroke cost grows superlinearly with list size: 300-item list 48 ms per key, 1000-item list about 385 ms per key",
+    "severity": "medium",
+    "file": "src/preview/serialize.ts",
+    "repro": "bench/verify/inline-verify-perf.mjs (300 items) and an ad-hoc run with 50/300/1000 items, dev build.\n1. Load a single list block of N items ('- 列表项 i：… **粗体** 与 `code`').\n2. Click an item and type.",
+    "expected": "The per-keystroke preview work stays under 10 ms at p95.",
+    "actual": "- 300 items: session start 64 ms; flush p50 39 ms / p95 48 ms, of which the preview part is 44 ms.\n- 1000 items (45k chars, still under MAX_EDIT_CHARS 60000): about 385 ms per keystroke.\n- 50 items: about 13 ms, including the frame wait.\n- Normal blocks are fast: large.md paragraph p95 0.6 ms; medium.md tables flush p95 1.7 ms.",
+    "suggestedFix": "Serialize only the top-level child (the list item) that contains the caret and splice its lines into the block's last written text, or cache the per-item serialization.\n\nFind and remove the superlinear step (likely a whole-block pass per item in escaping or neighbour context). Alternatively, lower MAX_EDIT_CHARS for List/Quote kinds, or throttle serialization for large blocks (write on idle)."
+  },
+  {
+    "title": "First edit of a block rewrites non-canonical source (54 of 218 blocks); only &nbsp; changes the rendering",
+    "severity": "low",
+    "file": "src/preview/serialize.ts",
+    "repro": "bench/verify/inline-verify-fidelity.mjs: 218 blocks from a tricky corpus, README.md, docs/SPEC.md and small.md. For each block: click it, change nothing, press Esc; then type 'x' at the end and delete it. Details are in bench/verify/out/inline-verify-fidelity.json.",
+    "expected": "Click + Esc writes nothing: PASS, 0 writes, byte-identical. A type-and-delete ideally leaves the source unchanged, or applies only documented normalisations.",
+    "actual": "54 blocks changed after typing and deleting one character:\n- Table delimiter row: '|---|' → '| --- |'; ':---' → ':--'.\n- Escaping: '[1]', '[x]', 'arr[0]' → '\\[1\\]'; '$5' → '\\$5'; '~~~' → '\\~\\~\\~'.\n- Whitespace: tab → space; trailing single space dropped; backslash hard break → two spaces.\n- Headings: '### x ###' → '### x'; setext → ATX.\n- Quotes: '>>' → '> >' with an added '>' line; lazy continuation gets '> '.\n- A blank line is inserted between a heading and the paragraph, table or fence that directly follows it in one block (SPEC.md style).\n- Reference links → inline; '[a](<https://x.com/a b>)' → '%20'.\n- Loose ordered list gets blank lines between items.\n- Entities decoded: '&copy;' → '©', and '&nbsp;' → plain space. This one changes the rendering: the non-breaking space is lost.\n\nAlso: typing two spaces collapses to one; typing four spaces at a paragraph start gives '&nbsp; '; pasting paragraphs separated by blank lines leaves '  ' lines. Fuzzing produced raw '<em>&nbsp;&nbsp;</em>' / '<strong>…&nbsp;&nbsp;</strong>' when an emphasis ends in two spaces.",
+    "suggestedFix": "The contract accepts most of these. To reduce churn for a writer who never looks at the source:\n- Keep untouched sibling lines verbatim: diff the serialized block against the baseline per top-level child and splice only the changed child's lines.\n- Preserve the table delimiter row when column count and alignment are unchanged.\n- Do not escape '[x]' when no link definition or following '(' / '[' makes it a link.\n- Keep '&nbsp;' as an entity.\n- Move leading/trailing whitespace outside emphasis instead of emitting raw HTML."
+  },
+  {
+    "title": "Editor-only shortcuts (⌘1–⌘6 heading, ⌘0, ⌘⇧X task, ⌘F find) do nothing inside a preview session, with no feedback",
+    "severity": "low",
+    "file": "src/app/App.ts",
+    "repro": "Click into a paragraph in the preview, type, then press ⌘2 (or ⌘F, ⌘⇧X). See bench/verify/inline-verify-interplay.mjs.",
+    "expected": "Either the command applies to the edited block (make it a heading, toggle a task) or it is routed to the editor. The typed text must be committed either way; it is.",
+    "actual": "The session is kept, focus stays in the preview, and the source is unchanged. The keys are silently ignored, so a preview writer cannot make a heading without typing '## '.",
+    "suggestedFix": "Route editor-scope shortcuts pressed inside the contenteditable through runEditorCommand. For heading, paragraph and task, implement them in the session: rewrite the block's first line through source.replace and resume. Or at least show a toast."
+  },
+  {
+    "title": "Blocks with '<!--' inside inline code, or inline raw <div> text, are refused for editing",
+    "severity": "low",
+    "file": "src/preview/serialize.ts",
+    "repro": "1. docs/SPEC.md:285, a list whose inline code contains `/^ {0,3}<!--/`, is refused with the toast 此块请在源码中编辑.\n2. So is the paragraph '文本里有 <div> 字样和 <span>内联标签</span>'.",
+    "expected": "Only blocks containing real HTML comments or raw block HTML are refused.",
+    "actual": "The guard is source.includes('<!--'), which also matches inside code spans. Inline '<div>' text makes the whole paragraph non-editable.",
+    "suggestedFix": "In unsupportedReason, strip code spans or fences before the '<!--' check, or check the DOM for comment nodes instead of the source."
+  }
+]

@@ -1,0 +1,12 @@
+preview: {"mode":"preview","cm":[0,0,0,0],"pane":[0,0],"dialog":false,"palette":false,"overlayHit":"A.mdr-toc__item mdr-toc__item--h2"}
++0ms: {"mode":"split","cm":[298,33,519,27425],"pane":[240,577],"dialog":false,"palette":false,"overlayHit":"DIV.cm-line"}
++500ms: {"mode":"split","cm":[298,33,519,27425],"pane":[240,577],"dialog":false,"palette":false,"overlayHit":"DIV.cm-line"}
++1000ms: {"mode":"split","cm":[298,33,519,27425],"pane":[240,577],"dialog":false,"palette":false,"overlayHit":"DIV.cm-line"}
++1500ms: {"mode":"split","cm":[298,33,519,27425],"pane":[240,577],"dialog":false,"palette":false,"overlayHit":"DIV.cm-line"}
++2000ms: {"mode":"split","cm":[298,33,519,27425],"pane":[240,577],"dialog":false,"palette":false,"overlayHit":"DIV.cm-line"}
++2500ms: {"mode":"split","cm":[298,33,519,27425],"pane":[240,577],"dialog":false,"palette":false,"overlayHit":"DIV.cm-line"}
+click: ok
+boundingBox: {"x":298.265625,"y":33,"width":518.734375,"height":27425.0625} isVisible: true
+
+[dbg-split] 0 passed, 0 failed
+[dbg-split] no console/page errors

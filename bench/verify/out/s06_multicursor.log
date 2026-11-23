@@ -1,0 +1,27 @@
+PASS  3-cursor typing inserted 3 copies  — count=3
+PASS  3 cursors typing: settled  — {"ok":true,"version":8}
+PASS  3 cursors typing: structure tiles  — {"blocks":300,"docLines":1024,"sumLines":1024,"domBlocks":300,"pending":276,"stale":0,"errors":0,"kinds":{"0":91,"1":61,"2":30,"3":30,"4":29,"5":29,"7":30},"problems":[]}
+PASS  3 cursors typing: fresh settled  — {"ok":true,"version":9}
+PASS  3 cursors typing: incremental preview === fresh render  — []
+PASS  3 cursors typing: block count  — 300 vs 300
+PASS  200-change transaction: settled  — {"ok":true,"version":11}
+PASS  200-change transaction: structure tiles  — {"blocks":137,"docLines":1280,"sumLines":1280,"domBlocks":137,"pending":123,"stale":0,"errors":0,"kinds":{"0":53,"1":45,"2":9,"3":7,"4":8,"5":7,"7":8},"problems":[]}
+PASS  200-change transaction: fresh settled  — {"ok":true,"version":12}
+PASS  200-change transaction: incremental preview === fresh render  — []
+PASS  200-change transaction: block count  — 137 vs 137
+PASS  50-cursor typing inserted 50 copies  — count=50
+PASS  50 cursors typing: settled  — {"ok":true,"version":25}
+PASS  50 cursors typing: structure tiles  — {"blocks":5951,"docLines":20454,"sumLines":20454,"domBlocks":5951,"pending":5884,"stale":0,"errors":0,"kinds":{"0":1786,"1":1195,"2":594,"3":594,"4":594,"5":594,"7":594},"problems":[]}
+PASS  50 cursors typing: fresh settled  — {"ok":true,"version":26}
+PASS  50 cursors typing: incremental preview === fresh render  — []
+PASS  50 cursors typing: block count  — 5951 vs 5951
+PASS  no console errors  — []
+PASS  no page errors  — []
+PASS  no worker restart  — restarts=0
+
+=== s06 multi-cursor ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

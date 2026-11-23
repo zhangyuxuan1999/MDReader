@@ -1,0 +1,22 @@
+PASS  [extra] details: content is nested and collapsed
+PASS  [extra] div align=center: content nested and centred
+PASS  [extra] task toggle inside blockquote
+PASS  [extra] math: text after same-line $$ kept
+PASS  [extra] math: text after closer line kept
+PASS  [extra] refs: ref def inside fence not treated as a definition
+PASS  [extra] refs: ref def inside <pre> not treated as a definition
+PASS  [extra] refs: ref def inside indented code not treated as a definition
+ref deletion samples: [{"t":1636,"scrollTop":32,"visible":21,"visPending":0,"visStale":0,"visOld":0,"visIds":["14","15","16"],"totalStale":0,"totalOld":0},{"t":1889,"scrollTop":32,"visible":21,"visPending":0,"visStale":0,"visOld":0,"visIds":["14","15","16"],"totalStale":0,"totalOld":0},{"t":2145,"scrollTop":32,"visible":21,"visPending":0,"visStale":0,"visOld":0,"visIds":["14","15","16"],"totalStale":0,"totalOld":0},{"t":2400,"scrollTop":32,"visible":21,"visPending":0,"visStale":0,"visOld":0,"visIds":["14","15","16"],"totalStale":0,"totalOld":0},{"t":2654,"scrollTop":32,"visible":21,"visPending":0,"visStale":0,"visOld":0,"visIds":["14","15","16"],"totalStale":0,"totalOld":0},{"t":2908,"scrollTop":32,"visible":21,"visPending":0,"visStale":0,"visOld":0,"visIds":["14","15","16"],"totalStale":0,"totalOld":0},{"t":3163,"scrollTop":32,"visible":21,"visPending":0,"visStale":0,"visOld":0,"visIds":["14","15","16"],"totalStale":0,"totalOld":0},{"t":3419,"scrollTop":32,"visible":21,"visPending":0,"visStale":0,"visOld":0,"visIds":["14","15","16"],"totalStale":0,"totalOld":0},{"t":3675,"scrollTop":32,"visible":21,"visPending":0,"visStale":0,"visOld":0,"visIds":["14","15","16"],"totalStale":0,"totalOld":0},{"t":3929,"scrollTop":32,"visible":21,"visPending":0,"visStale":0,"visOld":0,"visIds":["14","15","16"],"totalStale":0,"totalOld":0},{"t":4185,"scrollTop":32,"visible":21,"visPending":0,"visStale":0,"visOld":0,"visIds":["14","15","16"],"totalStale":0,"totalOld":0},{"t":4440,"scrollTop":32,"visible":21,"visPending":0,"visStale":0,"visOld":0,"visIds":["14","15","16"],"totalStale":0,"totalOld":0}]
+PASS  [extra] refs: deleting the definition refreshes the visible blocks  — idle after 31 ms; {"t":4440,"scrollTop":32,"visible":21,"visPending":0,"visStale":0,"visOld":0,"visIds":["14","15","16"],"totalStale":0,"totalOld":0}
+PASS  [extra] refs: blocks scrolled into view after the deletion are refreshed
+toc: [{"level":5,"text":"A & B c & # d","line":1,"slug":"#a--b-c---d"},{"level":1,"text":"with image","line":3,"slug":"#with-image"}]
+PASS  [extra] toc: heading text has HTML stripped
+export ids: [ 'a--b-c---d', 'with-image' ] app slugs: [ '#a--b-c---d', '#with-image' ]
+PASS  [extra] export: heading ids equal in-app slugs
+offline export: {"katex":true,"mathmlDisplay":null,"mathmlHeight":null,"htmlHeight":21,"visibleText":"M\n\nInline E=mc\n2\n and\n\n∫\n0\n1\n\t​\n\nxdx","links":[]}
+PASS  [extra] export: no external stylesheet
+PASS  [extra] no page errors
+PASS  [extra] no console errors
+
+[extra] 15 pass, 0 fail, 0 measurements
+__RESULT__{"findings":[],"measurements":[]}

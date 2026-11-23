@@ -1,0 +1,29 @@
+OK    baseline after warm-up + unload: heap MB / nodes = 8.4 / 162 (target informational)
+baseline { heap: 8.4, total: 9, nodes: 162, listeners: 131, docs: 2, frames: 1 } { all: 114, blocks: 0, mounted: 0, workers: 1, toc: 0, cmLines: 1 }
+cycle 1: loaded 36.7 MB → unloaded 9.3 MB, nodes 171, listeners 132, DOM 117, md-blocks 0, workers 1
+cycle 2: loaded 36.8 MB → unloaded 9.4 MB, nodes 171, listeners 131, DOM 114, md-blocks 0, workers 1
+cycle 3: loaded 36.9 MB → unloaded 9.5 MB, nodes 177, listeners 131, DOM 114, md-blocks 0, workers 1
+cycle 4: loaded 36.9 MB → unloaded 9.5 MB, nodes 183, listeners 131, DOM 114, md-blocks 0, workers 1
+cycle 5: loaded 37 MB → unloaded 9.6 MB, nodes 189, listeners 131, DOM 114, md-blocks 0, workers 1
+cycle 6: loaded 37 MB → unloaded 9.6 MB, nodes 195, listeners 131, DOM 114, md-blocks 0, workers 1
+cycle 7: loaded 37 MB → unloaded 9.7 MB, nodes 201, listeners 131, DOM 114, md-blocks 0, workers 1
+cycle 8: loaded 37.1 MB → unloaded 9.7 MB, nodes 207, listeners 131, DOM 114, md-blocks 0, workers 1
+cycle 9: loaded 37.1 MB → unloaded 9.7 MB, nodes 213, listeners 131, DOM 114, md-blocks 0, workers 1
+cycle 10: loaded 36.1 MB → unloaded 9.7 MB, nodes 219, listeners 131, DOM 114, md-blocks 0, workers 1
+OK    heap after 10 load/unload cycles vs baseline (MB) = 9.7 vs 8.4 (×1.15) (target within +30 %)
+OK    DOM nodes after 10 cycles vs baseline = 219 vs 162 (target within +30 %)
+OK    event listeners after 10 cycles vs baseline = 131 vs 131 (target within +30 %)
+PASS  no leftover .md-block wrappers after unload  — blocks=0
+PASS  exactly one Worker ever created (no restarts)  — workers=1
+OK    heap growth per cycle (MB/cycle, after unload) = 0.04 (target ≈ 0)
+OK    loaded-state heap growth per cycle (MB/cycle) = -0.07 (target ≈ 0)
+PASS  no console errors  — []
+PASS  no page errors  — []
+PASS  no worker restart  — restarts=0
+
+=== s11 memory cycles ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

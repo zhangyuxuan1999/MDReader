@@ -1,0 +1,94 @@
+--- currency prefix only
+[{"text":"Costs $5 and $10 today; $5.00 to $10.50; US$3-$4.","katex":0,"errors":[],"mathSpans":0,"blockMath":0,"tex":[],"annotations":0,"semantics":0,"mathml":0,"html":"<p data-l=\"0\">Costs $5 and $10 today; $5.00 to $10.50; US$3-$4.</p> "}]
+PASS  [math] math semantics: currency prefix only
+PASS  [math] math per-block == whole-doc: currency prefix only: preview == markdown-it  — 3 canonical lines, 1 blocks
+--- suffix currency "5$ each" after a "$5"
+[{"text":"Price 5,then55, then 55,then5 each.","katex":1,"errors":[],"mathSpans":1,"blockMath":0,"tex":["5,then5"],"annotations":0,"semantics":0,"mathml":1,"html":"<p data-l=\"0\">Price <span class=\"md-math\">[K]</span></span> each.</p> "}]
+FAIL  [math] math semantics: suffix currency "5$ each" after a "$5"
+      {"text":"Price $5, then 5$ each.\n","blocks":[{"text":"Price 5,then55, then 55,then5 each.","katex":1,"errors":[],"mathSpans":1,"blockMath":0,"tex":["5,then5"],"annotations":0,"semantics":0,"mathml":1,"html":"<p data-l=\"0\">Price <span class=\"md-math\">[K]</span></span> each.</p> "}]}
+PASS  [math] math per-block == whole-doc: suffix currency "5$ each" after a "$5": preview == markdown-it  — 9 canonical lines, 1 blocks
+--- suffix currency alone
+[{"text":"It costs 5$ each and 10$ total.","katex":0,"errors":[],"mathSpans":0,"blockMath":0,"tex":[],"annotations":0,"semantics":0,"mathml":0,"html":"<p data-l=\"0\">It costs 5$ each and 10$ total.</p> "}]
+PASS  [math] math semantics: suffix currency alone
+PASS  [math] math per-block == whole-doc: suffix currency alone: preview == markdown-it  — 3 canonical lines, 1 blocks
+--- dollar alone / double dollar words
+[{"text":"A $ sign, $$ two, abbbc and end.","katex":1,"errors":[],"mathSpans":1,"blockMath":0,"tex":["b"],"annotations":0,"semantics":0,"mathml":1,"html":"<p data-l=\"0\">A $ sign, $$ two, a<span class=\"md-math\">[K]</span></span>c and end.</p> "}]
+PASS  [math] math semantics: dollar alone / double dollar words
+PASS  [math] math per-block == whole-doc: dollar alone / double dollar words: preview == markdown-it  — 9 canonical lines, 1 blocks
+--- escaped dollars
+[{"text":"Escaped $x$ and $5.","katex":0,"errors":[],"mathSpans":0,"blockMath":0,"tex":[],"annotations":0,"semantics":0,"mathml":0,"html":"<p data-l=\"0\">Escaped $x$ and $5.</p> "}]
+PASS  [math] math semantics: escaped dollars
+PASS  [math] math per-block == whole-doc: escaped dollars: preview == markdown-it  — 3 canonical lines, 1 blocks
+--- inline math basic
+[{"text":"Let x2+y1x^2 + y_1x2+y1​ hold.","katex":1,"errors":[],"mathSpans":1,"blockMath":0,"tex":["x2+y1​"],"annotations":0,"semantics":0,"mathml":1,"html":"<p data-l=\"0\">Let <span class=\"md-math\">[K]</span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-"}]
+FAIL  [math] math semantics: inline math basic
+      {"text":"Let $x^2 + y_1$ hold.\n","blocks":[{"text":"Let x2+y1x^2 + y_1x2+y1​ hold.","katex":1,"errors":[],"mathSpans":1,"blockMath":0,"tex":["x2+y1​"],"annotations":0,"semantics":0,"mathml":1,"html":"<p data-l=\"0\">Let <span class=\"md-math\">[K]</span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-"}]}
+PASS  [math] math per-block == whole-doc: inline math basic: preview == markdown-it  — 9 canonical lines, 1 blocks
+--- inline math with < > & and \text
+[{"text":"a<b>ca < b > ca<b>c and a&b\\text{a\\&b}a&b.","katex":2,"errors":[],"mathSpans":2,"blockMath":0,"tex":["a<b>c","a&b"],"annotations":0,"semantics":0,"mathml":2,"html":"<p data-l=\"0\"><span class=\"md-math\">[K]</span></span> and <span class=\"md-math\">[K]</span></span></span>.</p> "}]
+PASS  [math] math semantics: inline math with < > & and \text
+PASS  [math] math per-block == whole-doc: inline math with < > & and \text: preview == markdown-it  — 14 canonical lines, 1 blocks
+--- inline display $$..$$
+[{"text":"See x<yx < yx<y here.","katex":1,"errors":[],"mathSpans":1,"blockMath":0,"tex":["x<y"],"annotations":0,"semantics":0,"mathml":1,"html":"<p data-l=\"0\">See <span class=\"md-math md-math--display\"><span class=\"katex-display\">[K]</span></span></span> here.</p> "}]
+PASS  [math] math semantics: inline display $$..$$
+PASS  [math] math per-block == whole-doc: inline display $$..$$: preview == markdown-it  — 11 canonical lines, 1 blocks
+--- block math aligned
+[{"text":"a=bc=d\\begin{aligned} a &= b \\\\ c &= d \\end{aligned} ac​=b=d​","katex":1,"errors":[],"mathSpans":1,"blockMath":1,"tex":["ac​=b=d​"],"annotations":0,"semantics":0,"mathml":1,"html":"<div class=\"md-math md-math--block\" data-l=\"0\"><span class=\"katex-display\">[K]<span style=\"top:-2.26em;\"><span class=\"pstrut\" style=\"height:3em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\">c</span></span></span></span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:1.1em;\"><span></span></span></span></span></span><span class=\"col-align-l\"><"}]
+PASS  [math] math semantics: block math aligned
+PASS  [math] math per-block == whole-doc: block math aligned: preview == markdown-it  — 7 canonical lines, 1 blocks
+--- block math in blockquote
+[{"text":"a=ba = b a=b","katex":1,"errors":[],"mathSpans":1,"blockMath":1,"tex":["a=b"],"annotations":0,"semantics":0,"mathml":1,"html":"<blockquote data-l=\"0\"> <div class=\"md-math md-math--block\" data-l=\"0\"><span class=\"katex-display\">[K]</span></span></div> </blockquote> "}]
+PASS  [math] math semantics: block math in blockquote
+PASS  [math] math per-block == whole-doc: block math in blockquote: preview == markdown-it  — 9 canonical lines, 1 blocks
+--- inline math in list + block math in list item
+[{"text":"xxx item yy y","katex":2,"errors":[],"mathSpans":2,"blockMath":1,"tex":["x","y"],"annotations":0,"semantics":0,"mathml":2,"html":"<ul> <li data-l=\"0\"><span class=\"md-math\">[K]</span></span> item</li> <li data-l=\"1\"> <div class=\"md-math md-math--block\" data-l=\"1\"><span class=\"katex-display\">[K]</span></span></div> </li> </ul> "}]
+PASS  [math] math semantics: inline math in list + block math in list item
+PASS  [math] math per-block == whole-doc: inline math in list + block math in list item: preview == markdown-it  — 19 canonical lines, 1 blocks
+--- math in table cells
+[{"text":"aaa bbb c1c_1c1​ d","katex":3,"errors":[],"mathSpans":3,"blockMath":0,"tex":["a","b","c1​"],"annotations":0,"semantics":0,"mathml":3,"html":"<table data-l=\"0\"> <thead> <tr> <th><span class=\"md-math\">[K]</span></span></th> <th><span class=\"md-math md-math--display\"><span class=\"katex-display\">[K]</span></span></span></th> </tr> </thead> <tbody> <tr> <td><span class=\"md-math\">[K]</span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span></sp"}]
+PASS  [math] math semantics: math in table cells
+PASS  [math] math per-block == whole-doc: math in table cells: preview == markdown-it  — 36 canonical lines, 1 blocks
+--- unclosed $$ block runs to end (no crash, text kept)
+[{"text":"a=bnextparaa = b next para a=bnextpara","katex":1,"errors":[],"mathSpans":1,"blockMath":1,"tex":["a=bnextpara"],"annotations":0,"semantics":0,"mathml":1,"html":"<div class=\"md-math md-math--block\" data-l=\"0\"><span class=\"katex-display\">[K]</span></span></div> "}]
+PASS  [math] math semantics: unclosed $$ block runs to end (no crash, text kept)
+PASS  [math] math per-block == whole-doc: unclosed $$ block runs to end (no crash, text kept): preview == markdown-it  — 7 canonical lines, 1 blocks
+--- $$ at line start followed by prose ("$$ is the price")
+[{"text":"isthepricenextparais the price next para isthepricenextpara","katex":1,"errors":[],"mathSpans":1,"blockMath":1,"tex":["isthepricenextpara"],"annotations":0,"semantics":0,"mathml":1,"html":"<div class=\"md-math md-math--block\" data-l=\"0\"><span class=\"katex-display\">[K]</span></span></div> "}]
+PASS  [math] math semantics: $$ at line start followed by prose ("$$ is the price")
+PASS  [math] math per-block == whole-doc: $$ at line start followed by prose ("$$ is the price"): preview == markdown-it  — 7 canonical lines, 1 blocks
+--- single $ unclosed
+[{"text":"A single $ here and text","katex":0,"errors":[],"mathSpans":0,"blockMath":0,"tex":[],"annotations":0,"semantics":0,"mathml":0,"html":"<p data-l=\"0\">A single $ here and text</p> "},{"text":"$unclosed math runs?","katex":0,"errors":[],"mathSpans":0,"blockMath":0,"tex":[],"annotations":0,"semantics":0,"mathml":0,"html":"<p data-l=\"0\">$unclosed math runs?</p> "},{"text":"next","katex":0,"errors":[],"mathSpans":0,"blockMath":0,"tex":[],"annotations":0,"semantics":0,"mathml":0,"html":"<p data-l=\"0\">next</p> "}]
+PASS  [math] math semantics: single $ unclosed
+PASS  [math] math per-block == whole-doc: single $ unclosed: preview == markdown-it  — 9 canonical lines, 3 blocks
+--- math with markdown-looking tex
+[{"text":"a1∗b2∗ca_1 * b_2 * ca1​∗b2​∗c and {x∣x>0}\\{x | x > 0\\}{x∣x>0} and [a](b)[a](b)[a](b)","katex":3,"errors":[],"mathSpans":3,"blockMath":0,"tex":["a1​∗b2​∗c","{x∣x>0}","[a](b)"],"annotations":0,"semantics":0,"mathml":3,"html":"<p data-l=\"0\"><span class=\"md-math\">[K]</span><span class=\"vlist-s\">​</span></span><span class=\"vlist-r\"><span class=\"vlist\" style=\"height:0.15em;\"><span></span></span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">∗</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"katex-base\"><span class=\"katex-strut\" s"}]
+PASS  [math] math semantics: math with markdown-looking tex
+PASS  [math] math per-block == whole-doc: math with markdown-looking tex: preview == markdown-it  — 19 canonical lines, 1 blocks
+--- CJK around math
+[{"text":"面积为S=πr2S=\\pi r^2S=πr2，其中rrr为半径。","katex":2,"errors":[],"mathSpans":2,"blockMath":0,"tex":["S=πr2","r"],"annotations":0,"semantics":0,"mathml":2,"html":"<p data-l=\"0\">面积为<span class=\"md-math\">[K]</span></span></span></span></span></span></span></span></span>，其中<span class=\"md-math\">[K]</span></span>为半径。</p> "}]
+PASS  [math] math semantics: CJK around math
+PASS  [math] math per-block == whole-doc: CJK around math: preview == markdown-it  — 15 canonical lines, 1 blocks
+--- math block with trailing text on closer line
+[{"text":"xx x tail","katex":1,"errors":[],"mathSpans":1,"blockMath":1,"tex":["x"],"annotations":0,"semantics":0,"mathml":1,"html":"<div class=\"md-math md-math--block\" data-l=\"0\"><span class=\"katex-display\">[K]</span></span></div> <p data-l=\"2\">tail</p> "}]
+PASS  [math] math semantics: math block with trailing text on closer line
+PASS  [math] math per-block == whole-doc: math block with trailing text on closer line: preview == markdown-it  — 10 canonical lines, 1 blocks
+--- giant tex > 20000 chars shown as code
+[{"text":"x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+","katex":0,"errors":[],"mathSpans":1,"blockMath":0,"tex":[],"annotations":0,"semantics":0,"mathml":0,"html":"<p data-l=\"0\"><span class=\"md-math\"><code>x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+x+"}]
+PASS  [math] math semantics: giant tex > 20000 chars shown as code
+PASS  [math] math per-block == whole-doc: giant tex > 20000 chars shown as code: preview == markdown-it  — 7 canonical lines, 1 blocks
+--- math inside inline code and fence must stay literal
+[{"text":"$x$ and","katex":0,"errors":[],"mathSpans":0,"blockMath":0,"tex":[],"annotations":0,"semantics":0,"mathml":0,"html":"<p data-l=\"0\"><code>$x$</code> and</p> "},{"text":"$$ y $$","katex":0,"errors":[],"mathSpans":0,"blockMath":0,"tex":[],"annotations":0,"semantics":0,"mathml":0,"html":"<pre class=\"md-code md-code--unhighlighted\" data-l=\"0\"><code>$$ y $$ </code></pre> "}]
+PASS  [math] math semantics: math inside inline code and fence must stay literal
+PASS  [math] math per-block == whole-doc: math inside inline code and fence must stay literal: preview == markdown-it  — 11 canonical lines, 2 blocks
+--- math inside html block
+[{"text":"$x$","katex":0,"errors":[],"mathSpans":0,"blockMath":0,"tex":[],"annotations":0,"semantics":0,"mathml":0,"html":"<div data-l=\"0\"> $x$ </div> "}]
+PASS  [math] math semantics: math inside html block
+PASS  [math] math per-block == whole-doc: math inside html block: preview == markdown-it  — 3 canonical lines, 1 blocks
+mathml after sanitize: {"math":true,"semantics":false,"annotation":false,"mathInner":"<mrow><msup><mi>x</mi><mn>2</mn></msup></mrow>x^2","strayText":["x^2"]}
+FAIL  [math] math: DOMPurify strips <semantics>/<annotation> from KaTeX MathML (TeX source left as a stray text node inside <math>)
+      {"math":true,"semantics":false,"annotation":false,"mathInner":"<mrow><msup><mi>x</mi><mn>2</mn></msup></mrow>x^2","strayText":["x^2"]}
+PASS  [math] no page errors
+PASS  [math] no console errors
+
+[math] 42 pass, 3 fail, 0 measurements
+__RESULT__{"findings":[{"title":"math semantics: suffix currency \"5$ each\" after a \"$5\"","text":"Price $5, then 5$ each.\n","blocks":[{"text":"Price 5,then55, then 55,then5 each.","katex":1,"errors":[],"mathSpans":1,"blockMath":0,"tex":["5,then5"],"annotations":0,"semantics":0,"mathml":1,"html":"<p data-l=\"0\">Price <span class=\"md-math\">[K]</span></span> each.</p> "}]},{"title":"math semantics: inline math basic","text":"Let $x^2 + y_1$ hold.\n","blocks":[{"text":"Let x2+y1x^2 + y_1x2+y1​ hold.","katex":1,"errors":[],"mathSpans":1,"blockMath":0,"tex":["x2+y1​"],"annotations":0,"semantics":0,"mathml":1,"html":"<p data-l=\"0\">Let <span class=\"md-math\">[K]</span></span></span></span></span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span><span class=\"mbin\">+</span><span class=\"mspace\" style=\"margin-right:0.2222em;\"></span></span><span class=\"katex-base\"><span class=\"katex-strut\" style=\"height:0.625em;vertical-align:-0.1944em;\"></span><span class=\"mord\"><span class=\"mord mathnormal\" style=\"margin-"}]},{"title":"math: DOMPurify strips <semantics>/<annotation> from KaTeX MathML (TeX source left as a stray text node inside <math>)","math":true,"semantics":false,"annotation":false,"mathInner":"<mrow><msup><mi>x</mi><mn>2</mn></msup></mrow>x^2","strayText":["x^2"]}],"measurements":[]}

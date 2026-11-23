@@ -1,0 +1,20 @@
+PASS  initial settle  — {"ok":true,"version":1}
+OK    6 MB paste dispatch main-thread time (ms) = 88.4 (target < 500 (informational))
+OK    input latency p95 immediately after paste (ms) = 24.5 (target < 100)
+OK    input latency max immediately after paste (ms) = 33.5 (target informational)
+PASS  settled after 6 MB paste  — {"ok":true,"version":27}
+OK    time from paste to worker idle (ms) = 697 (target < 20000 (P3 idle))
+PASS  structure tiles the document after paste  — {"blocks":191047,"docLines":575542,"sumLines":575542,"domBlocks":19069,"pending":19029,"stale":0,"errors":0,"kinds":{"0":32642,"1":32041,"2":31441,"3":31441,"4":31441,"5":31441,"7":600},"problems":[]}
+OK    long tasks after paste (count / max ms / >100ms) = 2/297/1 (target informational)
+PASS  editor holds pasted text + typed text  — len 6702072
+PASS  pasted region mounted in preview  — {"pending":false,"text":"\n\n\na\nb\n\n\n\n\n1\n2\n\n\n\n"}
+PASS  no console errors  — []
+PASS  no page errors  — []
+PASS  no worker restart  — restarts=0
+
+=== s04 paste 6 MB ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

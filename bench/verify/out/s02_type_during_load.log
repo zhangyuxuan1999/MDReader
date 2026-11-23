@@ -1,0 +1,20 @@
+PASS  render still in progress when typing starts  — {"structure":-1,"idle":-1,"html":0,"pending":0,"blocks":0,"focused":true}
+OK    editor ready after navigation (ms) = 157 (target informational)
+OK    input latency p95 while initial render in progress (ms) = 15.1 (target < 100)
+OK    input latency max while initial render in progress (ms) = 16.8 (target informational)
+OK    typing 263 chars wall (ms) = 144 (target informational)
+PASS  no edits lost: editor text === typed + original  — len 6952230 vs 6952230; head="Typed during load: abc abc abc abc abc abc abc abc abc abc a"
+PASS  worker settled after typing during load  — {"ok":true,"version":264}
+PASS  structure tiles the document  — {"blocks":100002,"docLines":340004,"sumLines":340004,"domBlocks":100002,"pending":99976,"stale":0,"errors":0,"kinds":{"0":30002,"1":20000,"2":10000,"3":10000,"4":10000,"5":10000,"7":10000},"problems":[]}
+PASS  preview first block shows the typed text  — Typed during load: abc abc abc abc abc abc abc abc abc abc abc abc abc abc abc a
+OK    long tasks (count / max ms) whole scenario = 1/167 (target max < 120 (CM state), informational)
+PASS  no console errors  — []
+PASS  no page errors  — []
+PASS  no worker restart  — restarts=0
+
+=== s02 type during load ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

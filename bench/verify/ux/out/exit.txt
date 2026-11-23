@@ -1,0 +1,4 @@
+01-editor exit 0
+02-shell exit 0
+04-files exit 0
+03-preview exit 0

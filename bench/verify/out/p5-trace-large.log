@@ -1,0 +1,12 @@
+[trace large line 50011] keys=60 tasks in window=7061
+[trace] main busy per key (RunTask sum): p50 29.0 p95 42.6 max 58.7 ms
+[trace] longest task per key: p50 14.4 p95 18.7 max 20.4 ms
+[trace] tasks > 5 ms: 60, > 10 ms: 49, > 16 ms: 6, > 50 ms: 0
+[trace] mean per-key breakdown (ms, nested events overlap): FunctionCall 13.31, RunMicrotasks 11.37, EventDispatch 2.78, Layout 1.86, FireAnimationFrame 1.59, Paint 0.66, UpdateLayoutTree 0.54, Commit 0.47, Layerize 0.43, PrePaint 0.26, HandlePostMessage 0.21, HitTest 0.02, TimerFire 0.02
+  task 20.4 ms: RunMicrotasks 18.2, FunctionCall 18.2, EventDispatch(keypress) 1.9, EventDispatch(textInput) 1.8, Layout 0.9, EventDispatch(keydown) 0.2
+  task 18.7 ms: RunMicrotasks 13.8, FunctionCall 13.8, EventDispatch(keypress) 1.6, EventDispatch(textInput) 1.6, FireAnimationFrame 1.0, FunctionCall 1.0
+  task 18.7 ms: RunMicrotasks 13.8, FunctionCall 13.8, EventDispatch(keypress) 1.6, EventDispatch(textInput) 1.6, FireAnimationFrame 1.0, FunctionCall 1.0
+  task 16.6 ms: RunMicrotasks 14.6, FunctionCall 14.5, EventDispatch(keypress) 1.7, EventDispatch(textInput) 1.6, Layout 0.8, EventDispatch(keydown) 0.3
+  task 16.4 ms: RunMicrotasks 14.6, FunctionCall 14.6, EventDispatch(keypress) 1.6, EventDispatch(textInput) 1.5, Layout 0.7, EventDispatch(keydown) 0.2
+FAIL  P5(trace) main busy per keystroke p95: 42.6 ms  (target < 5 ms)
+FAIL  P5(trace) main busy per keystroke max: 58.7 ms  (target < 10 ms)

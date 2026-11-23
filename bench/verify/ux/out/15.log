@@ -1,0 +1,8 @@
+PASS  split → preview (button) → split (button): editor visible and clickable again  — preview: {"w":0,"h":0,"display":"block","visibility":"visible","opacity":"1"} → split: {"w":519,"h":27086,"display":"block","visibility":"visible","opacity":"1"}
+PASS  split → preview via Mod-/ keeps the reading position (scrolled to ~line 600)  — editor 603 → preview 603
+PASS  preview → edit via Mod-/ keeps the reading position and shows the editor  — preview 718 → editor 718
+PASS  edit → split via Mod-/: both panes visible, preview follows  — editor 1 → preview 1
+PASS  Repeat preview → split via buttons 3× (flakiness check)  — split:27660 split:27660 split:27660
+
+[15-mode-visibility] 5 passed, 0 failed
+[15-mode-visibility] no console/page errors

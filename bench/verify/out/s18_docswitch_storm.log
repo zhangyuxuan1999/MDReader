@@ -1,0 +1,23 @@
+PASS  settles after 20 back-to-back loads  — {"ok":true,"version":26}
+OK    20 loads + settle wall (ms) = 671 (target informational)
+PASS  editor holds the last document (small.md)  — len 20239 vs 20239
+PASS  structure tiles the final document  — {"blocks":302,"docLines":1024,"sumLines":1024,"domBlocks":302,"pending":276,"stale":0,"errors":0,"kinds":{"0":91,"1":61,"2":30,"3":30,"4":30,"5":30,"7":30},"problems":[]}
+PASS  block count equals a clean load of small.md  — 302 vs 302
+PASS  preview after storm === fresh render of small.md  — []
+PASS  TOC item count matches small.md headings  — {"toc":{"items":61,"first":"性能测试文档 Performance Test Document"},"tocExpect":61}
+PASS  status bar file name is the last loaded one  — 行 1, 列 1字数 6948字符 20239约 23 分钟fresh.md · 未命名分栏渲染中 1%
+OK    latency p95 while a 2 MB load lands mid-burst (ms) = 15.4 (target < 100)
+PASS  settles after load-mid-burst  — {"ok":true,"version":448}
+PASS  structure tiles after load-mid-burst  — {"blocks":6002,"docLines":20404,"sumLines":20404,"domBlocks":6002,"pending":5936,"stale":0,"errors":0,"kinds":{"0":1801,"1":1201,"2":600,"3":600,"4":600,"5":600,"7":600},"problems":[]}
+FAIL  editor text = large.md with the post-load keystrokes inserted (prefix/suffix intact)  — {"len":410903,"large":2075291}
+FAIL  preview after load-mid-burst === fresh render  — ["block count 13568 vs 6002","block 0: incremental=\"\" vs fresh=\"<h1 data-l=\"0\">性能测试文档 Performance Test Document</h1>\"","block 1: incremental=\"\" vs fresh=\"<p data-l=\"0\">本文件由 scripts/gen-sample.mjs 生成。</p>\"","block 2: incremental=\"\" vs fresh=\"<h2 data-l=\"0\">第 1 节 Section 1</h2>\"","block 3: incremental=\"\" vs fresh=\"<p data-l=\"0\">这是一个用于性能测试的段落。Markdown 编辑器需要在大文件下保持流畅：输入、滚动、跳转都不应卡顿。The quick brown fox jumps over the lazy dog. 中文与 English 混排，<strong>加粗</strong>、<em>斜体</em>、<c\""]
+PASS  no console errors  — []
+PASS  no page errors  — []
+PASS  no worker restart  — restarts=0
+
+=== s18 docswitch storm ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

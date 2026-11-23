@@ -1,0 +1,23 @@
+PASS  initial settle medium.md  — {"ok":true,"version":1}
+OK    typing 2000 chars wall time (ms) = 7850 (target informational)
+OK    input latency p95 during burst (ms) = 16.2 (target < 100)
+OK    input latency max during burst (ms) = 23.7 (target informational)
+PASS  editor text grew by ≥ 2000 chars  — len 413734 vs 410483
+PASS  editor text prefix intact
+PASS  editor text suffix intact
+PASS  worker settled after burst  — {"ok":true,"version":1983}
+OK    long tasks during burst (count/max ms) = 0/0 (target 0 > 100 ms after load)
+PASS  structure tiles the document after burst  — {"blocks":6007,"docLines":20578,"sumLines":20578,"domBlocks":6007,"pending":5962,"stale":0,"errors":0,"kinds":{"0":1802,"1":1203,"2":601,"3":600,"4":601,"5":600,"7":600},"problems":[]}
+PASS  fresh render settled  — {"ok":true,"version":1984}
+PASS  fresh structure block count equals incremental  — 6007 vs 6007
+PASS  incremental preview === fresh render (per-block HTML)  — []
+PASS  no console errors  — []
+PASS  no page errors  — []
+PASS  no worker restart  — restarts=0
+
+=== s01 typing burst ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}

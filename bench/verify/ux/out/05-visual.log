@@ -1,0 +1,33 @@
+PASS  screenshot split light 1400x900
+PASS  screenshot split light 1000x700
+PASS  screenshot split dark 1400x900
+PASS  screenshot split dark 1000x700
+PASS  screenshot preview mode dark + edit mode light
+PASS  screenshot overlays: palette, search panel, dialog, toast, dragover (light)
+PASS  screenshot overlays dark: palette + dialog + toasts
+PASS  screenshot rich content (code, table, math, quote, task list, html) light+dark
+PASS  Computed styles: fonts, sizes, line-height, CJK  — {"previewFont":"-apple-system, \"system-ui\", \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans CJK SC\", sans-serif","previewSize":"16px","previewLH":"28px","cmFont":"-apple-system, \"system-ui\", \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans CJK SC\", sans-serif","cmSize":"15px","cmLH":"26.25px","codeFont":"ui-monospace, \"SF Mono\", Menlo, Monaco, Consolas, \"PingFang SC\", monospace","codeSize":"14px","tocSize":"13px","statusSize":"12px","h1":"30.4px","h2":"24px","katex":true,"hljs":true,"table":true,"checkbox":[{"checked":false,"disabled":false},{"checked":true,"disabled":false}],"details":true,"img":"lazy"}
+PASS  contrast light previewText ≥ 4.5 (AA)  — 15.05 (rgb(31, 34, 38) on rgb(250, 248, 244))
+PASS  contrast light editorText ≥ 4.5 (AA)  — 15.05 (rgb(31, 34, 38) on rgb(250, 248, 244))
+PASS  contrast light gutter ≥ 4.5 (AA)  — 4.83 (rgb(106, 110, 117) on rgb(250, 248, 244))
+PASS  contrast light status ≥ 4.5 (AA)  — 5.12 (rgb(106, 110, 117) on rgb(255, 255, 255))
+PASS  contrast light toc ≥ 4.5 (AA)  — 5.64 (rgb(156, 63, 12) on rgb(239, 235, 227))
+PASS  contrast light tocActive ≥ 4.5 (AA)  — 5.64 (rgb(156, 63, 12) on rgb(239, 235, 227))
+PASS  contrast light code ≥ 4.5 (AA)  — 9.56 (rgb(56, 60, 67) on rgb(241, 238, 231))
+PASS  contrast light link ≥ 4.5 (AA)  — 5.82 (rgb(11, 95, 191) on rgb(250, 248, 244))
+PASS  contrast light muted ≥ 4.5 (AA)  — 5.12 (rgb(106, 110, 117) on rgb(255, 255, 255))
+PASS  contrast light toolbarBtn ≥ 4.5 (AA)  — 15.97 (rgb(31, 34, 38) on rgb(255, 255, 255))
+PASS  contrast dark previewText ≥ 4.5 (AA)  — 14.13 (rgb(230, 228, 223) on rgb(21, 23, 26))
+PASS  contrast dark editorText ≥ 4.5 (AA)  — 14.13 (rgb(230, 228, 223) on rgb(21, 23, 26))
+PASS  contrast dark gutter ≥ 4.5 (AA)  — 6.68 (rgb(154, 158, 166) on rgb(21, 23, 26))
+PASS  contrast dark status ≥ 4.5 (AA)  — 6.09 (rgb(154, 158, 166) on rgb(29, 32, 36))
+PASS  contrast dark toc ≥ 4.5 (AA)  — 7.74 (rgb(243, 178, 122) on rgb(40, 43, 49))
+PASS  contrast dark tocActive ≥ 4.5 (AA)  — 7.74 (rgb(243, 178, 122) on rgb(40, 43, 49))
+PASS  contrast dark code ≥ 4.5 (AA)  — 10.68 (rgb(214, 211, 205) on rgb(31, 34, 39))
+PASS  contrast dark link ≥ 4.5 (AA)  — 8.18 (rgb(111, 179, 255) on rgb(21, 23, 26))
+PASS  contrast dark muted ≥ 4.5 (AA)  — 6.09 (rgb(154, 158, 166) on rgb(29, 32, 36))
+PASS  contrast dark toolbarBtn ≥ 4.5 (AA)  — 12.87 (rgb(230, 228, 223) on rgb(29, 32, 36))
+PASS  Contrast: fg/bg of key surfaces in both themes  — light.previewText=15.05 light.editorText=15.05 light.gutter=4.83 light.status=5.12 light.toc=5.64 light.tocActive=5.64 light.code=9.56 light.link=5.82 light.muted=5.12 light.toolbarBtn=15.97 dark.previewText=14.13 dark.editorText=14.13 dark.gutter=6.68 dark.status=6.09 dark.toc=7.74 dark.tocActive=7.74 dark.code=10.68 dark.link=8.18 dark.muted=6.09 dark.toolbarBtn=12.87
+
+[05-visual] 30 passed, 0 failed
+[05-visual] no console/page errors

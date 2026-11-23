@@ -1,0 +1,43 @@
+FAIL  Plain items in a list that also contains task items keep their bullets  — plain items without bullets: [{"text":"普通项一","cls":"","task":false,"style":"none","ulCls":"contains-task-list","pad":"6.4px"},{"text":"普通项二","cls":"","task":false,"style":"none","ulCls":"contains-task-list","pad":"6.4px"}] (all: [{"text":"普通项一","cls":"","task":false,"style":"none","ulCls":"contains-task-list","pad":"6.4px"},{"text":"普通项二","cls":"","task":false,"style":"none","ulCls":"contains-task-list","pad":"6.4px"},{"text":"任务项","cls":"task-list-item enabled","task":true,"style":"none","ulCls":"contains-task-list","pad":"6.4px"},{"text":"完成项","cls":"task-list-item enabled","task":true,"style":"none","ulCls":"contains-task-list","pad":"6.4px"},{"text":"编号一","cls":"","task":false,"style":"decimal","ulCls":"contains-task-list","pad":"28.8px"},{"text":"编号任务","cls":"task-list-item enabled","task":true,"style":"none","ulCls":"contains-task-list","pad":"28.8px"}])
+PASS  Wide table is scrollable inside the preview instead of overflowing/clipping  — {"sw":568,"cw":497,"wrapper":"md-block","wrapperOverflow":"visible","tableOverflow":"auto","display":"block","tableRight":1360,"pvRight":1400}
+PASS  Long unbroken word wraps (overflow-wrap) rather than overflowing the paragraph  — [{"t":"AAAAAAAAAAAA","sw":497,"cw":497,"ow":"anywhere"},{"t":"https://exam","sw":497,"cw":497,"ow":"anywhere"},{"t":"行内 zzzzzzzzz","sw":497,"cw":497,"ow":"anywhere"}]
+PASS  Long unbroken text / URL / code / table: no horizontal scroll of the page or the preview pane; pre & table scroll internally  — {"page":[1400,1400],"preview":[577,577],"body":[497,497],"pre":[2652,497,"auto"],"table":{"sw":568,"cw":497,"wrapper":"md-block","wrapperOverflow":"visible","tableOverflow":"auto","display":"block","tableRight":1360,"pvRight":1400},"editor":[577,577],"paras":[{"t":"AAAAAAAAAAAA","sw":497,"cw":497,"ow":"anywhere"},{"t":"https://exam","sw":497,"cw":497,"ow":"anywhere"},{"t":"行内 zzzzzzzzz","sw":497,"cw":497,"ow":"anywhere"}]}
+FAIL  Identical toasts are de-duplicated (≤ 2 visible after 5 clicks)  — 5 toasts visible
+PASS  Clicking a relative link 5× quickly does not stack 5 identical toasts; info toast auto-dismisses  — 5 toasts; all gone after ≈3952 ms
+PASS  Draft-restore toast does not auto-dismiss (still there after 8 s)
+FAIL  Esc from a palette opened while the preview had focus returns focus to the editor  — focus on BODY
+PASS  Palette opened with focus on the preview: Esc returns focus to the editor; mouse click runs a command
+PASS  Palette fuzzy filter matches a subsequence (标3 → 标题 3) and ranks prefix matches first  — 标题 3
+FAIL  Hovering a palette item makes it the active (Enter) target  — active after hover: "标题 1"
+PASS  Palette: mouse hover moves the active item; Enter runs the hovered one
+PASS  Mod-k without selection inserts [](url)-style template (or similar) at the cursor  — line: "段落 [](url)abc def", selected "url"
+PASS  Mod-k with no selection inserts a link template; bold on a multi-line selection  — no-sel link → "段落 [](url)abc def" (selected "url"); multi-line bold → "**第一行 one\n第二行 **two\n"
+PASS  #anchor to a missing heading: no navigation, URL unchanged, no error (feedback noted)  — toasts: (none — silent no-op)
+FAIL  Alt+click on heading / quote / code / table row / nested list item moves the cursor to the right line  — locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('.mdr-preview a[href="#二"]')
+
+PASS  Nested task checkbox toggles the right source line; Mod-z reverts and the preview follows
+PASS  Mod-Alt-g as a real macOS keydown (key "©", code KeyG) opens goto-line; Mod-Shift-x with key "X"
+FAIL  Dropping a binary .png does not replace the document with garbage  — text changed to "�PNG\u0000\u0001\u0002"
+FAIL  Dropping a non-markdown file gives feedback (toast) instead of silently opening it  — toasts ; dialog=false
+PASS  Dropping a .png onto a clean document: document unchanged, user gets feedback  — png → toasts []; dialog=false; text changed=true
+PASS  No toolbar button is clipped at 640px  — []
+PASS  File name does not overlap toolbar buttons at 640px  — overlapped [] name 597,658.203125,11,33
+PASS  Toolbar at 640×480: every button visible and not overlapped by the file name  — {"sw":666,"cw":666,"h":45,"overflow":"visible"} name=597,658,11,33
+PASS  Search: Mod-f while open refocuses the field; Shift-Enter finds previous; × closes and returns focus
+PASS  TOC active item updates after a TOC click in preview mode  — active "子标题 5.1" want "子标题 5.1"
+PASS  TOC click in edit mode moves the editor cursor + scrolls it; in preview mode scrolls the preview
+FAIL  Named file loaded via ?doc= is not labelled 未命名 in the status bar  — status "small.md · 未命名"
+PASS  Status bar label for a URL-loaded named file (?doc=)  — small.md · 未命名
+MEASURE progress max % shown (large.md) = 0 (target ≥ 90 before hiding) FAIL
+PASS  Progress indicator on large.md: shown values and duration  — load→idle 417 ms; visible ≈313 ms; texts: 渲染中 0%
+MEASURE progress max % shown (huge.md) = 0 (target ≥ 90 before hiding) FAIL
+PASS  Progress indicator on huge.md: shown values and duration  — load→idle 865 ms; visible ≈587 ms; texts: 渲染中 0%
+PASS  screenshot rich bottom light  — {"quoteBorder":"4px","details":true,"hr":"1px","img":"缺失图片","nestedOl":true,"olType":"decimal"}
+PASS  screenshot rich bottom dark  — {"quoteBorder":"4px","details":true,"hr":"1px","img":"缺失图片","nestedOl":true,"olType":"decimal"}
+
+[12-gaps] 25 passed, 10 failed
+[12-gaps] page/console errors (4):
+  console.error: Failed to load resource: net::ERR_NAME_NOT_RESOLVED
+ERRORS: ["console.error: Failed to load resource: net::ERR_NAME_NOT_RESOLVED"]

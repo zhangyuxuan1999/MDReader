@@ -1,0 +1,251 @@
+/* src/styles/editor.css — editor pane, CodeMirror panels, toolbar buttons, command palette.
+   Colours and fonts come exclusively from the --mdr-* tokens (tokens.css, E4). */
+
+/* ---------------------------------------------------------------- editor pane */
+.mdr-pane--editor .cm-editor,
+.cm-editor {
+  height: 100%;
+}
+.cm-editor.cm-focused {
+  outline: none;
+}
+.cm-editor .cm-scroller {
+  overflow: auto;
+}
+
+/* ---------------------------------------------------------------- focus line (CONTRACT §9) */
+/* The mirror of the preview's focus line. Same token as the caret line, so both panes read alike; the
+   selectors are one step more specific than CodeMirror's generated theme rules (which come out as
+   `.<cm-class>.cm-editor .cm-activeLine`) so they win whatever order the CM style module is injected in. */
+.cm-editor .cm-content .cm-peerLine {
+  background-color: var(--mdr-focus-line);
+}
+/* While a peer line is shown, the caret line gives up its own background: exactly one tinted line per pane. */
+.cm-editor.mdr-peer-active .cm-content .cm-activeLine,
+.cm-editor.mdr-peer-active .cm-gutters .cm-activeLineGutter {
+  background-color: transparent;
+}
+
+/* ---------------------------------------------------------------- search / go-to-line panels */
+.cm-editor .cm-panel {
+  font-family: var(--mdr-font-sans);
+  font-size: 13px;
+  color: var(--mdr-fg);
+}
+.cm-editor .cm-panel.cm-search {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+  padding: 6px 10px;
+}
+.cm-editor .cm-panel.cm-search br {
+  display: none;
+}
+.cm-editor .cm-panel.cm-gotoLine {
+  padding: 6px 10px;
+}
+.cm-editor .cm-panel.cm-gotoLine label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.cm-editor .cm-panel input,
+.cm-editor .cm-panel .cm-textfield {
+  background: var(--mdr-bg);
+  color: var(--mdr-fg);
+  border: 1px solid var(--mdr-border);
+  border-radius: 4px;
+  padding: 3px 6px;
+  font: inherit;
+  margin: 0;
+}
+.cm-editor .cm-panel .cm-textfield:focus {
+  outline: none;
+  border-color: var(--mdr-accent);
+}
+.cm-editor .cm-panel button,
+.cm-editor .cm-panel .cm-button {
+  background-image: none;
+  background: var(--mdr-bg-elevated);
+  color: var(--mdr-fg);
+  border: 1px solid var(--mdr-border);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font: inherit;
+  cursor: pointer;
+  margin: 0;
+}
+.cm-editor .cm-panel button:hover,
+.cm-editor .cm-panel .cm-button:hover {
+  background: var(--mdr-bg-hover);
+}
+.cm-editor .cm-panel button:active,
+.cm-editor .cm-panel .cm-button:active {
+  background-image: none;
+}
+.cm-editor .cm-panel label {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: 4px;
+  color: var(--mdr-fg-muted);
+  cursor: pointer;
+}
+.cm-editor .cm-panel input[type='checkbox'] {
+  accent-color: var(--mdr-accent);
+  margin: 0;
+}
+.cm-editor .cm-panel.cm-search button[name='close'] {
+  position: static;
+  border: none;
+  background: transparent;
+  color: var(--mdr-fg-muted);
+  font-size: 16px;
+  line-height: 1;
+  padding: 2px 6px;
+  margin-left: auto;
+}
+.cm-editor .cm-panel.cm-search button[name='close']:hover {
+  color: var(--mdr-fg);
+}
+
+/* ---------------------------------------------------------------- toolbar buttons */
+.mdr-toolbar__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin: 0 1px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--mdr-fg);
+  cursor: pointer;
+  position: relative;
+  flex: none;
+}
+.mdr-toolbar__btn:hover:not(:disabled) {
+  background: var(--mdr-bg-hover);
+}
+.mdr-toolbar__btn:focus-visible {
+  outline: 2px solid var(--mdr-accent);
+  outline-offset: 1px;
+}
+.mdr-toolbar__btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.mdr-toolbar__btn.is-active {
+  background: var(--mdr-bg-hover);
+  color: var(--mdr-accent);
+  border-color: var(--mdr-border);
+}
+.mdr-toolbar__btn.is-dirty::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--mdr-accent);
+  border: 1px solid var(--mdr-bg);
+}
+.mdr-toolbar__btn svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.mdr-toolbar__sep {
+  display: inline-block;
+  width: 1px;
+  height: 18px;
+  margin: 0 6px;
+  background: var(--mdr-border);
+  align-self: center;
+  flex: none;
+}
+
+/* ---------------------------------------------------------------- command palette */
+.mdr-palette {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 12vh;
+  /* dim the app behind the palette without a literal colour: derive from the foreground token */
+  background: color-mix(in srgb, var(--mdr-fg) 28%, transparent);
+  pointer-events: auto;
+}
+.mdr-palette__box {
+  width: min(560px, 92vw);
+  background: var(--mdr-bg-elevated);
+  color: var(--mdr-fg);
+  border: 1px solid var(--mdr-border);
+  border-radius: 10px;
+  box-shadow: var(--mdr-shadow);
+  overflow: hidden;
+  font-family: var(--mdr-font-sans);
+}
+.mdr-palette__input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: none;
+  border-bottom: 1px solid var(--mdr-border);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 15px;
+  outline: none;
+}
+.mdr-palette__list {
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+  max-height: 50vh;
+  overflow: auto;
+}
+.mdr-palette__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 14px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.mdr-palette__item:hover {
+  background: var(--mdr-bg-hover);
+}
+.mdr-palette__item.is-active,
+.mdr-palette__item.is-active:hover {
+  background: var(--mdr-accent);
+  color: var(--mdr-accent-fg);
+}
+.mdr-palette__item.is-disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.mdr-palette__key {
+  font-family: var(--mdr-font-mono);
+  font-size: 12px;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+.mdr-palette__empty {
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--mdr-fg-muted);
+}

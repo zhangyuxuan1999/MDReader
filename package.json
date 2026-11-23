@@ -1,0 +1,58 @@
+{
+  "name": "mdreader",
+  "private": true,
+  "version": "0.2.1",
+  "description": "高性能的本地 Markdown 浏览/编辑器（Web + macOS 桌面版）",
+  "author": {
+    "name": "zyx"
+  },
+  "main": "electron/main.mjs",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "bench": "vitest bench --run",
+    "perf": "playwright test",
+    "gen:sample": "node scripts/gen-sample.mjs",
+    "deploy": "npm run typecheck && npm test && npm run build && npx wrangler deploy",
+    "app:icon": "node scripts/make-icon.mjs",
+    "app:dev": "MDR_DEV_URL=http://localhost:5251 electron .",
+    "app:build": "vite build && electron-builder --mac --arm64 && codesign --force --deep --sign - release/mac-arm64/MDReader.app && codesign --verify --deep --strict release/mac-arm64/MDReader.app",
+    "app:install": "node scripts/install-app.mjs"
+  },
+  "dependencies": {
+    "@codemirror/autocomplete": "^6.20.3",
+    "@codemirror/commands": "^6.11.0",
+    "@codemirror/lang-markdown": "^6.5.2",
+    "@codemirror/language": "^6.12.4",
+    "@codemirror/language-data": "^6.5.2",
+    "@codemirror/search": "^6.7.2",
+    "@codemirror/state": "^6.7.4",
+    "@codemirror/view": "^6.43.11",
+    "@lezer/highlight": "^1.2.3",
+    "codemirror": "^6.0.2",
+    "dompurify": "^3.4.14",
+    "highlight.js": "^11.12.0",
+    "idb-keyval": "^6.3.0",
+    "katex": "^0.18.5",
+    "markdown-it": "^15.0.1",
+    "markdown-it-task-lists": "^2.1.1",
+    "turndown": "^7.2.4",
+    "turndown-plugin-gfm": "^1.0.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/markdown-it": "^14.2.0",
+    "@types/turndown": "^5.0.6",
+    "@types/wicg-file-system-access": "^2023.10.7",
+    "electron": "^44.4.3",
+    "electron-builder": "^26.15.3",
+    "jsdom": "^30.0.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2",
+    "vitest": "^5.0.0"
+  }
+}

@@ -1,0 +1,30 @@
+PASS  Clicking a preview checkbox toggles the source line and re-renders checked
+PASS  Checkbox toggle from preview does not steal the cursor position in the editor
+PASS  Task toggled from the editor (Mod-Shift-x) updates the preview checkbox
+PASS  Alt+click on a preview paragraph moves the editor cursor to that line
+PASS  Alt+click far down (after preview scroll) moves cursor and scrolls the editor to it
+PASS  #anchor link navigates both panes to the heading  — href="#%E7%AC%AC%E4%BA%8C%E8%8A%82" h2 offset -0px
+PASS  #anchor with ASCII slug (anchor-two) resolves
+PASS  External link has target=_blank rel=noopener and opens a new tab
+PASS  Relative link shows the zh-CN toast and does not navigate
+MEASURE editor→preview line error max = 0 (target ≤ block size (≤1 block)) PASS
+MEASURE editor→preview block error max = 0 (target ≤ 1) PASS
+MEASURE editor→preview block error mean = 0.00 (target ≤ 1) PASS
+MEASURE preview model-vs-DOM top block mismatches = 0 (target 0 (of 20)) PASS
+PASS  Editor → preview sync at 20 random positions (wheel-elected master, then scroll)  — 13368/13368(0) 6228/6228(0) 12858/12858(0) 20236/20236(0) 13787/13787(0) 13653/13653(0) 3535/3535(0) 17890/17890(0) 14313/14313(0) 16741/16741(0) 14951/14951(0) 6840/6840(0) 16020/16020(0) 3901/3901(0) 11747/11747(0) 4728/4728(0) 4222/4222(0) 15843/15843(0) 17504/17504(0) 16942/16942(0)
+MEASURE preview→editor block error max = 0 (target ≤ 1) PASS
+MEASURE preview→editor line error max = 0 (target informational) PASS
+PASS  Preview → editor sync at 20 random positions  — 2260/2260(0) 9594/9594(0) 14922/14922(0) 7468/7468(0) 5693/5693(0) 7518/7518(0) 18764/18764(0) 17786/17786(0) 8558/8558(0) 8746/8746(0) 16736/16736(0) 3514/3514(0) 3227/3227(0) 6490/6490(0) 7694/7694(0) 10306/10306(0) 19885/19885(0) 9550/9550(0) 15392/15392(0) 4596/4596(0)
+MEASURE wheel-scroll editor: preview block error after settle = 0 (target ≤ 1) PASS
+PASS  Real wheel scrolling on the editor (20 screens) keeps preview following  — during: 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 final 0
+MEASURE wheel-scroll preview: editor block error after settle = 0 (target ≤ 1) PASS
+PASS  Real wheel scrolling on the preview keeps editor following  — {"edLine":1159,"pvLine":1159,"edBlock":341,"pvBlock":341,"modelTopBlockId":342,"domTopBlockId":342,"lineErr":0,"blockErr":0}
+MEASURE PageDown×30: block error = 0 (target ≤ 1) PASS
+PASS  Editor PageDown ×30 keeps preview in sync  — {"edLine":799,"pvLine":799,"edBlock":236,"pvBlock":236,"modelTopBlockId":237,"domTopBlockId":237,"lineErr":0,"blockErr":0}
+PASS  Typing off-screen (preview scrolled away) brings the preview back to the cursor line
+PASS  Typing at the end of a long document (editor scrolled there) — preview follows without jumping back
+PASS  Progress indicator (渲染中 N%) shows while a large file renders, then hides  — 5 updates, e.g. 渲染中 0% … 渲染中 1%
+PASS  Status bar stats for large.md are plausible (字数/字符/约 N 分钟)  — {"pos":"行 1, 列 1","words":"字数 693018","chars":"字符 2075291","reading":"约 2258 分钟","file":"large.md · 未命名","mode":"分栏","progress":null}
+
+[03-preview] 27 passed, 0 failed
+[03-preview] no console/page errors

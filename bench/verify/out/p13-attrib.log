@@ -1,0 +1,12 @@
+[about:blank] page JS heap 0.8 MB (total 1.8), DOM nodes 4; worker heap n/a; renderers of browser cdp: pid 79079 footprint 98 MB (rss 210)
+[small.md split] page JS heap 8.9 MB (total 9.8), DOM nodes 1904; worker heap no performance.memory; renderers of browser cdp: pid 79079 footprint 136 MB (rss 245)
+[medium.md split] page JS heap 11.5 MB (total 13.3), DOM nodes 9906; worker heap no performance.memory; renderers of browser cdp: pid 79079 footprint 207 MB (rss 322)
+[large.md split] page JS heap 15.0 MB (total 16.4), DOM nodes 43611; worker heap no performance.memory; renderers of browser cdp: pid 79079 footprint 352 MB (rss 476)
+[huge.md split] page JS heap 25.4 MB (total 26.3), DOM nodes 141731; worker heap no performance.memory; renderers of browser cdp: pid 79079 footprint 688 MB (rss 825)
+[large.md edit] page JS heap 14.7 MB (total 15.4), DOM nodes 42583; worker heap no performance.memory; renderers of browser cdp: pid 79079 footprint 379 MB (rss 551)
+[large.md preview] page JS heap 15.1 MB (total 16.9), DOM nodes 43645; worker heap no performance.memory; renderers of browser cdp: pid 79079 footprint 363 MB (rss 546)
+[P13 after load (large split)] page JS heap 15.2 MB (total 16.6), DOM nodes 43611; worker heap no performance.memory; renderers of browser cdp: pid 79079 footprint 358 MB (rss 544)
+[P13 after 60 s typing] page JS heap 34.3 MB (total 35.6), DOM nodes 44981; worker heap no performance.memory; renderers of browser cdp: pid 79079 footprint 387 MB (rss 623)
+[P13 after scroll to end] page JS heap 52.8 MB (total 54.5), DOM nodes 53834; worker heap no performance.memory; renderers of browser cdp: pid 79079 footprint 415 MB (rss 681)
+PASS  P13 renderer memory after load + typing + scroll to end: 415 MB physical footprint (JS heap 52.8 MB, DOM nodes 53834)  (target < 450 MB)
+[P13] growth: load 358 → typing 387 → scroll 415 MB

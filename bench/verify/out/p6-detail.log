@@ -1,0 +1,18 @@
+
+[P6 300] block id 202 lines 303 before: {"mounted":true,"children":1,"chars":26071,"pre":"md-code"}
+[P6 300] dispatch p50 2.4 p95 3.8 max 3.8 ms (n=18); mount ms n=10 p50 4.2 p95 5.2 max 5.2; Event Timing ≥16: n=16 max 24.0; long tasks none
+[P6 300] typed text appeared 107 ms after last key; after: {"cls":"md-block","children":1,"pre":"md-code","hl":true}
+[P6 300] block mutation timeline (ms after first key: classes/children): 10:is-stale/1  28:-/1  110:is-stale/1  212:is-stale/1  279:-/1  312:is-stale/1  427:is-stale/1  496:-/1  526:is-stale/1  626:is-stale/1  696:-/1  727:is-stale/1  844:is-stale/1  913:-/1  943:is-stale/1  1042:is-stale/1  1114:-/1  1143:is-stale/1  1243:is-stale/1  1312:-/1  1343:is-stale/1  1460:is-stale/1  1531:-/1  1560:is-stale/1  1660:is-stale/1  1730:-/1  1760:is-stale/1  1930:-/1
+PASS  P6 300-line fence view.dispatch p95 (synchronous main work per key): 3.8 ms  (target < 8 ms)
+PASS  P6 300-line fence mount task max: 5.2 ms  (target < 8 ms (main p95 target))
+FAIL  P6 300-line fence dispatch+mount per key p95: 9.0 ms  (target < 8 ms)
+PASS  P6 300-line fence typed text reaches preview: 107 ms after last key  (target < 100 ms)
+
+[P6 5000] block id 202 lines 5003 before: {"mounted":true,"children":1,"chars":451680,"pre":"md-code md-code--plain"}
+[P6 5000] dispatch p50 4.9 p95 8.4 max 8.4 ms (n=18); mount ms n=1 p50 0.5 p95 0.5 max 0.5; Event Timing ≥16: n=31 max 24.0; long tasks none
+[P6 5000] typed text appeared 606 ms after last key; after: {"cls":"md-block","children":1,"pre":"md-code md-code--plain","hl":false}
+[P6 5000] block mutation timeline (ms after first key: classes/children): 26:is-stale/1  27:is-stale is-slow/1  123:is-stale/1  228:is-stale/1  286:is-stale is-slow/1  334:is-stale/1  439:is-stale/1  497:is-stale is-slow/1  544:is-stale/1  645:is-stale/1  702:is-stale is-slow/1  750:is-stale/1  856:is-stale/1  914:is-stale is-slow/1  959:is-stale/1  1064:is-stale/1  1118:is-stale is-slow/1  1169:is-stale/1  1273:is-stale/1  1334:is-stale is-slow/1  1376:is-stale/1  1482:is-stale/1  1542:is-stale is-slow/1  1579:is-stale/1  1689:is-stale/1  1740:is-stale is-slow/1  1790:is-stale/1  1954:is-stale is-slow/1  2472:-/1
+PASS  P6 5000-line fence view.dispatch p95 (synchronous main work per key): 8.4 ms  (target < 16 ms)
+PASS  P6 5000-line fence mount task max: 0.5 ms  (target < 16 ms (main p95 target))
+PASS  P6 5000-line fence dispatch+mount per key p95: 8.9 ms  (target < 16 ms)
+PASS  P6 5000-line fence typed text reaches preview: 606 ms after last key  (target ≈ 500 ms (giant guard))

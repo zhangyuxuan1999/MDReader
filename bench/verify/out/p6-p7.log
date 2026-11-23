@@ -1,0 +1,38 @@
+[P6 300] line 553 "export function fn149(a: number, b: stri" block {"index":201,"id":202,"startLine":403,"lineCount":303,"kind":2}
+
+[P6 300-line fence] keys=18 busy/key p50 32.0 p95 54.7 max 54.7 ms; input latency (keydown→next frame) p50 10.4 p95 18.3 max 18.3 ms; key→mount p50 171.9 p95 185.5 (n=18); mount ms max 3.2
+[P6 300-line fence] DIRECT: view.dispatch p50 1.3 p95 3.6 max 3.6 ms (n=18); mount ms p50 2.6 p95 3.2 max 3.2 (n=10); Event Timing keydown/input dur (8 ms granularity, ≥16 only): n=20 p95 24.0 max 24.0
+[P6 300-line fence] long tasks: 0 (); >100 ms: 0; LoAF: 
+[P6 300] preview updated: {"has":true,"stale":false,"hl":true,"cls":"md-code"}
+FAIL  P6 300-line fence main busy per key p95: 54.7 ms (max 54.7)  (target < 8 ms)
+PASS  P6 300-line fence preview shows typed text: true (stale false, highlighted true, pre class md-code)  (target true)
+[P6 5000] line 2903 "export function fn2499(a: number, b: str" block {"index":201,"id":202,"startLine":403,"lineCount":5003,"kind":2}
+
+[P6 5000-line fence] keys=18 busy/key p50 21.1 p95 35.7 max 35.7 ms; input latency (keydown→next frame) p50 8.9 p95 16.6 max 16.6 ms; key→mount p50 1600.0 p95 2421.2 (n=18); mount ms max 0.2
+[P6 5000-line fence] DIRECT: view.dispatch p50 1.5 p95 2.9 max 2.9 ms (n=18); mount ms p50 0.2 p95 0.2 max 0.2 (n=1); Event Timing keydown/input dur (8 ms granularity, ≥16 only): n=14 p95 16.0 max 16.0
+[P6 5000-line fence] long tasks: 0 (); >100 ms: 0; LoAF: 
+[P6 5000] preview updated: {"has":true,"stale":false,"hl":false,"cls":"md-code md-code--plain"}
+FAIL  P6 5000-line fence main busy per key p95: 35.7 ms (max 35.7)  (target < 16 ms)
+PASS  P6 5000-line fence preview shows typed text: true (stale false, highlighted false, pre class md-code md-code--plain)  (target true)
+
+[P7 open fence (type ``` Enter at line 1)] keys=4 busy/key p50 40.8 p95 47.7 max 47.7 ms; input latency (keydown→next frame) p50 11.7 p95 17.5 max 17.5 ms; key→mount p50 30.1 p95 34.6 (n=4); mount ms max 0.2
+[P7 open fence (type ``` Enter at line 1)] DIRECT: view.dispatch p50 3.2 p95 8.9 max 8.9 ms (n=4); mount ms p50 0.1 p95 0.2 max 0.2 (n=5); Event Timing keydown/input dur (8 ms granularity, ≥16 only): n=3 p95 24.0 max 24.0
+[P7 open fence (type ``` Enter at line 1)] long tasks: 0 (); >100 ms: 0; LoAF: 
+[P7] after opening fence: {"blocks":29996,"wrappers":29996,"mounted":21,"slow":0,"stale":0,"firstKind":{"index":0,"id":1,"startLine":1,"lineCount":24,"kind":2},"pre":"md-code md-code--unhighlighted","firstText":"# 性能测试文档 Performance Test Document\n\n本文件由 scripts/gen-sample."} (was 30002 blocks)
+[P7] long tasks after opening fence (incl. settle): none
+
+[P7 typing inside giant fence (line 2)] keys=4 busy/key p50 32.5 p95 52.5 max 52.5 ms; input latency (keydown→next frame) p50 13.5 p95 16.4 max 16.4 ms; key→mount p50 30.6 p95 33.3 (n=4); mount ms max 0.0
+[P7 typing inside giant fence (line 2)] DIRECT: view.dispatch p50 1.5 p95 1.5 max 1.5 ms (n=4); mount ms p50 0.0 p95 0.0 max 0.0 (n=8); Event Timing keydown/input dur (8 ms granularity, ≥16 only): n=8 p95 16.0 max 16.0
+[P7 typing inside giant fence (line 2)] long tasks: 0 (); >100 ms: 0; LoAF: 
+
+[P7 close fence (type ``` Enter at line 2)] keys=4 busy/key p50 30.9 p95 53.4 max 53.4 ms; input latency (keydown→next frame) p50 7.0 p95 16.1 max 16.1 ms; key→mount p50 24.1 p95 35.3 (n=4); mount ms max 0.2
+[P7 close fence (type ``` Enter at line 2)] DIRECT: view.dispatch p50 1.3 p95 2.3 max 2.3 ms (n=4); mount ms p50 0.1 p95 0.2 max 0.2 (n=54); Event Timing keydown/input dur (8 ms granularity, ≥16 only): n=3 p95 24.0 max 24.0
+[P7 close fence (type ``` Enter at line 2)] long tasks: 0 (); >100 ms: 0; LoAF: 
+[P7] after closing fence: {"blocks":30003,"wrappers":30003,"mounted":28,"stale":0,"slow":0,"h1":"性能测试文档 Performance Test Document xyz","l1":"```","l2":"```","l3":"# 性能测试文档 Performance Test Document xyz"}
+[P7] long tasks after closing (incl. settle): none
+[P7] Event Timing keydown/input ≥16ms: n=14 of 12 keys, p95 24.0 max 24.0; dispatch p95 8.9 max 8.9
+FAIL  P7 input latency p95 (keydown → next frame): 17.5 ms (max 17.5)  (target < 16 ms)
+PASS  P7 tasks > 100 ms: 0 ()  (target ≤ 1)
+FAIL  P7 giant fence: 1 block after open: 29996  (target 1)
+PASS  P7 blocks restored after close: 30003 (was 30002)  (target 30003)
+[P7] main busy per key: open p95 47.7, inside p95 52.5, close p95 53.4 ms

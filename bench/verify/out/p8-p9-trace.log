@@ -1,0 +1,13 @@
+[P8 trace] tasks 4229; top: 20.6 ms [FireAnimationFrame 0.3, HitTest 0.1, EventDispatch(wheel) 0.1, HitTest 0.1, Commit 0.1] | 20.6 ms [FireAnimationFrame 0.3, HitTest 0.1, EventDispatch(wheel) 0.1, HitTest 0.1, Commit 0.1] | 8.2 ms [FireAnimationFrame 2.5, FireAnimationFrame 2.1, Paint 0.7, PrePaint 0.4, Layerize 0.4] | 8.2 ms [FireAnimationFrame 2.5, FireAnimationFrame 2.1, Paint 0.7, PrePaint 0.4, Layerize 0.4] | 7.6 ms [FireAnimationFrame 2.1, FireAnimationFrame 2.0, Paint 1.0, Layerize 0.3, PrePaint 0.3]
+[P8 trace] forced layouts inside script: 493 (>2 ms: 0) Layout 0.7 in EventDispatch(scroll) ; Layout 0.7 in FireAnimationFrame ; Layout 0.5 in FireAnimationFrame ; Layout 1.2 in FunctionCall ; Layout 0.6 in FireAnimationFrame ; Layout 0.7 in FunctionCall ; Layout 0.6 in FireAnimationFrame ; UpdateLayoutTree 0.5 in FunctionCall 
+[P8 trace] rAF frames 322, >20 ms 1 (max 33.3), long tasks none
+PASS  P8 forced synchronous layouts > 2 ms during preview wheel: 0  (target 0)
+PASS  P8 frames > 20 ms (rAF gaps, traced run): 0.3 % (1/322, max 33.3 ms)  (target < 3 %)
+PASS  P8 longest main-thread task during wheel: 20.6 ms  (target (info; frame budget 20 ms))
+
+[P9 trace] tasks 14055; top: 18.8 ms [FunctionCall(work) 18.8] | 18.8 ms [FunctionCall(work) 18.8] | 9.2 ms [FireAnimationFrame 2.6, PrePaint 1.5, Paint 1.0, FireAnimationFrame 0.8, FireAnimationFrame 0.7] | 9.2 ms [FireAnimationFrame 2.6, PrePaint 1.5, Paint 1.0, FireAnimationFrame 0.8, FireAnimationFrame 0.7] | 8.6 ms [FireAnimationFrame 2.5, PrePaint 1.6, FireAnimationFrame 1.1, FireAnimationFrame 0.9, Paint 0.6]
+[P9 trace] forced layouts inside script: 940 (>2 ms: 0) UpdateLayoutTree 0.6 in FireAnimationFrame ; Layout 1.3 in FireAnimationFrame ; Layout 0.8 in FireAnimationFrame ; Layout 0.8 in FireAnimationFrame ; Layout 0.8 in FireAnimationFrame ; Layout 0.9 in FireAnimationFrame ; Layout 0.6 in FireAnimationFrame ; Layout 0.9 in FireAnimationFrame 
+[P9 trace] rAF frames 340, >20 ms 0 (max 18.6), long tasks none; end editor top 2665 preview top 2665
+PASS  P9 forced synchronous layouts > 2 ms during PageDown x100: 0  (target 0)
+PASS  P9 frames > 20 ms (rAF gaps, traced run): 0.0 % (0/340, max 18.6 ms)  (target < 3 %)
+PASS  P9 longest main-thread task during PageDown: 18.8 ms  (target (info; frame budget 20 ms))

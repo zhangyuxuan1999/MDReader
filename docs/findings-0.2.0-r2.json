@@ -1,0 +1,1192 @@
+{
+ "round": "0.2.0 stage 2c r2",
+ "date": "2026-11-20",
+ "confirm": {
+  "step0": [
+   "Nothing of this project was running at the start: no listener on 5380-5398, no project Electron, vitest or headless Chromium. Nothing had to be killed.",
+   "npx tsc --noEmit printed nothing (exit 0). node bench/verify/scan-invisible.mjs: OK.",
+   "diff -rq for electron/ and dist/ against release/staging-0.2.0.noindex, and cmp of package.json: no differences.",
+   "/Applications/MDReader.app/Contents/Info.plist CFBundleShortVersionString is 0.1.1. I read it only and did not launch the app.",
+   "Crash reports: still 11 Electron reports. The newest is Electron-2026-11-20-145455.ips (plus .000 from the same second, 14:54 local), so the verifiers caused no new main-process crash. My own Electron runs (about 20 launches of the staging and baseline directories) added none: the list was unchanged at my end."
+  ],
+  "suite": [
+   "npx vitest run --no-file-parallelism, run once in the background: 92 files / 1818 tests, 7 files and 42 tests failed, 157.4 s.",
+   "41 of the failures are in v3 repro files, and each belongs to a reproduced finding:",
+   "- v3-rev-reserved-bypass: 18 (REV-1 12, REV-2 6).",
+   "- v3-dec-decoder: 7 (DEC-1 4, DEC-2 2, DEC-3 1).",
+   "- v3-fid-r1: 7 (FID-4 2, FID-5 4, FID-6 1).",
+   "- v3-ses-repro: 6 (SES-1 2, SES-2 2, SES-3 1, SES-8 1).",
+   "- v3-rev-fidelity-stall: 2 (REV-3).",
+   "- v3-rev-markers: 1 (REV-4).",
+   "1 failure belongs to no finding: the existing test/final-delta-fuzz.test.ts 'incremental preview state equals a full structure of the same state' (seed 9004 step 1: lineToScrollTop 859 against 862 at entry 72).",
+   "- Run alone it passed 2 of 2 times, and 6 concurrent single runs all passed, so it failed 1 of 9 runs.",
+   "- Likely cause: a timing-dependent test. createPreview's eviction schedule uses real performance.now(), while the test only fakes timers. Reported as unexplained."
+  ],
+  "perf": [
+   "(a) npx playwright test, run once (58.1 s): every budget passes.",
+   "- P1 open to first visible: 117.7 ms (< 400).",
+   "- P4: 0 ms / 0 tasks.",
+   "- P5 main per keystroke: p95 26.8 ms (< 30), max 35.1 ms (< 60), raw p95 28.0 ms.",
+   "- P5 keystroke to mount: p95 34.3 ms (< 40).",
+   "- P8: 0 %. P11: 0 ms.",
+   "- Playwright created test-results/.last-run.json in the tree; I moved it to my scratch directory.",
+   "(b) P5 against 0.1.1 with bench/verify/fix2-int-p5.mjs, the same static server for both builds (adds ?perf=1), alternating, 3 runs each:",
+   "- Candidate raw p95 38.0 / 28.9 / 29.7 ms, p50 15.5 / 13.8 / 14.2 ms.",
+   "- 0.1.1 raw p95 34.0 / 31.3 / 27.3 ms, p50 16.0 / 13.4 / 14.3 ms.",
+   "- Keystroke to mount p95: 34.2-34.7 ms in both builds.",
+   "- The candidate is not slower than 0.1.1. The first run of each build is the high one.",
+   "(c) With MDR_PORT=5388, one at a time:",
+   "- inline-verify-perf: 5/5. large.md session start max 13.2 ms; preview work per key p95 0.7 ms; 300-line list start 30.6 ms and flush p95 2.3 ms; 20 tables flush p95 2.3 ms.",
+   "- inline-verify-resume: 13/13. Resume window median 28 ms (small.md and large.md).",
+   "- fix2-i2-paste: 9/9. Longest task after a 55 000-character one-line paste 22 ms, after 1 000 lines 25 ms; next-key flush 19-28 ms; refusals correct. In one unbroken 55 000-character word the next insertText takes 1616 ms (K16)."
+  ],
+  "quiet": "At step 0 nothing of the project was running (ports 5380-5398 free, no project Electron, vitest or headless Chromium), so nothing was killed. Load that is not mine, left alone: another project's Unreal staged build (Survive.app) took about 157 % CPU at the start and was gone by step 3. A WebKit content process took about 96-100 % and a Python process about 85 % throughout. Load average was about 10 at the start and about 3 during the performance step (10 cores). One of my own v3-app-regress processes, with its headless Chromium, outlived its batch; I killed it by pid before step 3. At the end I stopped every server and process I started (5388, 5398, the Playwright Vite on 5199) and deleted my scratch data."
+ },
+ "summary": [
+  "Seven verifiers reported 33 findings on the stage-2c candidate. I re-ran every repro myself, alone, on the quiet machine (my ports 5388 / 5398; scripts that default to another verifier's port were given MDR_PORT=5388, nothing else changed). All 33 reproduced. FID-3's fast variant failed 2 of 3 runs, its slow variant 3 of 3. None was flaky beyond that and none failed to reproduce. They fall into 29 groups H1-H29 (one group = one fix): 6 high, 10 medium, 13 low.",
+  "",
+  "**By the release gate this candidate must not ship.**",
+  "- 4 high groups are new in 0.2.0 or regressions: H1 (U10 bypass), H2 (file dropped onto the editor, a regression), H3 (Backspace in an emptied paragraph) and H4 (paste written twice).",
+  "- 3 groups are regressions against 0.1.1 at medium or above: H2, H7 (GBK read as damaged UTF-8) and H8 (selection lost after a session).",
+  "- H5 and H6 are high but pre-existing. H5 is the G28 class, a crash draft overwritten. H6 is page script blanking the window.",
+  "- 8 medium groups are new-feature defects or a spec gap (H9-H16) and need a fix or an explicit acceptance.",
+  "",
+  "The worst problems, in plain terms:",
+  "- A downloaded document can still steer in-preview editing (H1). One typed letter turns hidden raw HTML into a visible formula on disk, and a checkbox click can tick another task.",
+  "- Dragging a .md file from Finder onto the editor pane splices that file's text into the open document (H2). A clean document is then asked 放弃更改, and 取消 keeps the mixed text. 0.1.1 simply opened the file.",
+  "- One Backspace after emptying a paragraph glues the next block's raw Markdown onto the paragraph above (H3). A heading becomes '## …' text and a fence breaks.",
+  "- Pasting paragraphs that end in a whitespace-only line at a paragraph start writes the pasted text twice (H4).",
+  "- GBK data files whose Chinese happens to look like UTF-8 byte pairs (小时, 千元) now open as garbage with a 'damaged UTF-8' dialog (H7). 0.1.1 read them correctly.",
+  "- After clicking into a paragraph, a drag-selection across paragraphs copies from the paragraph start (H8, regression).",
+  "",
+  "What the stage-2c step itself changed held up. U13 held 24 + 15 Chromium cases and U14 held 9 + 3 cases. The fixer's claim about unkeepReusedId / held was checked by three verifiers. The only defect there is a one- or two-frame flash when an older structure arrives after the deletion (H20, low)."
+ ],
+ "groups": [
+  {
+   "group": "H1",
+   "title": "U10 bypass: rawHtmlReserved scans raw HTML text differently from the browser's HTML parser (RAWTEXT/RCDATA elements, named character references in class values)",
+   "severity": "high",
+   "class": "new-feature-defect",
+   "findingIds": [
+    "REV-1",
+    "REV-2"
+   ],
+   "files": [
+    "src/worker/md.ts",
+    "src/preview/interactions.ts",
+    "src/preview/serialize.ts"
+   ],
+   "introducedBy": "fix round 2 (U10 rawHtmlReserved / decodeNumericRefs); the checkbox steering itself exists since 0.1.x",
+   "oneLine": "A downloaded file can make one typed letter turn hidden raw HTML into a visible formula in the saved file, and can make a task checkbox tick another task elsewhere.",
+   "repro": "MDR_PORT=5388 node bench/verify/v3-rev-browser.mjs tog mathRaw math blk ; perl -e 'alarm 110; exec @ARGV' npx vitest run test/v3-rev-reserved-bypass.test.ts ; MDR_APP_DIR=/Users/zyx/LocalDocuments/MDReader/release/staging-0.2.0.noindex node bench/electron/v3-rev-desktop.mjs",
+   "observed": "tog: the wrapper of \"<style><!--</style><ul><li data-l=\\\"-4\\\"><input type=\\\"checkbox\\\">…\" has no data-mdr-x; a click on that checkbox changes line 1 to \"- [x] pay the rent\". math (class=\"&Tab;md-math\" on a hidden span): one typed \"s\" writes line 3 \"Please read $\\text{Call +1 555 0100 now}$the tesrms\". mathRaw (<style><![CDATA[…): line 3 \"Please read $\\text{Call +1 555 0100 now}$\\\"]]>the tesrms\". blk (class=\"&Tab;md-block\" data-id): the click on line 7 ticks line 3 \"- [x] sign the lease\". Desktop staging: line 3 rewritten on disk after Esc and ⌘S.",
+   "expected": "Any block whose rendered DOM carries a reserved name is flagged: no session (refusal toast) or only the typed letter is added; a checkbox toggles its own line.",
+   "baseline": "The formula rewrite is new: 0.1.1 starts no session and leaves the file unchanged (browser and desktop, same scripts). The checkbox steering (tog, blk) fails identically on 0.1.1.",
+   "suggestedFix": "Decide on the parsed DOM instead of the token text (flag at mount when any element of the sanitized fragment carries a reserved attribute or class the worker did not emit), or make the scan model RAWTEXT/RCDATA elements and decode named references; interactions.ts should take the block from the outer wrapper, not from [data-l] / .md-block inside raw HTML."
+  },
+  {
+   "group": "H2",
+   "title": "A Markdown file dropped onto the editor pane is first inserted into the current document by CodeMirror, then a discard question is asked",
+   "severity": "high",
+   "class": "regression-vs-shipped",
+   "findingIds": [
+    "FLOW-4",
+    "SHELL-3"
+   ],
+   "files": [
+    "src/app/App.ts",
+    "src/editor/createEditor.ts"
+   ],
+   "introducedBy": "fix round 2 (G31: onDrop awaits the shell's / File read before confirmDiscard)",
+   "oneLine": "Dragging a .md file from Finder onto the editor splices its text into the open document, asks a clean document 放弃更改, and 取消 keeps the mixed text (a save writes it).",
+   "repro": "MDR_TARGET=staging node bench/electron/v3-flow-desk.mjs K7 ; MDR_TARGET=staging node bench/electron/v3-shell-dropeditor.mjs other ; web: MDR_URL=http://localhost:5388/ node bench/verify/v3-flow-web.mjs DR and MDR_BASE_URL=http://localhost:5388/ node bench/verify/v3-shell-webdrop.mjs (with npx vite --port 5388 --strictPort running)",
+   "observed": "Clean k7-a.md \"alpha line\\n\\nsecond line\\n\" + drop of k7-b.md on the first .cm-line: editor \"al# DROPPED\\npha line\\n\\nsecond line\\n\", title \"● k7-a.md\", question 当前文档尚未保存，是否放弃更改？; 取消 keeps the mixed text; 丢弃 opens k7-b.md. Web: same on 未命名.md (buttons [\"取消\",\"丢弃\"]).",
+   "expected": "As 0.1.1: the dropped file opens, the current document is never changed, a clean document is not asked.",
+   "baseline": "Measured: desktop baseline K7 6/6 pass and dropeditor 1/1 PASS (title \"v2-dropeditor-dropped.md\"); web baseline DR 4/4 and webdrop PASS. The dirty-document variant (DR2) fails in both builds (older).",
+   "suggestedFix": "Stop CodeMirror's own file-drop insertion (EditorView.domEventHandlers drop returning true for Files, or a capture-phase root listener with preventDefault) and keep G31's order."
+  },
+  {
+   "group": "H3",
+   "title": "Backspace in an emptied paragraph (deletion already written) glues the next block's raw Markdown onto the paragraph above",
+   "severity": "high",
+   "class": "new-feature-defect",
+   "findingIds": [
+    "SES-2"
+   ],
+   "files": [
+    "src/preview/inlineEdit.ts"
+   ],
+   "introducedBy": "fix round 2 (U9 Session.gone + U3 tryMergeBackward)",
+   "oneLine": "One ordinary Backspace rewrites a block the user never touched: a heading, list, table or quote below becomes literal Markdown inside the previous paragraph, a fence breaks.",
+   "repro": "MDR_PORT=5388 node bench/verify/v3-ses-probe.mjs ghost-bs ; perl -e 'alarm 110; exec @ARGV' npx vitest run test/v3-ses-repro.test.ts -t SES-2",
+   "observed": "\"before words\\n\\nmiddle\\n\\n## Next heading\\n\\nend\\n\": click middle, ⌘A, Backspace → \"before words\\n\\n## Next heading\\n\\nend\\n\" (right); one more Backspace → \"before words## Next heading\\n\\nend\\n\". Fence: \"before words```\\ncode line\\n\\n```\\n\\nend\\n\"; list: session lost, 8 ⌘Z to restore.",
+   "expected": "The emptied element goes away (or nothing happens), the caret ends after \"before words\", the source stays \"before words\\n\\n## Next heading\\n\\nend\\n\".",
+   "baseline": "Not applicable (new feature).",
+   "suggestedFix": "tryMergeBackward must not read src at cur.startLine / cur.lineCount when cur.gone (it reads the next block's lines and replaces them); end the gone session at the end of the previous paragraph instead."
+  },
+  {
+   "group": "H4",
+   "title": "A paste of paragraphs whose last one is whitespace-only at a paragraph start resumes on the stale wrapper; the next keystroke writes the pasted paragraphs a second time",
+   "severity": "high",
+   "class": "new-feature-defect",
+   "findingIds": [
+    "SES-8"
+   ],
+   "files": [
+    "src/preview/inlineEdit.ts",
+    "src/preview/createPreview.ts"
+   ],
+   "introducedBy": "fix round 2 (U8 paste rewrite: pasteSplit resume by minVersion)",
+   "oneLine": "Pasting copied paragraphs at the start of a paragraph (copied text often ends with a blank line and indentation) duplicates the pasted text in the file, with the next typed letter inside the copy.",
+   "repro": "MDR_PORT=5388 node bench/verify/v3-ses-probe.mjs paste-split-identical ; perl -e 'alarm 110; exec @ARGV' npx vitest run test/v3-ses-repro.test.ts -t SES-8",
+   "observed": "\"before\\n\\nabcdef\\n\\nafter\\n\", caret before abc, paste \"vao\\n\\n \" → split written correctly, but the wrapper still shows \"<p>vao</p><p> abcdef</p>\"; typing Q writes \"before\\n\\nvao\\n\\nvQao\\n\\nabcdef\\n\\nafter\\n\". With \"vao\\n\\nwuu\\n\\n \" both pasted paragraphs are duplicated.",
+   "expected": "\"before\\n\\nvao\\n\\nQabcdef\\n\\nafter\\n\".",
+   "baseline": "Not applicable (new feature).",
+   "suggestedFix": "In tryResume, do not accept by minVersion a wrapper that still shows the ended session's DOM (require matchSource or a re-mount after the release), or mark the released block not fresh until its re-render mounts."
+  },
+  {
+   "group": "H5",
+   "title": "G28 class: with a crash-recovery offer unanswered, typing and taking it back makes the worker overwrite the crash draft with the loaded text",
+   "severity": "high",
+   "class": "pre-existing",
+   "findingIds": [
+    "FLOW-1"
+   ],
+   "files": [
+    "src/worker/draft.ts",
+    "src/app/App.ts"
+   ],
+   "introducedBy": "older (identical on 0.1.1)",
+   "oneLine": "Text recovered from a crash is silently lost if the user types, deletes it again and the tab or app then dies before the offer is answered.",
+   "repro": "npx vite --port 5388 --strictPort & then MDR_URL=http://localhost:5388/ node bench/verify/v3-flow-drafts.mjs D1a D1b",
+   "observed": "Draft {docId:untitled, text:\"crash text\"} offered; type x, Backspace (or abc, ⌘Z); 1.8 s later the stored draft is \"\", a new tab offers nothing.",
+   "expected": "An unanswered offer's draft is never overwritten by text equal to the loaded text; the next launch still offers \"crash text\".",
+   "baseline": "Measured: 0.1.1 dist identical (stored \"\", no offer).",
+   "suggestedFix": "Pause the worker's debounced draft writes for the offered docId until the offer is answered, or skip a write whose text equals the loaded text."
+  },
+  {
+   "group": "H6",
+   "title": "Page script can navigate the app window to about:blank / about:srcdoc: will-navigate never fires, later documents vanish, a dirty window cannot close or quit",
+   "severity": "high",
+   "class": "pre-existing",
+   "findingIds": [
+    "SHELL-1"
+   ],
+   "files": [
+    "electron/main.mjs"
+   ],
+   "introducedBy": "older (identical on 0.1.1)",
+   "oneLine": "Not reachable from a document today; any future script injection or app bug that sets location to about:blank would blank the window, swallow later documents and trap unsaved work.",
+   "repro": "MDR_TARGET=staging node bench/electron/v3-shell-stuck.mjs aboutBlank aboutSrcdoc dirtyBlank",
+   "observed": "url=about:blank, ev=[\"start about:blank\",\"did-navigate about:blank\",\"did-stop-loading\"], a later open-file is sent but not shown (editorLen=0); dirty: close leaves the window, app.quit() does not exit.",
+   "expected": "The window stays on the app page, or the shell restores it and re-arms the queue (S3: no page script may navigate the window).",
+   "baseline": "Measured: baseline shell 0/3, output identical.",
+   "suggestedFix": "In did-navigate (main frame) treat any committed URL other than the app page as a lost page: reset queue and close state as in render-process-gone and reload the renderer."
+  },
+  {
+   "group": "H7",
+   "title": "G22 variation: clean GBK whose characters happen to be valid UTF-8 byte pairs (小时, 千元, …) is read as lenient UTF-8",
+   "severity": "medium",
+   "class": "regression-vs-shipped",
+   "findingIds": [
+    "DEC-1"
+   ],
+   "files": [
+    "electron/fileIO.mjs"
+   ],
+   "introducedBy": "fix round 2 (S4 override 3, lenient UTF-8)",
+   "oneLine": "A GBK timesheet or budget that 0.1.1 showed correctly opens as garbage with a dialog calling it damaged UTF-8; a save after the dialog destroys the Chinese text.",
+   "repro": "perl -e 'alarm 110; exec @ARGV' npx vitest run test/v3-dec-decoder.test.ts -t DEC-1 ; MDR_APP_DIR=/Users/zyx/LocalDocuments/MDReader/release/staging-0.2.0.noindex PHASE=paths node bench/electron/v3-dec-e2e.mjs (and the same with MDR_APP_DIR=…/baseline-0.1.1.noindex)",
+   "observed": "dec1-gbk-sheet: \"# ��ʱ\\n\\n| ���� | ʱ�� |…\", dialog 「dec1-gbk-sheet-open-file.md」不是完全有效的 UTF-8 文本 on open-file, the panel and a drop; save after appending x: \"REWRITTEN (378 bytes differ from original+x; len 401->417)\".",
+   "expected": "As 0.1.1: GBK, the GBK toast, no dialog, save = original bytes + x.",
+   "baseline": "Measured: baseline exact+x on every path, no dialog.",
+   "suggestedFix": "In overrideOf, do not let override 3 replace a clean CJK reading that scores as real text (scoreLegacy threshold around 0.6 per the verifier's measurements), or count damage per replaced character; otherwise S4 (f): ship with DECODER_OVERRIDES off."
+  },
+  {
+   "group": "H8",
+   "title": "The re-render of an ended session's block leaves the document selection at (preview, 0): a drag or Shift-click out of the session loses its start; a click at the same paragraph's start after Esc keeps that stale caret",
+   "severity": "medium",
+   "class": "regression-vs-shipped",
+   "findingIds": [
+    "SES-4",
+    "SES-9"
+   ],
+   "files": [
+    "src/preview/inlineEdit.ts",
+    "src/preview/createPreview.ts"
+   ],
+   "introducedBy": "fix round 2 (U7: deferred release re-render of the ended session's block)",
+   "oneLine": "After clicking into a paragraph, selecting across paragraphs and ⌘C copies from the paragraph start (0.1.1 copies what was selected); a paste at a paragraph start after Esc becomes its own paragraph.",
+   "repro": "MDR_PORT=5388 node bench/verify/v3-ses-pointer.mjs out-of-session ; MDR_PORT=5388 node bench/verify/v3-ses-probe.mjs esc-then-click-start-paste ; baseline: npx vite preview --outDir release/baseline-0.1.1.noindex/dist --port 5398 --strictPort, then MDR_PORT=5398 MDR_PERF=1 node bench/verify/v3-ses-pointer.mjs out-of-session-drag-clean",
+   "observed": "copied=\"First para alpha words here.\\n\\nSecond para beta words here.\\n\\nThird para gam\" (drag from \"words\" to \"gamma\"); SES-9: caret={\"node\":\"SECTION\",\"off\":0}, ⌘V \"bqf\" → \"aaa\\n\\nbqf\\n\\nxyz wordsQ\\n\\nzzz\\n\".",
+   "expected": "\"words here.\\n\\nSecond para beta words here.\\n\\nThird para gam\"; \"aaa\\n\\nbqfxyz words\\n\\nzzz\\n\".",
+   "baseline": "Measured: 0.1.1 dist 2/2 PASS for the drag (and the candidate with editing off is correct per the verifier).",
+   "suggestedFix": "Save the selection endpoints that lie in the released block as text offsets before host.release re-renders it and restore them after the mount (or skip the re-render when nothing was written); normalise a caret that sits directly in the wrapper at session start."
+  },
+  {
+   "group": "H9",
+   "title": "Typing or Backspace next to a soft line break makes Chromium turn the line feed into a space; the session writes the two source lines joined",
+   "severity": "medium",
+   "class": "new-feature-defect",
+   "findingIds": [
+    "FID-1"
+   ],
+   "files": [
+    "src/preview/inlineEdit.ts",
+    "src/preview/serialize.ts"
+   ],
+   "introducedBy": "in-preview editing (Chromium whitespace rebalancing; not U13/U14)",
+   "oneLine": "In hard-wrapped Markdown every edit at a line end or line start joins two source lines; the rendering is the same, so the change shows only in the editor pane and in diffs.",
+   "repro": "MDR_PORT=5388 node bench/verify/v3-fid-reach.mjs soft- ; MDR_PORT=5388 node bench/verify/v3-fid-softprobe.mjs",
+   "observed": "\"abc\\ndef\" + Q after abc → \"abcQ def\"; Q before def → \"abc Qdef\"; \"第一行\\n第二行\" → \"第一行Q 第二行\"; \"abcd\\nefg\" + Backspace → \"abc efg\". softprobe: the DOM text node itself changes from \"abc\\ndef\" to \"ab def\".",
+   "expected": "\"abcQ\\ndef\", \"abc\\nQdef\", \"第一行Q\\n第二行\", \"abc\\nefg\".",
+   "baseline": "Not applicable (new feature).",
+   "suggestedFix": "Keep the text node's line feeds next to the edit point out of Chromium's rebalancing (restore them in the same DOM change, or mount each soft break as its own inert node)."
+  },
+  {
+   "group": "H10",
+   "title": "Enter or Shift+Enter right before an inline formula: Chromium's placeholder <br> is written as a hard break and the typed text ends up on its own line above the formula",
+   "severity": "medium",
+   "class": "new-feature-defect",
+   "findingIds": [
+    "FID-2",
+    "SES-7"
+   ],
+   "files": [
+    "src/preview/inlineEdit.ts",
+    "src/preview/serialize.ts"
+   ],
+   "introducedBy": "in-preview editing (Chromium placeholder <br> before a contenteditable=false atom; not U13)",
+   "oneLine": "Splitting a paragraph or list item in front of a formula adds a line break nobody typed, in the preview and in the file.",
+   "repro": "MDR_PORT=5388 node bench/verify/v3-fid-reach.mjs atom-enter-formula atom-shift ; MDR_PORT=5388 node bench/verify/v3-ses-probe.mjs atom- ; MDR_PORT=5388 node bench/verify/v3-fid-mathprobe.mjs",
+   "observed": "\"abc $x$ y\" + Enter after abc + Z → \"abc\\n\\nZ  \\n$x$ y\\n\"; Shift+Enter → \"abc  \\nZ  \\n$x$ y\\n\"; list → \"- abc\\n- Z  \\n  $x$ y\\n\"; at a paragraph start \"$x$ d\" + ⌘← + Q → \"$x$Q d\".",
+   "expected": "\"abc\\n\\nZ$x$ y\\n\", \"abc  \\nZ$x$ y\\n\", \"- abc\\n- Z$x$ y\\n\", \"Q$x$ d\".",
+   "baseline": "Not applicable (new feature).",
+   "suggestedFix": "In enterKey (same DOM change) remove a <br> Chromium leaves as first child before a [contenteditable=false] atom and place the caret before the atom; give the caret a text position before a leading formula."
+  },
+  {
+   "group": "H11",
+   "title": "Enter right before an image: after the resume the caret sits after the image",
+   "severity": "medium",
+   "class": "new-feature-defect",
+   "findingIds": [
+    "FID-3"
+   ],
+   "files": [
+    "src/preview/inlineEdit.ts"
+   ],
+   "introducedBy": "unknown (resume caret mapping)",
+   "oneLine": "After splitting a paragraph in front of an image, the text typed next goes after the image.",
+   "repro": "MDR_PORT=5388 node bench/verify/v3-fid-reach.mjs atom-enter-image",
+   "observed": "\"abc ![i](https://e.example/i.png) y\" + Enter after abc + Z → \"abc\\n\\n![i](https://e.example/i.png)Z y\\n\".",
+   "expected": "\"abc\\n\\nZ![i](https://e.example/i.png) y\\n\".",
+   "baseline": "Not applicable (new feature).",
+   "suggestedFix": "Count non-text atoms as positions in the resume offset (textOffsetOf / offsetForSource)."
+  },
+  {
+   "group": "H12",
+   "title": "Deleting (U9) a block that sits directly under a paragraph with no blank line merges the paragraph above with the text below; text typed there lands elsewhere or is dropped",
+   "severity": "medium",
+   "class": "new-feature-defect",
+   "findingIds": [
+    "SES-1"
+   ],
+   "files": [
+    "src/preview/inlineEdit.ts"
+   ],
+   "introducedBy": "fix round 2 (U9 deleteBlock / reinsert)",
+   "oneLine": "Removing a list or heading written in the common tight style merges the user's paragraphs; typed text lands after them or, in one case, about 2.5 s of typing is lost.",
+   "repro": "MDR_PORT=5388 node bench/verify/v3-ses-probe.mjs tight- ; perl -e 'alarm 110; exec @ARGV' npx vitest run test/v3-ses-repro.test.ts -t SES-1",
+   "observed": "\"Intro text:\\n- item one\\n- item two\\n\\nNext paragraph.\\n\" → \"Intro text:\\nNext paragraph.\\n\" shown as one paragraph; typing N → \"Intro text:\\nNext paragraph.\\n\\n- N\\n\". \"para one\\n# Head\\npara two\\n\": session lost, Q dropped, focus on BODY. \"para one\\n# Head\\n\" emptied → \"para one\" (final newline gone).",
+   "expected": "\"Intro text:\\n\\nNext paragraph.\\n\" (paragraphs stay apart), N typed between them, the session continues.",
+   "baseline": "Not applicable (new feature).",
+   "suggestedFix": "deleteBlock: keep a separating blank line when the line before is not blank; reinsert at the deleted block's own position; keep a final newline."
+  },
+  {
+   "group": "H13",
+   "title": "After ⌘Z / ⇧⌘Z whose position falls in a block's trailing blank line, the caret lands at the start of the block's last line",
+   "severity": "medium",
+   "class": "new-feature-defect",
+   "findingIds": [
+    "SES-3"
+   ],
+   "files": [
+    "src/preview/inlineEdit.ts"
+   ],
+   "introducedBy": "unknown (offsetForSource)",
+   "oneLine": "Type a new paragraph or item, undo it, keep typing: the text goes to the start of the paragraph above.",
+   "repro": "MDR_PORT=5388 node bench/verify/v3-ses-probe.mjs caret-undo ; perl -e 'alarm 110; exec @ARGV' npx vitest run test/v3-ses-repro.test.ts -t SES-3",
+   "observed": "\"abc\\n\\nzzz\\n\" + Enter + def + ⌘Z + Q → \"Qabc\\n\\nzzz\\n\"; list → \"- oneQ\\n- two\\n\\nz\\n\"; two-line paragraph → \"abc Qdef\".",
+   "expected": "\"abcQ\\n\\nzzz\\n\", \"- one\\n- twoQ\\n\\nz\\n\", \"abc\\ndefQ\".",
+   "baseline": "Not applicable (new feature).",
+   "suggestedFix": "offsetForSource: a position after the last content line maps to the end of the content, not column 0 of the last line."
+  },
+  {
+   "group": "H14",
+   "title": "Paste over a selection uses Chromium's smart delete: the space before a double-clicked word is removed, or a remaining double space is written &nbsp;",
+   "severity": "medium",
+   "class": "new-feature-defect",
+   "findingIds": [
+    "SES-5"
+   ],
+   "files": [
+    "src/preview/inlineEdit.ts"
+   ],
+   "introducedBy": "fix round 2 (U8 pasteText rewrite)",
+   "oneLine": "Replacing a word by pasting glues two words together or puts an &nbsp; the user never typed into the file.",
+   "repro": "MDR_PORT=5388 node bench/verify/v3-ses-paste.mjs dblclick-word-paste ; MDR_PORT=5388 node bench/verify/v3-ses-paste.mjs sel-replace",
+   "observed": "Double-click \"here\", ⌘V \"there\" → \"Some wordsthere to replace now.\"; select \"def\" in \"abc def ghi\", paste X → \"abc&nbsp;X ghi\"; \"X\\n\\nY\" → \"abc&nbsp;X\\n\\nY ghi\".",
+   "expected": "\"Some words there to replace now.\", \"abc X ghi\" (what typing over the selection writes).",
+   "baseline": "Not applicable (new feature).",
+   "suggestedFix": "Delete the selection with range.deleteContents() (no smart delete) before the insertion, or use insertText for single-line text."
+  },
+  {
+   "group": "H15",
+   "title": "serializeBlock ignores a failed pickMarkers(): a block with no four free marker code points is serialized with stale markers",
+   "severity": "medium",
+   "class": "new-feature-defect",
+   "findingIds": [
+    "REV-4"
+   ],
+   "files": [
+    "src/preview/serialize.ts"
+   ],
+   "introducedBy": "fix round 2 (G4 pickMarkers)",
+   "oneLine": "Pasting a full private-use glyph table into a paragraph silently turns one glyph into a line break in the file.",
+   "repro": "MDR_PORT=5388 node bench/verify/v3-rev-browser.mjs pua ; perl -e 'alarm 110; exec @ARGV' npx vitest run test/v3-rev-markers.test.ts",
+   "observed": "After pasting U+E000–U+F8FF plus U+FDD0–U+FDEF into \"Glyphs: end\": paragraph lines 2, length 6450 (expected 6451), U+E000 gone.",
+   "expected": "Every pasted character reaches the source, or nothing is written and the block is refused.",
+   "baseline": "Not applicable (new feature).",
+   "suggestedFix": "Honour pickMarkers()'s return value in serializeBlock / serializeBlockWithCaret (no serialization, refuse with the toast)."
+  },
+  {
+   "group": "H16",
+   "title": "A click in the preview followed by Space types a space into the document instead of paging the preview (also in preview-only mode)",
+   "severity": "medium",
+   "class": "spec-gap",
+   "findingIds": [
+    "APP-3"
+   ],
+   "files": [
+    "src/preview/inlineEdit.ts",
+    "src/app/previewEdit.ts"
+   ],
+   "introducedBy": "stage 2b (U7 click-to-edit on by default)",
+   "oneLine": "A reader who clicks into the preview and presses Space to page down inserts spaces into the file; the document turns dirty.",
+   "repro": "MDR_PORT=5388 node bench/verify/v3-app-regress.mjs K3 ; MDR_EDIT=off MDR_PORT=5388 node bench/verify/v3-app-regress.mjs K3 ; MDR_PERF=1 MDR_PORT=5398 node bench/verify/v3-app-regress.mjs K3 (0.1.1 dist on 5398)",
+   "observed": "{\"scrolled\":false,\"changedLine\":\"第一 段落文字 alpha。\",\"session\":true}.",
+   "expected": "Lead decision: either accept and document it, or keep 0.1.1's reading habit (Space pages until the user types something else).",
+   "baseline": "Measured: 0.1.1 {\"scrolled\":true,\"changedLine\":null,\"session\":false}; the candidate with 预览可编辑 off is identical.",
+   "suggestedFix": "Decision for the lead (see the verifier's options)."
+  },
+  {
+   "group": "H17",
+   "title": "G20 variation: an inline formula whose TeX starts and ends with a digit becomes literal text when an edit leaves it before whitespace or at the paragraph end (currency rule)",
+   "severity": "low",
+   "class": "new-feature-defect",
+   "findingIds": [
+    "FID-4"
+   ],
+   "files": [
+    "src/preview/serialize.ts",
+    "src/worker/math.ts"
+   ],
+   "introducedBy": "fix round 2 (G20 covers only a digit after the formula)",
+   "oneLine": "After deleting the punctuation behind $3\\times4$ or typing a space after $1+2$, the formula shows as raw $…$ text.",
+   "repro": "perl -e 'alarm 110; exec @ARGV' npx vitest run test/v3-fid-r1.test.ts -t G20 ; MDR_PORT=5388 node bench/verify/v3-fid-reach.mjs g20-",
+   "observed": "\"面积 $3\\times4$.\" + Backspace → \"面积 $3\\times4$\" (0 formulas rendered); \"和 $1+2$x\" + space → \"和 $1+2$ x\"; \"等于 $10$。\" → \"等于 $10$\".",
+   "expected": "The formula stays a formula.",
+   "baseline": "Not applicable (new feature).",
+   "suggestedFix": "Apply the proof-or-general rule to math.ts's currency closer (refuse or write a closing spelling)."
+  },
+  {
+   "group": "H18",
+   "title": "A List block with three or more adjacent lists of the same type is refused by the U12 gate",
+   "severity": "low",
+   "class": "new-feature-defect",
+   "findingIds": [
+    "FID-5"
+   ],
+   "files": [
+    "src/preview/serialize.ts"
+   ],
+   "introducedBy": "unknown (serializer list marker choice)",
+   "oneLine": "An ordinary list block (\"- a\", \"* b\", \"+ c\" separated by blank lines) cannot be edited in the preview.",
+   "repro": "perl -e 'alarm 110; exec @ARGV' npx vitest run test/v3-fid-r1.test.ts -t \"three adjacent\" ; MDR_PORT=5388 node bench/verify/v3-fid-reach.mjs adjacent-lists",
+   "observed": "Baseline \"- a\\n\\n* b\\n\\n* c\" (lists 2 and 3 merge); session false, toast 此块请在源码中编辑.",
+   "expected": "The block is editable; markers alternate for each adjacent list.",
+   "baseline": "Not applicable (new feature).",
+   "suggestedFix": "Alternate the bullet / ordered delimiter relative to the previous adjacent list."
+  },
+  {
+   "group": "H19",
+   "title": "A task list is refused when the document defines a reference named x ([x]: url)",
+   "severity": "low",
+   "class": "new-feature-defect",
+   "findingIds": [
+    "FID-6"
+   ],
+   "files": [
+    "src/preview/fidelity.ts",
+    "src/preview/serialize.ts"
+   ],
+   "introducedBy": "fix round 2 (U12 gate renders without the document's references)",
+   "oneLine": "In a document that defines [x] (or [X]), every task list with a checked item is uneditable in the preview.",
+   "repro": "perl -e 'alarm 110; exec @ARGV' npx vitest run test/v3-fid-r1.test.ts -t \"is editable: the gate\" ; MDR_PORT=5388 node bench/verify/v3-fid-reach.mjs task-ref",
+   "observed": "Baseline \"- [x] [x](https://ref.example/x) done\\n- [ ] open\" refused; no session, toast 此块请在源码中编辑.",
+   "expected": "The task list is editable.",
+   "baseline": "Not applicable (new feature).",
+   "suggestedFix": "Give the gate the document's references, or write a checked marker that cannot read as a reference link."
+  },
+  {
+   "group": "H20",
+   "title": "unkeepReusedId also acts on an older structure arriving after the deletion write: the deleted block reappears for a frame or two",
+   "severity": "low",
+   "class": "new-feature-defect",
+   "findingIds": [
+    "SES-6"
+   ],
+   "files": [
+    "src/preview/createPreview.ts",
+    "src/preview/inlineEdit.ts"
+   ],
+   "introducedBy": "the stage-2c fix step (unkeepReusedId)",
+   "oneLine": "A one- or two-frame flash of just-deleted text (and of a missing neighbour) when typing and select-all-delete come within one worker round trip.",
+   "repro": "MDR_PORT=5388 node bench/verify/v3-ses-preview.mjs old-delta",
+   "observed": "[\"aaa\",\"zzz\"] → [\"aaa\",\"midX\",\"zzz\"] at ~305 ms → [\"aaa\",\"zzz\"]; first block with a leading line: [\"midX\",\"zzz\"], [\"~midX\"] (zzz not shown).",
+   "expected": "The deleted block never shows again; neighbours never vanish.",
+   "baseline": "Not applicable (new feature).",
+   "suggestedFix": "Apply unkeepReusedId only to structures whose version is at least the deletion write's version."
+  },
+  {
+   "group": "H21",
+   "title": "G14 variation: a session-end write while the user drags a selection in the editor cancels CodeMirror's drag",
+   "severity": "low",
+   "class": "new-feature-defect",
+   "findingIds": [
+    "APP-1"
+   ],
+   "files": [
+    "src/app/previewEdit.ts",
+    "src/preview/inlineEdit.ts"
+   ],
+   "introducedBy": "fix round 2 (G14 replace with userEvent input.type.previewEdit)",
+   "oneLine": "With an open IME composition in the preview, a drag-selection in the editor does not appear; the next typed text goes in at the press point.",
+   "repro": "MDR_PORT=5388 node bench/verify/v3-app-g.mjs G14a 3",
+   "observed": "丙 line \"Q丙段落文字一二三。\" / \"Q段落文字一二三。\".",
+   "expected": "\"Q文字一二三。\".",
+   "baseline": "Not applicable (new feature).",
+   "suggestedFix": "Do not tag the focus-keeping session-end write as input.type, or end the session from a capture-phase mousedown on the editor."
+  },
+  {
+   "group": "H22",
+   "title": "G15 variation: in a code-block session, ⌘A again never selects the whole preview",
+   "severity": "low",
+   "class": "regression-vs-shipped",
+   "findingIds": [
+    "APP-2"
+   ],
+   "files": [
+    "src/preview/inlineEdit.ts"
+   ],
+   "introducedBy": "fix round 2 (U7 ⌘A two-step rule)",
+   "oneLine": "After clicking into a code block, ⌘A ⌘A only selects the code; the page cannot be selected without Esc first.",
+   "repro": "MDR_PORT=5388 node bench/verify/v3-app-g.mjs G15k ; MDR_PORT=5388 node bench/verify/v3-app-regress.mjs A1 ; MDR_PERF=1 MDR_PORT=5398 node bench/verify/v3-app-regress.mjs A1",
+   "observed": "second ⌘A {\"whole\":false,\"len\":10,\"session\":true}; A1 {\"whole\":false,\"len\":12,\"session\":true}.",
+   "expected": "As for other blocks (and 0.1.1): the second ⌘A ends the session and selects the whole preview.",
+   "baseline": "Measured: 0.1.1 A1 {\"len\":\">500\",\"session\":false}.",
+   "suggestedFix": "In blockFullySelected compare against the editable content (skip [data-mdr-ui] and the code-block chrome)."
+  },
+  {
+   "group": "H23",
+   "title": "G23 variation: a Shift_JIS reading that neither encoder table gives back is saved with the WHATWG table and rewrites more bytes than 0.1.1 (22 vs 2), also with the overrides off",
+   "severity": "low",
+   "class": "regression-vs-shipped",
+   "findingIds": [
+    "DEC-2"
+   ],
+   "files": [
+    "electron/fileIO.mjs"
+   ],
+   "introducedBy": "fix round 2 (S4 (e) WHATWG tables + saveTableOf)",
+   "oneLine": "Silent byte respelling on save in rare NEC-style Shift_JIS files; the characters read the same.",
+   "repro": "perl -e 'alarm 110; exec @ARGV' npx vitest run test/v3-dec-decoder.test.ts -t DEC-2 ; MDR_APP_DIR=/Users/zyx/LocalDocuments/MDReader/release/staging-0.2.0.noindex PHASE=paths node bench/electron/v3-dec-e2e.mjs",
+   "observed": "dec2-sjis-nec: \"REWRITTEN (22 bytes differ from original+x; len 110->110)\".",
+   "expected": "No more bytes changed than 0.1.1 changed.",
+   "baseline": "Measured: baseline \"REWRITTEN (2 bytes differ …)\".",
+   "suggestedFix": "Choose the save table per character (keep the bytes the file used), or at least the table that changes fewer bytes."
+  },
+  {
+   "group": "H24",
+   "title": "G34 variation: a failure toast keyed by one spelling of a path is not cleared when the same file opens under another spelling (/tmp vs /private/tmp)",
+   "severity": "low",
+   "class": "new-feature-defect",
+   "findingIds": [
+    "FLOW-2"
+   ],
+   "files": [
+    "src/app/App.ts",
+    "electron/fileIO.mjs"
+   ],
+   "introducedBy": "fix round 2 (G34 keyed failures)",
+   "oneLine": "A false \"cannot open\" message stays next to the open document until dismissed.",
+   "repro": "MDR_TARGET=staging node bench/electron/v3-flow-desk.mjs K2",
+   "observed": "「无法打开「k2-later.md」：找不到这个文件…」 still shown while /tmp/…/k2-later.md is open.",
+   "expected": "A successful open clears the file's failure whatever path spelling each entry point used.",
+   "baseline": "Not comparable: 0.1.1 shows one generic toast 文件已不存在，已从最近列表移除 (×N).",
+   "suggestedFix": "Key failures by the resolved (realpath) path."
+  },
+  {
+   "group": "H25",
+   "title": "G30 class: save() deletes the stored draft of the new docId unconditionally; on the legacy web backend one tab's save deletes another tab's draft",
+   "severity": "low",
+   "class": "pre-existing",
+   "findingIds": [
+    "FLOW-3"
+   ],
+   "files": [
+    "src/app/App.ts",
+    "src/files/legacyBackend.ts",
+    "src/files/fileService.ts"
+   ],
+   "introducedBy": "older (identical on 0.1.1)",
+   "oneLine": "Firefox/Safari users: tab A's unsaved text loses its draft when tab B saves another untitled document.",
+   "repro": "npx vite --port 5388 --strictPort & then MDR_URL=http://localhost:5388/ node bench/verify/v3-flow-web.mjs L1",
+   "observed": "stored null after tab B's save.",
+   "expected": "A save deletes only a draft this tab wrote.",
+   "baseline": "Measured: 0.1.1 dist identical FAIL.",
+   "suggestedFix": "Use delDraftIfMine in save(), give legacy untitled downloads a unique docId."
+  },
+  {
+   "group": "H26",
+   "title": "mailto: and tel: links do nothing on the desktop although S3 says they open externally",
+   "severity": "low",
+   "class": "pre-existing",
+   "findingIds": [
+    "SHELL-2"
+   ],
+   "files": [
+    "electron/main.mjs"
+   ],
+   "introducedBy": "older (identical on 0.1.1)",
+   "oneLine": "Clicking an e-mail or phone link gives no reaction.",
+   "repro": "MDR_TARGET=staging node bench/electron/v3-shell-mailto.mjs",
+   "observed": "shell.openExternal never called for mailto / tel; https works.",
+   "expected": "mailto / tel open the system handler.",
+   "baseline": "Measured: baseline identical.",
+   "suggestedFix": "Forward mailto: / tel: from setWindowOpenHandler to shell.openExternal."
+  },
+  {
+   "group": "H27",
+   "title": "A GB18030 file with any four-byte sequence cannot be saved back in its encoding",
+   "severity": "low",
+   "class": "pre-existing",
+   "findingIds": [
+    "DEC-3"
+   ],
+   "files": [
+    "electron/fileIO.mjs"
+   ],
+   "introducedBy": "older (identical in the 0.1.0 decoder)",
+   "oneLine": "Such a file can only be saved as UTF-8 (the save is refused with a clear message).",
+   "repro": "perl -e 'alarm 110; exec @ARGV' npx vitest run test/v3-dec-decoder.test.ts -t DEC-3",
+   "observed": "Error: 文档包含 GBK 编码无法表示的字符「𠀀」，请用「另存为」保存为 UTF-8.",
+   "expected": "Byte-exact save including four-byte sequences.",
+   "baseline": "Same refusal in the frozen 0.1.0 decoder.",
+   "suggestedFix": "Encode characters missing from the two-byte table with the GB18030 four-byte algorithm."
+  },
+  {
+   "group": "H28",
+   "title": "The decoder tests and differentials run on Node's ICU, not on the Electron 44 main process the app ships",
+   "severity": "low",
+   "class": "spec-gap",
+   "findingIds": [
+    "DEC-4"
+   ],
+   "files": [
+    "test/electron.fileIO.differential.test.ts",
+    "electron/fileIO.mjs"
+   ],
+   "introducedBy": "older (test methodology)",
+   "oneLine": "No user impact found directly; future decoder changes validated only in vitest may behave differently in the app.",
+   "repro": "MDR_APP_DIR=/Users/zyx/LocalDocuments/MDReader/release/staging-0.2.0.noindex node bench/electron/v3-dec-icu.mjs",
+   "observed": "Encoder table sizes differ (big5 14816 vs 14490, shift_jis 9397 vs 9210, euc-kr 8570 vs 17176, gbk same size different content); 88 of 1072 inputs decode differently, the frozen 0.1.0 fixture included.",
+   "expected": "Thresholds and differentials evaluated with the shipped runtime's decoders.",
+   "baseline": "Not applicable.",
+   "suggestedFix": "Run the decoder differential under Electron's Node (ELECTRON_RUN_AS_NODE) or a main-process harness."
+  },
+  {
+   "group": "H29",
+   "title": "The fidelity gate is quadratic in a whitespace run inside emphasis or a formula",
+   "severity": "low",
+   "class": "new-feature-defect",
+   "findingIds": [
+    "REV-3"
+   ],
+   "files": [
+    "src/preview/fidelity.ts"
+   ],
+   "introducedBy": "fix round 2 (U12 fidelity.ts)",
+   "oneLine": "A block with tens of thousands of spaces inside emphasis or a formula freezes the window 1-3 s per click.",
+   "repro": "MDR_PORT=5388 node bench/verify/v3-rev-browser.mjs stallEm stallMath ; perl -e 'alarm 110; exec @ARGV' npx vitest run test/v3-rev-fidelity-stall.test.ts",
+   "observed": "click → next frame 1202 ms (em) and 2225 ms (math) at N=50000; gate 941 / 1535 ms in jsdom, serialize 2-8 ms.",
+   "expected": "Linear, well under 100 ms.",
+   "baseline": "Not applicable (0.1.1 starts no session).",
+   "suggestedFix": "Replace the two trailing-whitespace regexes (hoist, mathAtom) by backward loops."
+  }
+ ],
+ "verdicts": [
+  {
+   "id": "REV-1",
+   "group": "H1",
+   "verdict": "reproduced",
+   "output": "v3-rev-browser tog + mathRaw 0/2 (tog: wrapper data-mdr-x false, line 1 = \"- [x] pay the rent\"; mathRaw line 3 = \"Please read $\\text{Call +1 555 0100 now}$\\\"]]>the tesrms\"); vitest reserved-bypass: the 12 REV-1 cases fail (2 runs: suite + single); desktop staging v3-rev-desktop rev1 2 FAIL",
+   "baselineChecked": "baseline 0.1.1 dist (v3-rev-browser MDR_DIST): mathRaw PASS (no session, source unchanged), tog FAIL the same way (checkbox steering is pre-existing); desktop baseline ALL PASS (file unchanged)",
+   "severity": "high",
+   "severityNote": ""
+  },
+  {
+   "id": "REV-2",
+   "group": "H1",
+   "verdict": "reproduced",
+   "output": "v3-rev-browser math + blk 0/3 (math line 3 = \"Please read $\\text{Call +1 555 0100 now}$the tesrms\"; blk lines 1-3 = [\"- [ ] pay the rent\",\"- [ ] call the bank\",\"- [x] sign the lease\"]); vitest: the 6 REV-2 cases fail; desktop staging rev2 2 FAIL",
+   "baselineChecked": "baseline dist: math PASS (no session), blk FAIL identically (redirect pre-existing); desktop baseline ALL PASS",
+   "severity": "high",
+   "severityNote": ""
+  },
+  {
+   "id": "FLOW-4",
+   "group": "H2",
+   "verdict": "reproduced",
+   "output": "v3-flow-desk K7 staging 3/3 runs: FAIL \"K7 editor: a clean document is not asked about — [当前文档尚未保存，是否放弃更改？]\" and \"K7 editor/取消 … \\\"al# DROPPED\\\\npha line\\\\n\\\\nsecond line\\\\n\\\"\"; web v3-flow-web DR 1/1 same FAILs",
+   "baselineChecked": "measured: v3-flow-desk K7 baseline 6 passed 0 failed (editor \"# DROPPED\\n\", no question); web baseline (0.1.1 dist with ?perf=1) DR 4 passed",
+   "severity": "high",
+   "severityNote": "Merged with SHELL-3 (same root cause). I keep high: a clean document gains another file's text and the natural answer 取消 keeps it; a save writes it to disk."
+  },
+  {
+   "id": "SHELL-3",
+   "group": "H2",
+   "verdict": "reproduced",
+   "output": "v3-shell-dropeditor other staging 3/3 FAIL title=\"● v2-dropeditor-base.md\"; v3-shell-webdrop candidate FAIL after={\"title\":\"● 未命名.md\",…,\"buttons\":[\"取消\",\"丢弃\"]}",
+   "baselineChecked": "measured: baseline shell 1/1 PASS title=\"v2-dropeditor-dropped.md\"; web baseline PASS title \"v3-webdrop.md\", buttons []",
+   "severity": "high",
+   "severityNote": "Raised from medium to high: same bug as FLOW-4, which shows the 取消 path keeping the foreign text."
+  },
+  {
+   "id": "SES-2",
+   "group": "H3",
+   "verdict": "reproduced",
+   "output": "v3-ses-probe ghost-bs 0/6, e.g. afterBs=\"before words## Next heading\\n\\nend\\n\", fence \"before words```\\ncode line\\n\\n```\\n\\nend\\n\", list case editing=null undo=8; v3-ses-repro SES-2 2/2 fail",
+   "baselineChecked": "not applicable",
+   "severity": "high",
+   "severityNote": ""
+  },
+  {
+   "id": "SES-8",
+   "group": "H4",
+   "verdict": "reproduced",
+   "output": "v3-ses-probe paste-split-identical 0/4, e.g. afterQ=\"before\\n\\nvao\\n\\nvQao\\n\\nabcdef\\n\\nafter\\n\" (html0 still \"<p>vao</p><p> abcdef</p>\"); v3-ses-repro SES-8 fails (expected 2 to be 1)",
+   "baselineChecked": "not applicable",
+   "severity": "high",
+   "severityNote": ""
+  },
+  {
+   "id": "FLOW-1",
+   "group": "H5",
+   "verdict": "reproduced",
+   "output": "v3-flow-drafts D1a D1b candidate: 4 FAIL \"the crash draft is still stored … stored \\\"\\\"\", \"the next tab offers the crash text — toasts []\"",
+   "baselineChecked": "measured: 0.1.1 dist (?perf=1) identical 4 FAIL → pre-existing",
+   "severity": "high",
+   "severityNote": "Raised from medium to high: the scale lists \"a draft that should have been kept\" as high, and r1 rated the same class (G28) high. Pre-existing, so not a release blocker."
+  },
+  {
+   "id": "SHELL-1",
+   "group": "H6",
+   "verdict": "reproduced",
+   "output": "v3-shell-stuck aboutBlank aboutSrcdoc dirtyBlank staging 0/3: url=about:blank ev=[\"start about:blank\",\"did-navigate about:blank\",\"did-stop-loading\"] sends=1 editorLen=0; dirtyBlank windowsAfterClose=[{…\"url\":\"about:blank\"}] exitAfterQuit=null",
+   "baselineChecked": "measured: baseline shell 0/3, output identical → pre-existing",
+   "severity": "high",
+   "severityNote": "Agree with high by the S3 rule (page-script navigation), but no document vector reaches it (verify-shell: 372 activations + 37 page-script vectors)."
+  },
+  {
+   "id": "DEC-1",
+   "group": "H7",
+   "verdict": "reproduced",
+   "output": "vitest v3-dec-decoder -t DEC-1 4/4 fail (got {encoding:\"utf-8\",replaced:8,head:\"# ��ʱ…\"}); v3-dec-e2e staging dec1-gbk-sheet: dialog 「…不是完全有效的 UTF-8 文本」 on open-file, panel and drop, saved \"REWRITTEN (378 bytes differ from original+x; len 401->417)\"",
+   "baselineChecked": "measured: v3-dec-e2e baseline dec1-gbk-sheet \"exact+x\" on every path, no dialog → regression",
+   "severity": "medium",
+   "severityNote": ""
+  },
+  {
+   "id": "SES-4",
+   "group": "H8",
+   "verdict": "reproduced",
+   "output": "v3-ses-pointer out-of-session candidate 0/4 + 1 repeat of drag-clean: copied=\"First para alpha words here.\\n\\nSecond para beta words here.\\n\\nThird para gam\"",
+   "baselineChecked": "measured: 0.1.1 dist on 5398 (MDR_PERF=1) out-of-session-drag-clean 2/2 PASS copied=\"words here.\\n\\n…\" → regression",
+   "severity": "medium",
+   "severityNote": ""
+  },
+  {
+   "id": "SES-9",
+   "group": "H8",
+   "verdict": "reproduced",
+   "output": "v3-ses-probe esc-then-click-start-paste 1/3 (control passes): caret={\"node\":\"SECTION\",\"off\":0} after=\"aaa\\n\\nbqf\\n\\nxyz wordsQ\\n\\nzzz\\n\"",
+   "baselineChecked": "not applicable",
+   "severity": "low",
+   "severityNote": "Grouped with SES-4: both are the selection left at (wrapper, 0) when the ended session's block is re-rendered."
+  },
+  {
+   "id": "FID-1",
+   "group": "H9",
+   "verdict": "reproduced",
+   "output": "v3-fid-reach soft- 5/5 FAIL, e.g. src \"abc\\ndef\\n\\nnext\\n\" → \"abcQ def\\n\\nnext\\n\"; v3-fid-softprobe \"abc\\ndef\\n\" Backspace: DOM \"abc\\ndef\" -> \"ab def\"",
+   "baselineChecked": "not applicable",
+   "severity": "medium",
+   "severityNote": ""
+  },
+  {
+   "id": "FID-2",
+   "group": "H10",
+   "verdict": "reproduced",
+   "output": "v3-fid-reach atom-enter-formula(-fast), atom-shift-enter-formula, atom-enter-formula-li 4/4 FAIL, e.g. \"abc $x$ y\\n\" → \"abc\\n\\nZ  \\n$x$ y\\n\"; mathprobe: new <p> starts \"<br><span class=\\\"md-math\\\" … contenteditable=\\\"false\\\">\" at once",
+   "baselineChecked": "not applicable",
+   "severity": "medium",
+   "severityNote": ""
+  },
+  {
+   "id": "SES-7",
+   "group": "H10",
+   "verdict": "reproduced",
+   "output": "v3-ses-probe atom- 1/5 (image passes): atom-nows-math src=\"abc\\n\\nQ  \\n$x$ d\\n\"; atom-start-math-type src=\"$x$Q d\\n\\nz\\n\"",
+   "baselineChecked": "not applicable",
+   "severity": "medium",
+   "severityNote": "Raised from low to medium to match FID-2: same bug."
+  },
+  {
+   "id": "FID-3",
+   "group": "H11",
+   "verdict": "reproduced",
+   "output": "v3-fid-reach atom-enter-image: slow variant 3/3 FAIL, fast variant 2/3 FAIL: \"abc ![i](https://e.example/i.png) y\\n\" → \"abc\\n\\n![i](https://e.example/i.png)Z y\\n\"",
+   "baselineChecked": "not applicable",
+   "severity": "medium",
+   "severityNote": "timingSensitive: fast variant 2 of 3."
+  },
+  {
+   "id": "SES-1",
+   "group": "H12",
+   "verdict": "reproduced",
+   "output": "v3-ses-probe tight- 1/8: tight-list-del-merges afterEmpty=\"Intro text:\\nNext paragraph.\\n\" shown=[\"Intro text: Next paragraph.\"], typed=\"Intro text:\\nNext paragraph.\\n\\n- N\\n\"; tight-heading-only-para-type after3s active=BODY, Q not written; tight-last-block-final-newline afterEmpty=\"para one\"; v3-ses-repro SES-1 2/2 fail",
+   "baselineChecked": "not applicable",
+   "severity": "medium",
+   "severityNote": "tight-quote-del also fails in the same run (\"para one\\n> quoted\\n\\npara two\\n\" → \"para two\\n\") but the verifier did not claim it; it may be Cmd-A covering both lines of one block (not judged)."
+  },
+  {
+   "id": "SES-3",
+   "group": "H13",
+   "verdict": "reproduced",
+   "output": "v3-ses-probe caret-undo 1/5: afterQ=\"Qabc\\n\\nzzz\\n\" exp=\"abcQ\\n\\nzzz\\n\"; list afterQ=\"- oneQ\\n- two\\n\\nz\\n\"; v3-ses-repro SES-3 fails (expected +0 to be 3)",
+   "baselineChecked": "not applicable",
+   "severity": "medium",
+   "severityNote": ""
+  },
+  {
+   "id": "SES-5",
+   "group": "H14",
+   "verdict": "reproduced",
+   "output": "v3-ses-paste dblclick-word-paste FAIL src=\"Some wordsthere to replace now.\\n\\nz\\n\"; sel-replace FAIL src=\"abc&nbsp;X ghi\\n\\nz\\n\"; sel-replace-lines FAIL src=\"abc&nbsp;X\\n\\nY ghi\\n\\nz\\n\"",
+   "baselineChecked": "not applicable",
+   "severity": "medium",
+   "severityNote": ""
+  },
+  {
+   "id": "REV-4",
+   "group": "H15",
+   "verdict": "reproduced",
+   "output": "v3-rev-browser pua FAIL \"paragraph lines: 2, length 6450 (expected 6451)\", U+E000 present=false; vitest v3-rev-markers 1/1 fail",
+   "baselineChecked": "not applicable",
+   "severity": "medium",
+   "severityNote": ""
+  },
+  {
+   "id": "APP-3",
+   "group": "H16",
+   "verdict": "reproduced",
+   "output": "v3-app-regress K3 candidate: {\"scrolled\":false,\"changedLine\":\"第一 段落文字 alpha。\",\"session\":true}",
+   "baselineChecked": "measured: 0.1.1 dist (MDR_PERF=1, 5398) {\"scrolled\":true,\"changedLine\":null,\"session\":false}; candidate with MDR_EDIT=off identical to the baseline",
+   "severity": "medium",
+   "severityNote": "Kept as spec-gap: the behaviour follows from click-to-edit by default; the lead has to decide."
+  },
+  {
+   "id": "FID-4",
+   "group": "H17",
+   "verdict": "reproduced",
+   "output": "vitest v3-fid-r1 -t G20 2 failed; v3-fid-reach g20- 3/3 FAIL \"formulas rendered after the edit: 0 (expected 1)\", e.g. \"面积 $3\\\\times4$.\\n\" → \"面积 $3\\\\times4$\\n\"",
+   "baselineChecked": "not applicable",
+   "severity": "low",
+   "severityNote": ""
+  },
+  {
+   "id": "FID-5",
+   "group": "H18",
+   "verdict": "reproduced",
+   "output": "vitest -t \"three adjacent\" 4 failed (baseline \"- a\\n\\n* b\\n\\n* c\": expected false to be true); v3-fid-reach adjacent-lists-refused FAIL session false, toast 此块请在源码中编辑",
+   "baselineChecked": "not applicable",
+   "severity": "low",
+   "severityNote": ""
+  },
+  {
+   "id": "FID-6",
+   "group": "H19",
+   "verdict": "reproduced",
+   "output": "vitest -t \"is editable: the gate\" 1 failed; v3-fid-reach task-ref-x / task-ref-X-upper FAIL \"no session started; toast 此块请在源码中编辑\", gate refusals 1 / 2",
+   "baselineChecked": "not applicable",
+   "severity": "low",
+   "severityNote": ""
+  },
+  {
+   "id": "SES-6",
+   "group": "H20",
+   "verdict": "reproduced",
+   "output": "v3-ses-preview old-delta 3 runs, 0/3 each (9/9 cases): framesShowingDeleted=1 [\"305ms [\\\"aaa\\\",\\\"midX\\\",\\\"zzz\\\"]\"]; first-lead [\"285ms [\\\"midX\\\",\\\"zzz\\\"]\",\"318ms [\\\"~midX\\\"]\"]",
+   "baselineChecked": "not applicable",
+   "severity": "low",
+   "severityNote": "timingSensitive (slow-worker hook): 3 of 3 runs on the quiet machine."
+  },
+  {
+   "id": "APP-1",
+   "group": "H21",
+   "verdict": "reproduced",
+   "output": "v3-app-g G14a 3: 0/3, 丙 line \"Q丙段落文字一二三。\" (run 1) and \"Q段落文字一二三。\" (runs 2, 3) instead of \"Q文字一二三。\"",
+   "baselineChecked": "not applicable",
+   "severity": "low",
+   "severityNote": ""
+  },
+  {
+   "id": "APP-2",
+   "group": "H22",
+   "verdict": "reproduced",
+   "output": "v3-app-g G15k 3/6 (the three code-block cases fail: second ⌘A {\"whole\":false,\"len\":10,\"session\":true}); v3-app-regress A1 candidate {\"whole\":false,\"len\":12,\"session\":true}",
+   "baselineChecked": "measured: 0.1.1 dist A1 {\"whole\":false,\"len\":\">500\",\"session\":false} (the page is selected) → regression",
+   "severity": "low",
+   "severityNote": ""
+  },
+  {
+   "id": "DEC-2",
+   "group": "H23",
+   "verdict": "reproduced",
+   "output": "vitest -t DEC-2 2 failed \"expected 22 to be less than or equal to 2\"; v3-dec-e2e staging dec2-sjis-nec \"REWRITTEN (22 bytes differ from original+x; len 110->110)\"",
+   "baselineChecked": "measured: v3-dec-e2e baseline dec2-sjis-nec \"REWRITTEN (2 bytes differ …)\" → regression",
+   "severity": "low",
+   "severityNote": "Low because the file must combine three rare conditions (0 of 95 830 generated inputs) and every rewritten byte pair decodes to the same character; by r1 G23 standards it would be high if it hit ordinary files."
+  },
+  {
+   "id": "FLOW-2",
+   "group": "H24",
+   "verdict": "reproduced",
+   "output": "v3-flow-desk K2 staging 5 passed, 1 failed: \"K2 no stale 「无法打开 k2-later.md」 while it is open (other spelling of the path)\"",
+   "baselineChecked": "baseline K2: the old generic toast 文件已不存在，已从最近列表移除 ×N (keyed toasts do not exist there: not comparable)",
+   "severity": "low",
+   "severityNote": ""
+  },
+  {
+   "id": "FLOW-3",
+   "group": "H25",
+   "verdict": "reproduced",
+   "output": "v3-flow-web L1 candidate FAIL \"tab B saving its own document leaves tab A’s unsaved draft alone — stored null\"",
+   "baselineChecked": "measured: 0.1.1 dist L1 identical FAIL → pre-existing",
+   "severity": "low",
+   "severityNote": ""
+  },
+  {
+   "id": "SHELL-2",
+   "group": "H26",
+   "verdict": "reproduced",
+   "output": "v3-shell-mailto staging 0/1 FAIL \"(⌘-)clicked mailto / tel links reach the system\"",
+   "baselineChecked": "measured: baseline shell 0/1 identical → pre-existing",
+   "severity": "low",
+   "severityNote": ""
+  },
+  {
+   "id": "DEC-3",
+   "group": "H27",
+   "verdict": "reproduced",
+   "output": "vitest -t DEC-3 fails: Error: 文档包含 GBK 编码无法表示的字符「𠀀」，请用「另存为」保存为 UTF-8",
+   "baselineChecked": "the test itself checks the frozen 0.1.0 fixture: same refusal → pre-existing",
+   "severity": "low",
+   "severityNote": ""
+  },
+  {
+   "id": "DEC-4",
+   "group": "H28",
+   "verdict": "reproduced",
+   "output": "v3-dec-icu (Electron main of the staging directory): tableDiff for gbk, big5 (14816 vs 14490), shift_jis (9397 vs 9210), euc-kr (8570 vs 17176); resDiffCount 88; even the frozen 0.1.0 fixture answers differently (euc-kr in Node, windows-1252 in Electron) for Latin noise",
+   "baselineChecked": "not applicable (test methodology; both apps run the same Electron)",
+   "severity": "low",
+   "severityNote": ""
+  },
+  {
+   "id": "REV-3",
+   "group": "H29",
+   "verdict": "reproduced",
+   "output": "v3-rev-browser stallEm 1202 ms, stallMath 2225 ms (click → next frame, N=50000); vitest v3-rev-fidelity-stall 2/2 fail (gate 941 ms / 1535 ms, serialize 8 / 2 ms)",
+   "baselineChecked": "not applicable",
+   "severity": "low",
+   "severityNote": "timingSensitive by nature; 1 browser run + 2 vitest runs all far above the bound."
+  }
+ ],
+ "r1Checks": [
+  {
+   "group": "G1",
+   "variations": "7 (RAWTEXT style/xmp/title/textarea/noembed/noframes/iframe/script, CDATA token, &Tab; md-math, &Tab; md-block section, direct data-l control)",
+   "result": "broken",
+   "coveredBy": "H1 (REV-1, REV-2); the direct data-l control holds"
+  },
+  {
+   "group": "G2",
+   "variations": "27 jsdom + 7 Chromium link variations",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G3",
+   "variations": "5 jsdom cell / formula variations + property fuzz 6 seeds",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G4",
+   "variations": "7 jsdom PUA variations + list-cache fuzz ~1800 sequences",
+   "result": "holds",
+   "coveredBy": "see also H15 (REV-4, marker exhaustion)"
+  },
+  {
+   "group": "G5",
+   "variations": "10 jsdom + 11 Chromium edge cases + fuzz",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G6",
+   "variations": "large pastes into list / quote / cell / heading, limit both sides",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G7",
+   "variations": "flush, saves, close, drafts, export, menu save (verify-app, verify-session); tight neighbour; Backspace in the emptied element",
+   "result": "broken",
+   "coveredBy": "H12 (SES-1), H3 (SES-2)"
+  },
+  {
+   "group": "G8",
+   "variations": "9 jsdom + 2 Chromium two-session cases",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G9",
+   "variations": "5 jsdom + fuzz",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G10",
+   "variations": "43 keys in the resume window vs a live session",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G11",
+   "variations": "4 multi-boundary splits (quote, list, heading, three)",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G12",
+   "variations": "far undo / redo / undo of an emptied block in a 600-paragraph document",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G13",
+   "variations": "13 list Tab / Shift-Tab cases",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G14",
+   "variations": "4 (click in the rewritten line, double-click, after an emptied block, drag on another line)",
+   "result": "broken",
+   "coveredBy": "H21 (APP-1, drag)"
+  },
+  {
+   "group": "G15",
+   "variations": "drags without a session, drag out of a session, ⌘A ⌘A in 6 block kinds and 3 code kinds",
+   "result": "broken",
+   "coveredBy": "H8 (SES-4), H22 (APP-2)"
+  },
+  {
+   "group": "G16",
+   "variations": "5 slow-worker replacements (verify-session) + 3 (verify-review)",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G18",
+   "variations": "36 jsdom + 2 Chromium",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G19",
+   "variations": "8 jsdom + 1 Chromium",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G20",
+   "variations": "3 digit-after variations hold; currency-rule variations",
+   "result": "broken",
+   "coveredBy": "H17 (FID-4)"
+  },
+  {
+   "group": "G21",
+   "variations": "8 jsdom + fuzz",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G22",
+   "variations": "Latin CP1252 in 5 languages, NUL padding, UTF-8-shaped GBK",
+   "result": "broken",
+   "coveredBy": "H7 (DEC-1)"
+  },
+  {
+   "group": "G23",
+   "variations": "Big5 override saves, Shift_JIS CP932 saves, NEC-style EEEF + 8790",
+   "result": "broken",
+   "coveredBy": "H23 (DEC-2)"
+  },
+  {
+   "group": "G24",
+   "variations": "GBK-extension names (3400 strings), 6000 random GBK/3+4, hant-gbk 7637",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G25",
+   "variations": "CP1250 sentences with 8D/9D/8F, large files",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G26",
+   "variations": "lenient UTF-8 with a genuine U+FFFD, reload, draft restore",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G28",
+   "variations": "offer unanswered + Escape session; offer unanswered + typing taken back",
+   "result": "broken",
+   "coveredBy": "H5 (FLOW-1, pre-existing)"
+  },
+  {
+   "group": "G29",
+   "variations": "preview-session change + 恢复 in the same frame; re-shown offer",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G30",
+   "variations": "three tabs 丢弃 at 0/5/50 ms; legacy backend two untitled downloads",
+   "result": "broken",
+   "coveredBy": "H25 (FLOW-3, pre-existing)"
+  },
+  {
+   "group": "G31",
+   "variations": "refused files onto a dirty document (4 kinds); normal .md onto the editor pane",
+   "result": "broken",
+   "coveredBy": "H2 (FLOW-4, SHELL-3)"
+  },
+  {
+   "group": "G33",
+   "variations": "AbortError / NotAllowedError / SecurityError; getFile NotFoundError",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G34",
+   "variations": "repeat failure, 10 failures, ×; web lost permission then picker; /private/tmp vs /tmp",
+   "result": "broken",
+   "coveredBy": "H24 (FLOW-2)"
+  },
+  {
+   "group": "G36",
+   "variations": "新建 ×3 queued; same document reloaded",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G37",
+   "variations": "31 vector forms × 6 activations × editing off/on, original repro, SVG / area variations",
+   "result": "holds",
+   "coveredBy": "page script about:blank is H6 (SHELL-1, pre-existing, not a document vector)"
+  },
+  {
+   "group": "G38",
+   "variations": "6 hidden / minimised quit variations",
+   "result": "holds",
+   "coveredBy": ""
+  },
+  {
+   "group": "G39",
+   "variations": "palette, find field, go-to-line, ⌘K link field",
+   "result": "holds",
+   "coveredBy": ""
+  }
+ ],
+ "r1Broken": [
+  "G1",
+  "G7",
+  "G14",
+  "G15",
+  "G20",
+  "G22",
+  "G23",
+  "G28",
+  "G30",
+  "G31",
+  "G34"
+ ],
+ "held": {
+  "verify-fidelity": "No false U12 refusal of an ordinary block: direct walks of medium.md (6002 blocks), large.md (30002), small.md, README and docs found 17 refusals, all raw HTML (K4); 500 real clicks found 0. No false pass in 292 written sessions over adversarial documents (0 rendering differences, 0 bytes outside the block). Click + Esc writes nothing (530 blocks). The list cache matches uncached serialization with per-call markers (6 seeds x 150 sequences). Typed Markdown characters stay literal. U13 meets the serializer (15 Chromium cases). U14 keeps leading lines.",
+  "verify-session": "U13: 24 cases plus undo/redo byte for byte. U14 holds for every first-block kind. unkeepReusedId / held: 10 per-frame sampled cases, only the SES-6 flash. The P1 class: 8 history cases, no lost keys. U7 pointer gestures: 30 cases, only SES-4 fails. Paste: about 45 cases, only SES-5, SES-8 and SES-9 fail. An oracle fuzz (about 33 seeds, small / human speed / large.md) found SES-8 and SES-9. IME, drag and drop and the editing toggle around sessions also held.",
+  "verify-app": "Saving with pending session text or an emptied block, on every web save path, writes exactly the screen. Replacing the document during a session never leaks its text. Draft offers against a live session work. Block identity with duplicates and leading lines: 23/24 (the one mismatch was a wrong expectation). The ghost survives far scrolling. UI operations right after typing work (11/11). Desktop dev shell 14/14 and staging 5/5. With editing off the preview behaves like 0.1.1 (18 probes). large.md sessions at top, middle and end are exact. The dirty flag is right.",
+  "verify-flows": "Typing during a slow save keeps a newer draft. Session text counts as dirty for every replacing request and for quit. The window closes only when confirmed. OS document bursts give one question. Drafts around save / 不保存 work. argv failures are named. An IME composition at close is saved. ⌘Q with the 打开… panel up asks. A folder or FIFO open-file never loses the document. No crash dialogs.",
+  "verify-shell": "No document content navigates the window, opens a window or downloads (372 activations + 11 static carriers). 37 page-script vectors other than about:blank / about:srcdoc are cancelled. The open queue is right after every cancelled navigation (196/196 + 6/6). The dev-URL rule holds (10/10). Closing or quitting around full-screen transitions caused 0 crashes in 33 cases. G38 holds for the whole class. Drops never navigate. The lifecycle scripts reproduce the integrator's numbers. A line-by-line read of the main.mjs diff found no stuck flag.",
+  "verify-decoder": "Over 95 830 inputs in Node and in the Electron main process, no refusal other than the binary rule, no label that fails to round-trip and no U+FFFD in a non-UTF-8 reading. With the switch off the results equal the fixture (0 differences). Unmodified and +1 saves keep every byte. meta.table survives conflict, retry and reload. The K11 dialog appears exactly for lenient UTF-8. Large-file sampling agrees with the whole-file decision. The thresholds sit where documented.",
+  "verify-review": "The unkeepReusedId / held claim holds: every caller was read, and 4 slow-worker cases passed 8/8. No listener or element leaks over 120 sessions and 40 loads. The sanitizer config and CSP are unchanged apart from the new hook. The gate's main-thread render cannot run script. The regexes are linear except REV-3. Nothing on the session path inserts HTML from document text. A directly forged data-l is flagged."
+ },
+ "notCovered": [
+  "Real macOS input: OS-level key equivalents reaching the native menu during a session (double ⌘B / ⌘Z), real IME (only CDP), a real Finder drag, and real open / save sheets.",
+  "A really hidden tab: a session edit within one frame before hide, and the draft on hide with an open composition. Headless Chromium cannot hide a page.",
+  "The desktop menu 撤销 in the resume window beyond K2. native.ts isUiTextField treats the capture textarea as a UI field.",
+  "Natural timing of SES-6 (only the slow-worker hook was used). The full structure path of unkeepReusedId under a worker restart was only read, not run.",
+  "main.mjs render-process-gone: the third crash within 60 s calls win.destroy(), possibly during a full-screen transition. Not run, so that no crash dialog appears on the user's screen.",
+  "The decoder of the web build (File.text()). Real-world GBK / Big5 / Shift_JIS files, Big5-HKSCS, EUC-JP, and Shift_JIS user-defined characters.",
+  "serialize.ts startsLine: '#' after a <br> and a whitespace-only <strong> (jsdom only). '**__d__**' (not reachable by ⌘B). A pasted U+200B is dropped from the source (not judged).",
+  "Exceptions thrown inside serializeBlock during flush or begin. replayToggle when the block re-rendered meanwhile.",
+  "Two tabs on the same document while one holds a session. The native 另存为 dialog while a session holds text. Recent-entry open and 重新载入 during a session (code-reviewed only).",
+  "Drafts: a crash draft older than the file's mtime is never offered. The same file under two path spellings gets two docIds. delOwnDraft's text fallback can delete another tab's draft holding identical text.",
+  "In SES-1's script, the case tight-quote-del ('para one⏎> quoted⏎⏎para two' emptied → 'para two') also fails. The verifier did not claim it. It may be ⌘A selecting both lines of one block; I did not judge it."
+ ],
+ "decoderVerdict": "Yes, there is a reproduced decoder regression of medium or above against 0.1.1: DEC-1 (group H7, medium, regression-vs-shipped). It reproduced in the unit test (4/4) and end to end in the staging shell on open-file, the 打开… panel and a drop: dialog 「…不是完全有效的 UTF-8 文本」, and a save rewrites 378 bytes. The baseline shell reads the same file as GBK and saves exact+x. By S4 (f), override 3 (lenient UTF-8) must not replace a clean CJK reading that scores as real text; otherwise the release ships with DECODER_OVERRIDES off. Switching the overrides off removes DEC-1 (it is override 3). It does not remove DEC-2 (H23, a low regression: 22 bytes respelled instead of 2 in a constructed NEC-style Shift_JIS file), because the save-table rule is not behind the switch. DEC-3 (H27) is pre-existing and DEC-4 (H28) is test methodology. Its effect also applies to the frozen 0.1.0 fixture, which decodes 88 of 1072 inputs differently in Node and in Electron, so decoder differentials must run in Electron.",
+ "scriptNotes": [
+  "bench/verify/v3-ses-paste.mjs limit-prose-sel-replaced fails, but only because its option pre:'sel500' is not implemented: no selection is made, so 59 004 + 1 100 characters is rightly refused. This is a script artifact, not a product failure.",
+  "bench/verify/fix2-int-p5.mjs on a production build needs a server that adds ?perf=1: its warmUp opens a URL without it and times out after 90 s on vite preview. I used a 25-line static server in my scratch directory, as the integrator did.",
+  "bench/verify/v3-app-g.mjs and v3-app-regress.mjs printed nothing when started from a nohup'd sh batch with perl alarm and a pipe, and one v3-app-regress process outlived the batch. Run directly, they work. I ran them directly.",
+  "v3-app-regress.mjs takes only one case filter (argv[2]).",
+  "npx playwright test writes test-results/ into the tree."
+ ]
+}

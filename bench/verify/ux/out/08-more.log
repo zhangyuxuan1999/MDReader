@@ -1,0 +1,9 @@
+PASS  Tab outside a list inserts indentation (indentMore), Shift-Tab removes it
+PASS  Enter inside a blockquote continues with "> "
+PASS  Mod-k uses a URL from the clipboard when one is present
+PASS  Theme toggle recolours the hljs code block, TOC and status bar (tokens flip)  — {"light":{"kw":"rgb(138, 46, 160)","pre":"rgb(241, 238, 231)","sb":"rgb(255, 255, 255)","tb":"rgb(255, 255, 255)","cmGutter":"rgb(250, 248, 244)"},"dark":{"kw":"rgb(199, 146, 234)","pre":"rgb(31, 34, 39)","sb":"rgb(29, 32, 36)","tb":"rgb(29, 32, 36)","cmGutter":"rgb(21, 23, 26)"}}
+PASS  Selection survives toggle-wrap round trip and cursor-only italic/code place cursor inside
+PASS  Heading command on a list line / code fence line (edge)  — inside fence: "## let a = 1;"
+
+[08-more] 6 passed, 0 failed
+[08-more] no console/page errors

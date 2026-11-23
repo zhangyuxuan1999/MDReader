@@ -1,0 +1,820 @@
+{
+  "docs": {
+    "tricky.md": {
+      "blocks": 60,
+      "tested": 54,
+      "identical": 33
+    },
+    "README.md": {
+      "blocks": 43,
+      "tested": 43,
+      "identical": 40
+    },
+    "SPEC.md": {
+      "blocks": 45,
+      "tested": 44,
+      "identical": 21
+    },
+    "small-head.md": {
+      "blocks": 77,
+      "tested": 77,
+      "identical": 70
+    }
+  },
+  "changed": [
+    {
+      "block": "tricky.md:5 Prose «价格从 $5 到 $10 之间都可以，另有 \\$ 转义的美元符号。»",
+      "renderSame": true,
+      "before": [
+        "价格从 $5 到 $10 之间都可以，另有 \\$ 转义的美元符号。"
+      ],
+      "after": [
+        "价格从 \\$5 到 \\$10 之间都可以，另有 $ 转义的美元符号。"
+      ]
+    },
+    {
+      "block": "tricky.md:10 Prose «反斜杠硬换行\\»",
+      "renderSame": true,
+      "before": [
+        "反斜杠硬换行\\"
+      ],
+      "after": [
+        "反斜杠硬换行  "
+      ]
+    },
+    {
+      "block": "tricky.md:27 Prose «见[1]和[注释]，数组 arr[0] 与 [x] 复选样式文本»",
+      "renderSame": true,
+      "before": [
+        "见[1]和[注释]，数组 arr[0] 与 [x] 复选样式文本"
+      ],
+      "after": [
+        "见\\[1\\]和\\[注释\\]，数组 arr\\[0\\] 与 \\[x\\] 复选样式文本"
+      ]
+    },
+    {
+      "block": "tricky.md:29 Prose «~~删除线~~ 与 ~单波浪~ 与 ~~~»",
+      "renderSame": true,
+      "before": [
+        "~~删除线~~ 与 ~单波浪~ 与 ~~~"
+      ],
+      "after": [
+        "~~删除线~~ 与 ~单波浪~ 与 \\~\\~\\~"
+      ]
+    },
+    {
+      "block": "tricky.md:35 Prose «这里有一个[引用链接][ref]和[另一个][]。»",
+      "renderSame": true,
+      "before": [
+        "这里有一个[引用链接][ref]和[另一个][]。"
+      ],
+      "after": [
+        "这里有一个[引用链接](https://example.com)和[另一个](https://example.com/other)。"
+      ]
+    },
+    {
+      "block": "tricky.md:39 Heading «### 标题带结尾井号 ###»",
+      "renderSame": true,
+      "before": [
+        "### 标题带结尾井号 ###"
+      ],
+      "after": [
+        "### 标题带结尾井号"
+      ]
+    },
+    {
+      "block": "tricky.md:41 Prose «设置型标题»",
+      "renderSame": true,
+      "before": [
+        "设置型标题",
+        "========="
+      ],
+      "after": [
+        "# 设置型标题"
+      ]
+    },
+    {
+      "block": "tricky.md:44 Prose «二级设置型»",
+      "renderSame": true,
+      "before": [
+        "二级设置型",
+        "---------"
+      ],
+      "after": [
+        "## 二级设置型"
+      ]
+    },
+    {
+      "block": "tricky.md:47 List «* 星号列表一»",
+      "renderSame": true,
+      "before": [
+        "* 星号列表一",
+        "* 星号列表二",
+        "    * 四空格嵌套",
+        "* 星号列表三",
+        "",
+        "+ 加号列表",
+        "+ 第二项",
+        "",
+        "1) 右括号有序",
+        "2) 第二项",
+        "",
+        "3. 从三开始",
+        "4. 第四",
+        "5. 第五",
+        "",
+        "- [ ] 待办 A",
+        "- [x] 完成 B",
+        "- [ ] 待办 C 含 **粗体**",
+        "",
+        "- 松散列表一",
+        "",
+        "- 松散列表二",
+        "",
+        "- 松散列表三",
+        "",
+        "- 第一项",
+        "  - 嵌套一",
+        "    - 更深",
+        "  - 嵌套二"
+      ],
+      "after": [
+        "- 星号列表一",
+        "- 星号列表二",
+        "  - 四空格嵌套",
+        "- 星号列表三",
+        "",
+        "* 加号列表",
+        "* 第二项",
+        "",
+        "1. 右括号有序",
+        "2. 第二项",
+        "",
+        "3) 从三开始",
+        "4) 第四",
+        "5) 第五",
+        "",
+        "- [ ] 待办 A",
+        "",
+        "- [x] 完成 B",
+        "",
+        "- [ ] 待办 C 含 **粗体**",
+        "",
+        "- 松散列表一",
+        "",
+        "- 松散列表二",
+        "",
+        "- 松散列表三",
+        "",
+        "- 第一项",
+        "",
+        "  - 嵌套一",
+        "    - 更深",
+        "  - 嵌套二",
+        ""
+      ]
+    },
+    {
+      "block": "tricky.md:83 Quote «> - 引用中的列表 a»",
+      "renderSame": true,
+      "before": [
+        ">> 内层引用",
+        ">> 第二行",
+        "",
+        "> 引用第一行",
+        "引用惰性续行"
+      ],
+      "after": [
+        ">",
+        "> > 内层引用",
+        "> > 第二行",
+        "",
+        "> 引用第一行",
+        "> 引用惰性续行"
+      ]
+    },
+    {
+      "block": "tricky.md:119 Table «| 左 | 中 | 右 |»",
+      "renderSame": true,
+      "before": [
+        "|:---|:---:|---:|"
+      ],
+      "after": [
+        "| :-- | :-: | --: |"
+      ]
+    },
+    {
+      "block": "tricky.md:124 Table «| 列1 | 列2 |»",
+      "renderSame": true,
+      "before": [
+        "|-----|-----|"
+      ],
+      "after": [
+        "| --- | --- |"
+      ]
+    },
+    {
+      "block": "tricky.md:128 Table «列A | 列B»",
+      "renderSame": true,
+      "before": [
+        "列A | 列B",
+        "--- | ---",
+        "无外侧竖线 | 表格"
+      ],
+      "after": [
+        "| 列A | 列B |",
+        "| --- | --- |",
+        "| 无外侧竖线 | 表格 |"
+      ]
+    },
+    {
+      "block": "tricky.md:138 Math «$$ a^2 + b^2 = c^2 $$»",
+      "renderSame": true,
+      "before": [
+        "$$ a^2 + b^2 = c^2 $$"
+      ],
+      "after": [
+        "$$",
+        "a^2 + b^2 = c^2",
+        "$$"
+      ]
+    },
+    {
+      "block": "tricky.md:140 Prose «*星号强调* 与 _下划线强调_ 与 __下划线加粗__»",
+      "renderSame": true,
+      "before": [
+        "*星号强调* 与 _下划线强调_ 与 __下划线加粗__"
+      ],
+      "after": [
+        "*星号强调* 与 *下划线强调* 与 **下划线加粗**"
+      ]
+    },
+    {
+      "block": "tricky.md:144 Prose «行尾单个空格 »",
+      "renderSame": true,
+      "before": [
+        "行尾单个空格 "
+      ],
+      "after": [
+        "行尾单个空格"
+      ]
+    },
+    {
+      "block": "tricky.md:147 Prose «HTML 实体 &copy; &amp; &lt; 以及 &nbsp;不换行»",
+      "renderSame": false,
+      "before": [
+        "HTML 实体 &copy; &amp; &lt; 以及 &nbsp;不换行"
+      ],
+      "after": [
+        "HTML 实体 © & < 以及 不换行"
+      ]
+    },
+    {
+      "block": "tricky.md:151 Prose «链接带括号 [维基](https://zh.wikipedia.org/wiki/A_(B)) 与 »",
+      "renderSame": true,
+      "before": [
+        "链接带括号 [维基](https://zh.wikipedia.org/wiki/A_(B)) 与 [尖括号](<https://x.com/a b>)"
+      ],
+      "after": [
+        "链接带括号 [维基](https://zh.wikipedia.org/wiki/A_(B)) 与 [尖括号](https://x.com/a%20b)"
+      ]
+    },
+    {
+      "block": "tricky.md:156 Prose «制表符\t在\t文本中»",
+      "renderSame": true,
+      "before": [
+        "制表符\t在\t文本中"
+      ],
+      "after": [
+        "制表符 在 文本中"
+      ]
+    },
+    {
+      "block": "tricky.md:158 List «1. 一»",
+      "renderSame": true,
+      "before": [
+        "2. 二",
+        "",
+        "   第二项的第二段",
+        "3. 三",
+        "",
+        "- 列表项含代码块",
+        "",
+        "  ```py",
+        "  print(1)",
+        "  ```"
+      ],
+      "after": [
+        "",
+        "2. 二",
+        "",
+        "   第二项的第二段",
+        "",
+        "3. 三",
+        "",
+        "- 列表项含代码块",
+        "",
+        "  ```py",
+        "  print(1)",
+        "  ```",
+        ""
+      ]
+    },
+    {
+      "block": "tricky.md:199 Prose «转义的标签文本 &lt;div&gt; 与 &lt;b&gt;粗&lt;/b&gt; 应保持为字面»",
+      "renderSame": true,
+      "before": [
+        "转义的标签文本 &lt;div&gt; 与 &lt;b&gt;粗&lt;/b&gt; 应保持为字面"
+      ],
+      "after": [
+        "转义的标签文本 \\<div> 与 \\<b>粗\\</b> 应保持为字面"
+      ]
+    },
+    {
+      "block": "README.md:109 Table «| 指标 | 网页版（README 基准） | 桌面版实测 |»",
+      "renderSame": true,
+      "before": [
+        "|---|---|---|"
+      ],
+      "after": [
+        "| --- | --- | --- |"
+      ]
+    },
+    {
+      "block": "README.md:125 Table «| 快捷键 | 功能 |»",
+      "renderSame": true,
+      "before": [
+        "|---|---|"
+      ],
+      "after": [
+        "| --- | --- |"
+      ]
+    },
+    {
+      "block": "README.md:145 List «- **怎么用**：「预览可编辑」默认开启。在分栏或预览模式下点一下任意段落、标题、列表、引用、代码»",
+      "renderSame": true,
+      "before": [
+        "- **同一时间只编辑一个块**。HTML 块、分隔线、按纯文本显示的超大块和渲染出错的块不能在预览里改，会提示「此块请在源码中编辑」。",
+        "- **按键**：",
+        "  | 按键 | 作用 |",
+        "  |---|---|",
+        "  | `Enter` | 段落/标题中另起一段；列表中新建一项；代码块中换行；表格中不做任何事 |",
+        "  | `⇧Enter` | 段内换行（写回源码时自动生成行尾两个空格 + 换行） |",
+        "  | `⌘B` / `⌘I` / `⌘E` / `⌘K` | 加粗 / 斜体 / 行内代码（自动加反引号） / 链接（在小输入框里填网址） |",
+        "  | `Tab` / `⇧Tab` | 列表中缩进/取消缩进；表格中移到下一个/上一个单元格 |",
+        "  | `⌘Z` / `⇧⌘Z` | 撤销/重做预览里的输入（源码随之同步） |",
+        "  | `Esc` | 结束编辑，该块按源码重新渲染 |",
+        "",
+        "  粘贴一律按纯文本插入。编辑时点链接只会放置光标，`⌘` + 点击才打开；任务复选框照常可以勾选。`⌘S`、`⌘/`、`⌘⇧P`",
+        "  等全局快捷键照常可用——`⌘S` 会先结束当前块的编辑、把最后的改动写回源码，再保存；切换模式、新建/打开文件、关闭窗口也一样。",
+        "  编辑过程中从菜单或工具栏点「加粗 / 斜体 / 行内代码 / 链接」作用在预览里正在编辑的块上，其他编辑器命令（标题、查找、跳转到行…）",
+        "  会先结束预览编辑，再在源码中对该块执行。",
+        "- **写回时会被规范化的写法**（渲染结果不变，只是源码写法统一）：`_斜体_` → `*斜体*`，`+` / `*` 列表符号 → `-`，",
+        "  Setext 标题（下划线式）→ `#` 标题，引用式链接 → 行内链接，`1)` → `1.`，有序列表重新编号，嵌套列表缩进统一为 2 个空格。",
+        "  只有你真正改动过的那一块会被重写，其余源码一个字符都不动。"
+      ],
+      "after": [
+        "",
+        "- **同一时间只编辑一个块**。HTML 块、分隔线、按纯文本显示的超大块和渲染出错的块不能在预览里改，会提示「此块请在源码中编辑」。",
+        "",
+        "- **按键**：",
+        "",
+        "  | 按键 | 作用 |",
+        "  | --- | --- |",
+        "  | `Enter` | 段落/标题中另起一段；列表中新建一项；代码块中换行；表格中不做任何事 |",
+        "  | `⇧Enter` | 段内换行（写回源码时自动生成行尾两个空格 + 换行） |",
+        "  | `⌘B` / `⌘I` / `⌘E` / `⌘K` | 加粗 / 斜体 / 行内代码（自动加反引号） / 链接（在小输入框里填网址） |",
+        "  | `Tab` / `⇧Tab` | 列表中缩进/取消缩进；表格中移到下一个/上一个单元格 |",
+        "  | `⌘Z` / `⇧⌘Z` | 撤销/重做预览里的输入（源码随之同步） |",
+        "  | `Esc` | 结束编辑，该块按源码重新渲染 |",
+        "",
+        "  粘贴一律按纯文本插入。编辑时点链接只会放置光标，`⌘` + 点击才打开；任务复选框照常可以勾选。`⌘S`、`⌘/`、`⌘⇧P`",
+        "  等全局快捷键照常可用——`⌘S` 会先结束当前块的编辑、把最后的改动写回源码，再保存；切换模式、新建/打开文件、关闭窗口也一样。",
+        "  编辑过程中从菜单或工具栏点「加粗 / 斜体 / 行内代码 / 链接」作用在预览里正在编辑的块上，其他编辑器命令（标题、查找、跳转到行…）",
+        "  会先结束预览编辑，再在源码中对该块执行。",
+        "",
+        "- **写回时会被规范化的写法**（渲染结果不变，只是源码写法统一）：`_斜体_` → `*斜体*`，`+` / `*` 列表符号 → `-`，",
+        "  Setext 标题（下划线式）→ `#` 标题，引用式链接 → 行内链接，`1)` → `1.`，有序列表重新编号，嵌套列表缩进统一为 2 个空格。",
+        "  只有你真正改动过的那一块会被重写，其余源码一个字符都不动。",
+        ""
+      ]
+    },
+    {
+      "block": "SPEC.md:273 Prose «`src/shared/protocol.ts`: `packHtml(items: HtmlIte»",
+      "renderSame": true,
+      "before": [
+        "`src/shared/protocol.ts`: `packHtml(items: HtmlItem[]): { batch: HtmlBatch; transfer: ArrayBuffer[] }` — allocates `ids/flags/offsets`, one `Uint8Array` sized `Σ payload.length*3`, `TextEncoder.encodeInto` sequentially, trims to written length, transfers all four buffers. `unpackHtml(b: HtmlBatch): HtmlItem[]` decodes each `utf8.subarray(offsets[i], offsets[i+1])` with one shared `TextDecoder`. `src/shared/hash.ts`: `fnv1a64(s: string): [lo: number, hi: number]` — two 32-bit FNV-1a lanes (seeds `0x811c9dc5`, `0x9747b28c`) over UTF-16 code units in one loop; `hashKey(lo, hi, len) = `${hi}:${lo}:${len}``. `src/shared/keys.ts`: `matchShortcut(e: KeyboardEvent, s: string): boolean` for CM notation (`Mod` = metaKey on mac, ctrlKey elsewhere)."
+      ],
+      "after": [
+        "`src/shared/protocol.ts`: `packHtml(items: HtmlItem[]): { batch: HtmlBatch; transfer: ArrayBuffer[] }` — allocates `ids/flags/offsets`, one `Uint8Array` sized `Σ payload.length*3`, `TextEncoder.encodeInto` sequentially, trims to written length, transfers all four buffers. `unpackHtml(b: HtmlBatch): HtmlItem[]` decodes each `utf8.subarray(offsets[i], offsets[i+1])` with one shared `TextDecoder`. `src/shared/hash.ts`: `fnv1a64(s: string): [lo: number, hi: number]` — two 32-bit FNV-1a lanes (seeds `0x811c9dc5`, `0x9747b28c`) over UTF-16 code units in one loop; `hashKey(lo, hi, len) = `${hi}:${lo}:\\${len}\\`\\`. `src/shared/keys.ts`: `matchShortcut(e: KeyboardEvent, s: string): boolean` for CM notation (`Mod` = metaKey on mac, ctrlKey elsewhere)."
+      ]
+    },
+    {
+      "block": "SPEC.md:277 Heading «### 4.1 State»",
+      "renderSame": true,
+      "before": [],
+      "after": [
+        ""
+      ]
+    },
+    {
+      "block": "SPEC.md:280 Heading «### 4.2 Applying an edit (`doc.ts`)»",
+      "renderSame": true,
+      "before": [],
+      "after": [
+        ""
+      ]
+    },
+    {
+      "block": "SPEC.md:283 Heading «### 4.3 Segmentation rules (`segmenter.ts`) — sing»",
+      "renderSame": true,
+      "before": [],
+      "after": [
+        ""
+      ]
+    },
+    {
+      "block": "SPEC.md:295 Heading «### 4.4 Rendering a block (`md.ts`, `highlight.ts`»",
+      "renderSame": true,
+      "before": [],
+      "after": [
+        ""
+      ]
+    },
+    {
+      "block": "SPEC.md:306 Heading «### 4.5 Scheduling (`render.worker.ts`)»",
+      "renderSame": true,
+      "before": [],
+      "after": [
+        ""
+      ]
+    },
+    {
+      "block": "SPEC.md:309 Heading «### 4.6 Drafts (`draft.ts`)»",
+      "renderSame": true,
+      "before": [],
+      "after": [
+        ""
+      ]
+    },
+    {
+      "block": "SPEC.md:314 Heading «### 5.1 DOM»",
+      "renderSame": true,
+      "before": [
+        "```",
+        "div.mdr-preview                        (scroll container, overflow:auto, overflow-anchor:auto)",
+        "  article.mdr-preview__body.markdown-body",
+        "    section.md-block[data-id=\"17\"]     one per block, document order; states: .is-pending (no children, min-height:var(--est-h))",
+        "                                       .is-stale (content outdated, opacity .85) .is-slow (giant block awaiting settle)",
+        "```"
+      ],
+      "after": [
+        "",
+        "```",
+        "div.mdr-preview                        (scroll container, overflow:auto, overflow-anchor:auto)",
+        "  article.mdr-preview__body.markdown-body",
+        "    section.md-block[data-id=\"17\"]     one per block, document order; states: .is-pending (no children, min-height:var(--est-h))",
+        "                                       .is-stale (content outdated, opacity .85) .is-slow (giant block awaiting settle)",
+        "```",
+        ""
+      ]
+    },
+    {
+      "block": "SPEC.md:323 Heading «### 5.2 `applyStructure` (stateless reconcile)»",
+      "renderSame": true,
+      "before": [],
+      "after": [
+        ""
+      ]
+    },
+    {
+      "block": "SPEC.md:326 Heading «### 5.3 Height model»",
+      "renderSame": true,
+      "before": [],
+      "after": [
+        ""
+      ]
+    },
+    {
+      "block": "SPEC.md:329 Heading «### 5.4 Materialization window and eviction (`upda»",
+      "renderSame": true,
+      "before": [],
+      "after": [
+        ""
+      ]
+    },
+    {
+      "block": "SPEC.md:332 Heading «### 5.5 `applyHtml` + `MountQueue`»",
+      "renderSame": true,
+      "before": [],
+      "after": [
+        ""
+      ]
+    },
+    {
+      "block": "SPEC.md:335 Heading «### 5.6 Interactions (`interactions.ts`, delegated»",
+      "renderSame": true,
+      "before": [],
+      "after": [
+        ""
+      ]
+    },
+    {
+      "block": "SPEC.md:338 Heading «### 5.7 TOC (`toc.ts`)»",
+      "renderSame": true,
+      "before": [],
+      "after": [
+        ""
+      ]
+    },
+    {
+      "block": "SPEC.md:341 Heading «## 6. Scroll sync (`preview/scrollSync.ts`, E2)»",
+      "renderSame": true,
+      "before": [
+        "Both panes expose the top edge as `(line, fraction)`; the follower is positioned with `lineToScrollTop` / `scrollToLine`. Algorithm:",
+        "```",
+        "master: 'editor'|'preview' = 'editor'; suppressUntil = { editor:0, preview:0 }",
+        "wheel/pointerdown/touchstart/keydown/focusin on editor.view.scrollDOM → master='editor'; same on preview.el → 'preview'",
+        "editor.onScroll: if (!enabled || master!=='editor' || now < suppressUntil.editor) return",
+        "   {line,fraction} = editor.topVisible(); top = preview.lineToScrollTop(line,fraction)",
+        "   if |preview.el.scrollTop − top| > 1: suppressUntil.preview = now+SYNC_SUPPRESS_MS; preview.el.scrollTop = top; settle next frame (recompute once from the master, write again if > 4 px)",
+        "preview.onScroll: symmetric with preview.topVisible() → editor.scrollToLine(line,fraction)",
+        "syncNow(from): one forced pass (App calls it after load, on mode switch, on split resize)",
+        "bus 'doc:cursor' with typing && enabled && !preview.isLineVisible(line): preview.scrollToLine(line, 0, farther than 3 screens ? 'instant' : 'smooth')",
+        "bus 'nav:gotoLine': editor.gotoLine(line); preview.scrollToLine(line, fraction ?? 0)",
+        "```"
+      ],
+      "after": [
+        "",
+        "Both panes expose the top edge as `(line, fraction)`; the follower is positioned with `lineToScrollTop` / `scrollToLine`. Algorithm:",
+        "",
+        "```",
+        "master: 'editor'|'preview' = 'editor'; suppressUntil = { editor:0, preview:0 }",
+        "wheel/pointerdown/touchstart/keydown/focusin on editor.view.scrollDOM → master='editor'; same on preview.el → 'preview'",
+        "editor.onScroll: if (!enabled || master!=='editor' || now < suppressUntil.editor) return",
+        "   {line,fraction} = editor.topVisible(); top = preview.lineToScrollTop(line,fraction)",
+        "   if |preview.el.scrollTop − top| > 1: suppressUntil.preview = now+SYNC_SUPPRESS_MS; preview.el.scrollTop = top; settle next frame (recompute once from the master, write again if > 4 px)",
+        "preview.onScroll: symmetric with preview.topVisible() → editor.scrollToLine(line,fraction)",
+        "syncNow(from): one forced pass (App calls it after load, on mode switch, on split resize)",
+        "bus 'doc:cursor' with typing && enabled && !preview.isLineVisible(line): preview.scrollToLine(line, 0, farther than 3 screens ? 'instant' : 'smooth')",
+        "bus 'nav:gotoLine': editor.gotoLine(line); preview.scrollToLine(line, fraction ?? 0)",
+        "```",
+        ""
+      ]
+    },
+    {
+      "block": "SPEC.md:356 Heading «## 7. Editor (E3)»",
+      "renderSame": true,
+      "before": [],
+      "after": [
+        ""
+      ]
+    },
+    {
+      "block": "SPEC.md:367 Heading «## 8. Shell (E4)»",
+      "renderSame": true,
+      "before": [
+        "**Layout** (`layout.ts`) builds:",
+        "```",
+        "div.mdr-app[data-mode=split][data-toc=open]      grid-template-rows: auto 1fr auto",
+        "  header.mdr-toolbar",
+        "  div.mdr-main                                     grid-template-columns: var(--toc-w,240px) var(--split,1fr) 6px 1fr",
+        "    aside.mdr-toc  div.mdr-editor  div.mdr-gutter  div.mdr-preview",
+        "  footer.mdr-statusbar > span.mdr-statusbar__item[data-stat=pos|words|chars|reading|file|mode|progress]",
+        "  div.mdr-overlay (toasts .mdr-toast, dialogs .mdr-dialog, palette)",
+        "```"
+      ],
+      "after": [
+        "",
+        "**Layout** (`layout.ts`) builds:",
+        "",
+        "```",
+        "div.mdr-app[data-mode=split][data-toc=open]      grid-template-rows: auto 1fr auto",
+        "  header.mdr-toolbar",
+        "  div.mdr-main                                     grid-template-columns: var(--toc-w,240px) var(--split,1fr) 6px 1fr",
+        "    aside.mdr-toc  div.mdr-editor  div.mdr-gutter  div.mdr-preview",
+        "  footer.mdr-statusbar > span.mdr-statusbar__item[data-stat=pos|words|chars|reading|file|mode|progress]",
+        "  div.mdr-overlay (toasts .mdr-toast, dialogs .mdr-dialog, palette)",
+        "```",
+        ""
+      ]
+    },
+    {
+      "block": "SPEC.md:379 Table «| Shortcut | Command | Scope |»",
+      "renderSame": true,
+      "before": [
+        "|---|---|---|"
+      ],
+      "after": [
+        "| --- | --- | --- |"
+      ]
+    },
+    {
+      "block": "SPEC.md:392 Heading «## 9. Error handling (summary)»",
+      "renderSame": false,
+      "before": [
+        "| Failure | Handling |",
+        "|---|---|",
+        "| Worker crash / fatal error / 10 s silence | restart + full-text resend, ≤3/min, toast |",
+        "| markdown-it / hljs / KaTeX throws on a block | `.md-error` block, pass continues |",
+        "| KaTeX import fails | `math=false`, `$$` shown as text, one toast |",
+        "| HTML for unknown id / outside window | dropped; re-requested by `updateWindow` |",
+        "| Giant block (unclosed fence at top) | worker: no hljs > 30k chars, PLAIN > 200k chars, 300 ms throttle; main: mount deferred until 500 ms stable |",
+        "| FSA unavailable / permission denied | legacy backend / `SaveResult.permission` toast |",
+        "| IndexedDB unavailable | drafts/recent are no-ops |",
+        "| Hash collision (64-bit) | negligible; self-heals on next edit |"
+      ],
+      "after": [
+        "",
+        "| Failure | Handling |",
+        "| --- | --- |",
+        "| Worker crash / fatal error / 10 s silence | restart + full-text resend, ≤3/min, toast |",
+        "| markdown-it / hljs / KaTeX throws on a block | `.md-error` block, pass continues |",
+        "| KaTeX import fails | `math=false`, `$$` shown as text, one toast |",
+        "| HTML for unknown id / outside window | dropped; re-requested by `updateWindow` |",
+        "| Giant block (unclosed fence at top) | worker: no hljs > 30k chars, PLAIN > 200k chars, 300 ms throttle; main: mount deferred until 500 ms stable |",
+        "| FSA unavailable / permission denied | legacy backend / `SaveResult.permission` toast |",
+        "| IndexedDB unavailable | drafts/recent are no-ops |",
+        "| Hash collision (64-bit) | negligible; self-heals on next editx |"
+      ]
+    },
+    {
+      "block": "SPEC.md:404 Heading «## 10. Keystroke budget (10 MB, typing in a paragr»",
+      "renderSame": true,
+      "before": [],
+      "after": [
+        ""
+      ]
+    },
+    {
+      "block": "SPEC.md:407 Heading «## 11. Performance test plan (`bench/`, `npm run p»",
+      "renderSame": true,
+      "before": [],
+      "after": [
+        ""
+      ]
+    },
+    {
+      "block": "SPEC.md:410 Table «| # | Scenario (large.md unless noted) | Metric | »",
+      "renderSame": true,
+      "before": [
+        "|---|---|---|---|",
+        "| P1 | open | `mdr:open` → `mdr:first-visible` | < 400 ms |",
+        "| P2 | open | → first keystroke echoed | < 600 ms |",
+        "| P3 | open | → outline visible / `mdr:idle` | < 800 ms / < 20 s |",
+        "| P4 | open | longest main task; long tasks after t = 1 s | < 120 ms (CM state) ; 0 > 50 ms |",
+        "| P5 | type 200 chars mid-doc at 60 wpm | main-thread work per keystroke p95 / max; keystroke → block mounted p95 | < 5 ms / < 10 ms ; < 40 ms |",
+        "| P6 | type in 300-line / 5k-line fence | main p95 | < 8 ms / < 16 ms |",
+        "| P7 | unclosed ``` at line 1 then close | input latency p95; tasks > 100 ms | < 16 ms ; ≤ 1 (deferred giant mount) |"
+      ],
+      "after": [
+        "| --- | --- | --- | --- |",
+        "| P1 | open | `mdr:open` → `mdr:first-visible` | < 400 ms |",
+        "| P2 | open | → first keystroke echoed | < 600 ms |",
+        "| P3 | open | → outline visible / `mdr:idle` | < 800 ms / < 20 s |",
+        "| P4 | open | longest main task; long tasks after t = 1 s | < 120 ms (CM state) ; 0 > 50 ms |",
+        "| P5 | type 200 chars mid-doc at 60 wpm | main-thread work per keystroke p95 / max; keystroke → block mounted p95 | < 5 ms / < 10 ms ; < 40 ms |",
+        "| P6 | type in 300-line / 5k-line fence | main p95 | < 8 ms / < 16 ms |",
+        "| P7 | unclosed \\`\\`\\` at line 1 then close | input latency p95; tasks > 100 ms | < 16 ms ; ≤ 1 (deferred giant mount) |"
+      ]
+    },
+    {
+      "block": "SPEC.md:430 Table «| Engineer | Owns (files) | Builds against (day 0)»",
+      "renderSame": true,
+      "before": [
+        "|---|---|---|---|"
+      ],
+      "after": [
+        "| --- | --- | --- | --- |"
+      ]
+    },
+    {
+      "block": "small-head.md:24 Table «| 列1 | 列2 | 列3 |»",
+      "renderSame": true,
+      "before": [
+        "|-----|-----|-----|"
+      ],
+      "after": [
+        "| --- | --- | --- |"
+      ]
+    },
+    {
+      "block": "small-head.md:58 Table «| 列1 | 列2 | 列3 |»",
+      "renderSame": true,
+      "before": [
+        "|-----|-----|-----|"
+      ],
+      "after": [
+        "| --- | --- | --- |"
+      ]
+    },
+    {
+      "block": "small-head.md:92 Table «| 列1 | 列2 | 列3 |»",
+      "renderSame": true,
+      "before": [
+        "|-----|-----|-----|"
+      ],
+      "after": [
+        "| --- | --- | --- |"
+      ]
+    },
+    {
+      "block": "small-head.md:126 Table «| 列1 | 列2 | 列3 |»",
+      "renderSame": true,
+      "before": [
+        "|-----|-----|-----|"
+      ],
+      "after": [
+        "| --- | --- | --- |"
+      ]
+    },
+    {
+      "block": "small-head.md:160 Table «| 列1 | 列2 | 列3 |»",
+      "renderSame": true,
+      "before": [
+        "|-----|-----|-----|"
+      ],
+      "after": [
+        "| --- | --- | --- |"
+      ]
+    },
+    {
+      "block": "small-head.md:194 Table «| 列1 | 列2 | 列3 |»",
+      "renderSame": true,
+      "before": [
+        "|-----|-----|-----|"
+      ],
+      "after": [
+        "| --- | --- | --- |"
+      ]
+    },
+    {
+      "block": "small-head.md:228 Table «| 列1 | 列2 | 列3 |»",
+      "renderSame": true,
+      "before": [
+        "|-----|-----|-----|"
+      ],
+      "after": [
+        "| --- | --- | --- |"
+      ]
+    }
+  ],
+  "escWrites": [],
+  "refused": [
+    "tricky.md:31 Html «<https://autolink.example.com> 和裸链接 https://bare.e» (toast: 此块请在源码中编辑×)",
+    "tricky.md:187 Prose «[ref]: https://example.com»: renders to nothing (0 px)",
+    "tricky.md:189 Html «<div>» (toast: 此块请在源码中编辑×)",
+    "tricky.md:193 Hr «---» (toast: 此块请在源码中编辑 ×2×)",
+    "tricky.md:207 Prose «[ref]: https://example.com/ref»: renders to nothing (0 px)"
+  ],
+  "noSession": [
+    "tricky.md:19 Prose «文本里有 <div> 字样和 <span>内联标签</span>，还有 a < b > c。» (toast: 此块请在源码中编辑×)",
+    "SPEC.md:285 List «1. FENCE opens on `/^ {0,3}(`{3,}|~{3,})/` (backti» (toast: 此块请在源码中编辑×)"
+  ],
+  "renderChanged": [
+    {
+      "block": "tricky.md:147 Prose «HTML 实体 &copy; &amp; &lt; 以及 &nbsp;不换行»",
+      "renderSame": false,
+      "before": [
+        "HTML 实体 &copy; &amp; &lt; 以及 &nbsp;不换行"
+      ],
+      "after": [
+        "HTML 实体 © & < 以及 不换行"
+      ],
+      "htmlBefore": "<p>HTML 实体 © &amp; &lt; 以及 &nbsp;不换行</p>",
+      "htmlAfter": "<p>HTML 实体 © &amp; &lt; 以及 不换行</p>"
+    },
+    {
+      "block": "SPEC.md:392 Heading «## 9. Error handling (summary)»",
+      "renderSame": false,
+      "before": [
+        "| Failure | Handling |",
+        "|---|---|",
+        "| Worker crash / fatal error / 10 s silence | restart + full-text resend, ≤3/min, toast |",
+        "| markdown-it / hljs / KaTeX throws on a block | `.md-error` block, pass continues |",
+        "| KaTeX import fails | `math=false`, `$$` shown as text, one toast |",
+        "| HTML for unknown id / outside window | dropped; re-requested by `updateWindow` |",
+        "| Giant block (unclosed fence at top) | worker: no hljs > 30k chars, PLAIN > 200k chars, 300 ms throttle; main: mount deferred until 500 ms stable |",
+        "| FSA unavailable / permission denied | legacy backend / `SaveResult.permission` toast |",
+        "| IndexedDB unavailable | drafts/recent are no-ops |",
+        "| Hash collision (64-bit) | negligible; self-heals on next edit |"
+      ],
+      "after": [
+        "",
+        "| Failure | Handling |",
+        "| --- | --- |",
+        "| Worker crash / fatal error / 10 s silence | restart + full-text resend, ≤3/min, toast |",
+        "| markdown-it / hljs / KaTeX throws on a block | `.md-error` block, pass continues |",
+        "| KaTeX import fails | `math=false`, `$$` shown as text, one toast |",
+        "| HTML for unknown id / outside window | dropped; re-requested by `updateWindow` |",
+        "| Giant block (unclosed fence at top) | worker: no hljs > 30k chars, PLAIN > 200k chars, 300 ms throttle; main: mount deferred until 500 ms stable |",
+        "| FSA unavailable / permission denied | legacy backend / `SaveResult.permission` toast |",
+        "| IndexedDB unavailable | drafts/recent are no-ops |",
+        "| Hash collision (64-bit) | negligible; self-heals on next editx |"
+      ],
+      "htmlBefore": "<h2>9. Error handling (summary)</h2><table><thead><tr><th>Failure</th><th>Handling</th></tr></thead><tbody><tr><td>Worker crash / fatal error / 10 s silence</td><td>restart + full-text resend, ≤3/min, toast</td></tr><tr><td>markdown-it / hljs / KaTeX throws on a block</td><td><code>.md-error</code> block, pass continues</td></tr><tr><td>KaTeX import fails</td><td><code>math=false</code>, <code>$$<",
+      "htmlAfter": "<h2>9. Error handling (summary)</h2><table><thead><tr><th>Failure</th><th>Handling</th></tr></thead><tbody><tr><td>Worker crash / fatal error / 10 s silence</td><td>restart + full-text resend, ≤3/min, toast</td></tr><tr><td>markdown-it / hljs / KaTeX throws on a block</td><td><code>.md-error</code> block, pass continues</td></tr><tr><td>KaTeX import fails</td><td><code>math=false</code>, <code>$$<"
+    }
+  ],
+  "errors": []
+}

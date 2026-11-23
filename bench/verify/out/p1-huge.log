@@ -1,0 +1,23 @@
+
+[huge run 0] open→structure 216.7 ms, open→first-visible 378.0 ms, open→idle 1510.8 ms
+  blocks=100002 wrappers@fv=26880 mounted@fv=26 lines=340004
+  ALL long tasks since nav (rel. to open): 114ms@254
+  long tasks during open (<1s): 114ms@+254
+  long tasks after 1s: 0 
+  LoAF ≥50ms after open: 138ms(block 38)@+205 Worker.onmessage:11|Worker.onmessage:27|FrameRequestCallback:8
+  memory: heap 28.9 MB used / 50.0 MB total, DOM nodes 144723, UA-specific n/a
+
+[huge run 1] open→structure 325.1 ms, open→first-visible 517.3 ms, open→idle 2442.6 ms
+  blocks=100002 wrappers@fv=21760 mounted@fv=26 lines=340004
+  ALL long tasks since nav (rel. to open): 170ms@397
+  long tasks during open (<1s): 170ms@+397
+  long tasks after 1s: 0 
+  LoAF ≥50ms after open: 177ms(block 84)@+353 Worker.onmessage:43|FrameRequestCallback:8
+  memory: heap 32.1 MB used / 73.1 MB total, DOM nodes 142948, UA-specific n/a
+
+==== summary huge
+PASS  P1 huge open→first-visible (best of 2): 378.0 ms (worst 517.3)  (target < 400 ms)
+PASS  P3 huge open→idle (best): 1510.8 ms  (target < 20000 ms)
+PASS  P4 huge longest task during open (best): 114.0 ms (worst 170.0)  (target < 120 ms)
+PASS  P4 huge long tasks >50ms after t=1s (best run): 0 (worst run 0, longest 0.0 ms)  (target 0)
+P13-load huge JS heap: 28.9, 32.1 MB

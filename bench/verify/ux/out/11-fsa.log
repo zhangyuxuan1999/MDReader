@@ -1,0 +1,101 @@
+PASS  FSA available: save button is 保存 (not 下载)
+PASS  Mod-o → picker → file opens with name/title/status 已保存
+PASS  Mod-s saves in place through the handle (no download), clears dirty, toast  — toasts: 已保存
+PASS  Permission denied on save → zh-CN error toast, document stays dirty
+PASS  Mod-Shift-s → save picker with suggestedName, new name shown, status 已保存
+PASS  Save-as cancelled (AbortError): no error toast, state unchanged
+PASS  New file when clean: no dialog; Mod-s on untitled → save picker suggests 未命名.md
+PASS  Recent menu opens on click, lists 打开文件… + recent handles, is visible on screen  — 打开文件… | fresh.md | beta.md | alpha.md
+FAIL  Click a recent entry → reopens the file (getFile), status 已保存, menu closes  — page.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('.mdr-recent__item:has-text("alpha.md")')
+    - locator resolved to <li class="mdr-recent__item">alpha.md</li>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <header class="mdr-toolbar">…</header> intercepts pointer events
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <header class="mdr-toolbar">…</header> intercepts pointer events
+    - retrying click action
+      - waiting 100ms
+    57 × waiting for element to be visible, enabled and stable
+       - element is visible, enabled and stable
+       - scrolling into view if needed
+       - done scrolling
+       - <header class="mdr-toolbar">…</header> intercepts pointer events
+     - retrying click action
+       - waiting 500ms
+
+FAIL  Draft for an FSA file is offered after reload + reopen from recent (docId reused via isSameEntry)  — page.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('.mdr-recent__item:has-text("alpha.md")')
+    - locator resolved to <li class="mdr-recent__item">alpha.md</li>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <header class="mdr-toolbar">…</header> intercepts pointer events
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <header class="mdr-toolbar">…</header> intercepts pointer events
+    - retrying click action
+      - waiting 100ms
+    57 × waiting for element to be visible, enabled and stable
+       - element is visible, enabled and stable
+       - scrolling into view if needed
+       - done scrolling
+       - <header class="mdr-toolbar">…</header> intercepts pointer events
+     - retrying click action
+       - waiting 500ms
+
+FAIL  Reopen from recent while dirty asks for confirmation; 取消 keeps text  — page.waitForSelector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('.mdr-recent') to be visible
+
+FAIL  Recent entry whose file vanished (NotFoundError): toast + removed from the list  — page.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('.mdr-recent__item:has-text("fresh.md")')
+    - locator resolved to <li class="mdr-recent__item">fresh.md</li>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <header class="mdr-toolbar">…</header> intercepts pointer events
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is visible, enabled and stable
+      - scrolling into view if needed
+      - done scrolling
+      - <header class="mdr-toolbar">…</header> intercepts pointer events
+    - retrying click action
+      - waiting 100ms
+    57 × waiting for element to be visible, enabled and stable
+       - element is visible, enabled and stable
+       - scrolling into view if needed
+       - done scrolling
+       - <header class="mdr-toolbar">…</header> intercepts pointer events
+     - retrying click action
+       - waiting 500ms
+
+FAIL  Recent entry with permission denied on reopen: 需要重新授权 toast  — page.waitForSelector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('.mdr-recent') to be visible
+
+PASS  Drop with getAsFileSystemHandle → file opens with a handle; Mod-s writes in place (no download)
+
+[11-fsa] 9 passed, 5 failed
+[11-fsa] no console/page errors

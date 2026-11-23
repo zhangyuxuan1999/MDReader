@@ -1,0 +1,9 @@
+PASS  split + toc open: both panes wide  — mode=split toc=open vw=1400 :: toc[x=0 w=240 h=830 disp=block] editor[x=240 w=577 h=830 disp=block] .mdr-gutter[x=817 w=6 h=830 disp=block] preview[x=823 w=577 h=830 disp=block]
+PASS  preview mode (toolbar button): preview pane fills width  — mode=preview toc=open vw=1400 :: toc[x=0 w=240 h=830 disp=block] editor[x=0 w=0 h=0 disp=none] .mdr-gutter[x=0 w=0 h=0 disp=none] preview[x=240 w=1160 h=830 disp=block]
+PASS  edit mode: editor fills width  — mode=edit toc=open vw=1400 :: toc[x=0 w=240 h=830 disp=block] editor[x=240 w=1160 h=830 disp=block] .mdr-gutter[x=0 w=0 h=0 disp=none] preview[x=0 w=0 h=0 disp=none]
+PASS  split + toc closed (Mod-Shift-o): editor and preview both wide  — mode=split toc=closed vw=1400 :: toc[x=0 w=0 h=0 disp=none] editor[x=0 w=697 h=830 disp=block] .mdr-gutter[x=697 w=6 h=830 disp=block] preview[x=703 w=697 h=830 disp=block]
+PASS  preview mode + toc closed: preview fills width  — mode=preview toc=closed vw=1400 :: toc[x=0 w=0 h=0 disp=none] editor[x=0 w=0 h=0 disp=none] .mdr-gutter[x=0 w=0 h=0 disp=none] preview[x=0 w=1400 h=830 disp=block]
+PASS  split at 800px wide (toc auto-collapsed): panes wide  — mode=split toc=open vw=800 :: toc[x=0 w=0 h=0 disp=none] editor[x=0 w=397 h=530 disp=block] .mdr-gutter[x=397 w=6 h=530 disp=block] preview[x=403 w=397 h=530 disp=block]
+
+[06-grid] 6 passed, 0 failed
+[06-grid] no console/page errors

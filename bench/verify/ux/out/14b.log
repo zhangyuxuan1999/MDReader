@@ -1,0 +1,13 @@
+PASS  Fresh load: preview shows its top padding (baseline)  — {"scrollTop":0,"bodyPadTop":"0px","h1Top":32,"edTop":{"line":1,"fraction":0},"pvTop":{"line":1,"fraction":0},"l1":32}
+FAIL  Wheel down then back to the very top of the editor: preview returns to scrollTop 0 (padding visible)  — preview scrollTop 32 after editor returned to line 1 (h1 offset 0px, body padding 0px, lineToScrollTop(1,0)=32)
+FAIL  Switch split → preview while at the top: preview starts at scrollTop 0  — preview scrollTop 32 in preview mode (h1 offset 0px)
+FAIL  Keyboard: Mod-Home in the editor → preview at top  — page.click: Timeout 30000ms exceeded.
+
+MEASURE progress indicator max % (large.md, 6002 blocks) = 0 (target ≥ 90 before hiding (spec: 渲染中 37%)) FAIL
+PASS  Progress indicator trace on large.md (values seen while visible)  — load→idle 430 ms; 7 mutations; visible values: 0
+FAIL  Plain items in a list that also contains task items keep their bullets  — plain items without bullet: [{"text":"普通项一","task":false,"listStyle":"none","marker":"normal"},{"text":"普通项二","task":false,"listStyle":"none","marker":"normal"}]
+PASS  Dropping a .png replaces the document with binary garbage and no feedback  — text "�PNG\n\u001a\n\u0000\u0001\u0002" title pic.png
+FAIL  Clicking a relative link 5× stacks 5 identical toasts  — 6 identical toasts visible
+
+[14-top-sync-progress] 3 passed, 6 failed
+[14-top-sync-progress] no console/page errors

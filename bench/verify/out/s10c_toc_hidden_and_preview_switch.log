@@ -1,0 +1,21 @@
+PASS  (1) 1400 px, TOC open: editor and preview have width  — {"vw":1400,"mode":"split","tocAttr":"open","toc":{"x":0,"w":240,"display":"block"},"editor":{"x":240,"w":577,"display":"block"},"gutter":{"x":817,"w":6,"display":"block"},"preview":{"x":823,"w":577,"display":"block"},"cmContent":{"x":298,"w":519,"display":"block"},"cols":"240px 577px 6px 577px"}
+TOC hidden @1400: {"vw":1400,"mode":"split","tocAttr":"closed","toc":{"x":0,"w":0,"display":"none"},"editor":{"x":0,"w":697,"display":"block"},"gutter":{"x":697,"w":6,"display":"block"},"preview":{"x":703,"w":697,"display":"block"},"cmContent":{"x":58,"w":639,"display":"block"},"cols":"0px 697px 6px 697px"}
+PASS  (1) 1400 px, TOC hidden via Mod-Shift-O: editor and preview still have width  — {"vw":1400,"mode":"split","tocAttr":"closed","toc":{"x":0,"w":0,"display":"none"},"editor":{"x":0,"w":697,"display":"block"},"gutter":{"x":697,"w":6,"display":"block"},"preview":{"x":703,"w":697,"display":"block"},"cmContent":{"x":58,"w":639,"display":"block"},"cols":"0px 697px 6px 697px"}
+PASS  (1) TOC hidden: editor content area is hit-testable  — {"rect":{"x":58,"w":639,"h":27034},"hit":"DIV.cm-content cm-lineWrapping"}
+TOC open @900: {"vw":900,"mode":"split","tocAttr":"open","toc":{"x":0,"w":0,"display":"none"},"editor":{"x":0,"w":447,"display":"block"},"gutter":{"x":447,"w":6,"display":"block"},"preview":{"x":453,"w":447,"display":"block"},"cmContent":{"x":58,"w":389,"display":"block"},"cols":"0px 447px 6px 447px"}
+PASS  (1) 900 px, TOC attr open: editor and preview have width  — {"vw":900,"mode":"split","tocAttr":"open","toc":{"x":0,"w":0,"display":"none"},"editor":{"x":0,"w":447,"display":"block"},"gutter":{"x":447,"w":6,"display":"block"},"preview":{"x":453,"w":447,"display":"block"},"cmContent":{"x":58,"w":389,"display":"block"},"cols":"0px 447px 6px 447px"}
+PASS  (2) split→preview: preview top line stays near 8000  — {"before":{"mode":"split","ed":7990,"pv":7990,"edScroll":210002,"pvScroll":226731},"after":{"mode":"preview","ed":7990,"pv":7990,"edScroll":0,"pvScroll":226675}}
+PASS  (2) preview→split: both panes keep the pre-switch top line  — {"before":{"mode":"split","ed":7990,"pv":7990,"edScroll":210002,"pvScroll":226731},"after":{"mode":"split","ed":7990,"pv":7990,"edScroll":210003,"pvScroll":226731}}
+PASS  (2) edit→preview: preview top line near editor line  — {"before":{"mode":"edit","ed":7991,"pv":1,"edScroll":210014,"pvScroll":0},"after":{"mode":"preview","ed":7991,"pv":7991,"edScroll":0,"pvScroll":226683}}
+PASS  (2) split→edit: editor top kept  — {"before":{"mode":"split","ed":7991,"pv":7991,"edScroll":210014,"pvScroll":226739},"after":{"mode":"edit","ed":7991,"pv":1,"edScroll":210014,"pvScroll":0}}
+PASS  (2) edit→split: preview follows editor (±5 lines)  — {"mode":"split","ed":7991,"pv":7991,"edScroll":210015,"pvScroll":226739}
+PASS  (2) Mod-/ split→preview keeps the reading position  — {"before":{"mode":"split","ed":7991,"pv":7991,"edScroll":210014,"pvScroll":226739},"after":{"mode":"preview","ed":7991,"pv":7991,"edScroll":0,"pvScroll":226683}}
+PASS  no console errors  — []
+PASS  no page errors  — []
+
+=== s10c toc hidden + preview switch ===
+{
+ "consoleErrors": [],
+ "pageErrors": [],
+ "restarts": 0
+}
